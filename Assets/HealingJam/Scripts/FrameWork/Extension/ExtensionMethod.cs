@@ -78,4 +78,9 @@ public static class ExtensionMethod
             }
         }
     }
+
+    public static T RandomValue<T>(this IList<T> list)
+    {
+        return list[Random.Range(0, list.Count)];
+    }
 }

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 
 namespace HealingJam.Crossword
 {
@@ -17,6 +17,7 @@ namespace HealingJam.Crossword
     // 게임 플레이에 쓰이는 클래스.
     public class WordDataForGame : WordData
     {
+        [Flags]
         public enum Direction : byte
         {
             None = 0, Horizontal = 1, Vertical = 2, All = 3

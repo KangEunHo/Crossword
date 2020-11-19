@@ -11,6 +11,9 @@ namespace HealingJam.Crossword
             None, Unuse, Completed
         }
 
+        [SerializeField] private Sprite cellCompleteSprite = null;
+        [SerializeField] private Sprite cellUnCompleteSprite = null;
+
         [SerializeField] private Text letterText = null;
         [SerializeField] private Image cellImage = null;
 
@@ -19,6 +22,7 @@ namespace HealingJam.Crossword
         public WordDataForGame HorizontalWordData { get; set; } = null;
         public WordDataForGame VerticalWordData { get; set; } = null;
         public CellState State { get; private set; } = CellState.None;
+        public char Letter { get; private set; }
 
         public void Init(Vector2Int index)
         {
@@ -31,6 +35,35 @@ namespace HealingJam.Crossword
         {
             State = CellState.Unuse;
             gameObject.SetActive(false);
+        }
+
+        public void SetCompleteState()
+        {
+            State = CellState.Completed;
+            cellImage.sprite = cellCompleteSprite;
+        }
+
+        public void SetSpriteToCurrentState()
+        {
+            if (State == CellState.None)
+            {
+                cellImage.sprite = cellUnCompleteSprite;
+            }
+            else if (State == CellState.Completed)
+            {
+                cellImage.sprite = cellCompleteSprite;
+            }
+        }
+
+        public void SetSprite(Sprite sprite)
+        {
+            cellImage.sprite = sprite;
+        }
+
+        public void SetLetter(char letter)
+        {
+            Letter = letter;
+            letterText.text = letter.ToString();
         }
     }
 }
