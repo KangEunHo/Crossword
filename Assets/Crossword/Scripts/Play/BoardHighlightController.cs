@@ -16,6 +16,7 @@ namespace HealingJam.Crossword
         private List<BoardCell> highlightCells = null;
 
         public Action<WordDataForGame> onCorrectAnswer = null;
+        public Action<WordDataForGame> onWrongAnswer = null;
 
 
         public void Init(BoardController boardController)
@@ -161,6 +162,7 @@ namespace HealingJam.Crossword
             {
                 ClearHighlightCellsLetter();
                 SetUpHighlightCells(SelectedWordData);
+                onWrongAnswer?.Invoke(SelectedWordData);
             }
         }
 

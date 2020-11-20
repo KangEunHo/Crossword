@@ -52,6 +52,11 @@ namespace HealingJam.Crossword
             }
         }
 
+        /// <summary>
+        /// 버튼들에 글자를 설정합니다.
+        /// 들어가는 단어의 글자들을 집어 넣고 나머지 글자를 채웁니다.
+        /// </summary>
+        /// <param name="wordDataForGame"></param>
         public void SetButtonsLetter(WordDataForGame wordDataForGame)
         {
             List<char> letters = new List<char>();
@@ -70,13 +75,23 @@ namespace HealingJam.Crossword
 
             for (int i = 0; i < BUTTON_COUNT; ++i)
             {
-                letterSelectionButtons[i].SetLetter(letters[i]);
+                letterSelectionButtons[i].Letter = letters[i];
+                letterSelectionButtons[i].SetState(LetterSelectionButton.ButtonState.Basic);
             }
         }
 
         private void OnLetterSelectionButtonClick(LetterSelectionButton letterSelectionButton)
         {
-            letterSelectionButtonClickHandler?.Invoke(this, new LetterSelectionButtonClickEventArgs(letterSelectionButton.letter));
+            letterSelectionButton.SetState(LetterSelectionButton.ButtonState.Selected);
+            letterSelectionButtonClickHandler?.Invoke(this, new LetterSelectionButtonClickEventArgs(letterSelectionButton.Letter));
+        }
+
+        public void ChangeButtonsStateToAllBasic()
+        {
+            for (int i = 0; i < BUTTON_COUNT; ++i)
+            {
+                letterSelectionButtons[i].SetState(LetterSelectionButton.ButtonState.Basic);
+            }
         }
     }
 }

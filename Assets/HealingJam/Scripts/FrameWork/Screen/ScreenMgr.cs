@@ -29,7 +29,7 @@ namespace HealingJam.GameScreens
 
             foreach(var screen in screens)
             {
-                StateMachine.RegisterState(screen);
+                RegisterState(screen);
             }
 
             StateMachine.OnStateEntered += OnScreenEntered;

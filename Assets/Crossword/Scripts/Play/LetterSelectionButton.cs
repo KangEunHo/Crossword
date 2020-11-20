@@ -5,22 +5,54 @@ using System;
 
 namespace HealingJam.Crossword
 {
-    public class LetterSelectionButton : MonoBehaviour, IPointerClickHandler
+    public class LetterSelectionButton : DarkModeMonoBehaviour, IPointerClickHandler
     {
+        public enum ButtonState
+        {
+            Basic = 0, Selected = 1
+        }
+
         [SerializeField] private Text letterText = null;
+        [SerializeField] private Image image = null;
+        [SerializeField] private DarkModeSprite basicSprite = null;
+        [SerializeField] private DarkModeSprite selectedSprite = null;
 
         public Action<LetterSelectionButton> onClick = null;
-        public char letter;
+        private ButtonState buttonState = ButtonState.Basic;
 
-        public void SetLetter(char letter)
+        private char letter;
+        public char Letter
         {
-            this.letter = letter;
-            letterText.text = letter.ToString();
+            get { return letter; }
+            set { letter = value; letterText.text = value.ToString(); }
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            onClick?.Invoke(this);
+            if (buttonState == ButtonState.Basic)
+                onClick?.Invoke(this);
+        }
+
+        public override void DarkModeChanged(bool darkMode)
+        {
+            basicSprite.DarkModeChanged(darkMode);
+            selectedSprite.DarkModeChanged(darkMode);
+
+            SetState(buttonState);
+        }
+
+        public void SetState(ButtonState state)
+        {
+            buttonState = state;
+
+            if (buttonState == ButtonState.Basic)
+            {
+                image.sprite = basicSprite.activeModeSprite;
+            }
+            else
+            {
+                image.sprite = selectedSprite.activeModeSprite;
+            }
         }
     }
 }
