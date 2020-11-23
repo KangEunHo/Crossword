@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using HealingJam.Crossword.Save;
 
 namespace HealingJam.Crossword
 {
@@ -8,37 +9,38 @@ namespace HealingJam.Crossword
     {
         private readonly int MAX_ANSWER_COUNT;
 
-        private HashSet<WordDataForGame> matchedWords = null;
-        private HashSet<WordDataForGame> unmatchedWords = null;
+        private HashSet<string> matchedWords = null;
+        private Dictionary<string, WordDataForGame> unmatchedWords = null;
 
-        public AnswerChecker(CrosswordMap crosswordMap, BoardController boardController)
+        public AnswerChecker(List<WordDataForGame> wordDataForGames, BoardController boardController)
         {
-            MAX_ANSWER_COUNT = crosswordMap.wordDatas.Count;
+            MAX_ANSWER_COUNT = wordDataForGames.Count;
 
-            matchedWords = new HashSet<WordDataForGame>();
-            unmatchedWords = new HashSet<WordDataForGame>();
+            matchedWords = new HashSet<string>();
+            unmatchedWords = new Dictionary<string, WordDataForGame>();
 
-            foreach (var word in crosswordMap.wordDatas)
+            foreach (var word in wordDataForGames)
             {
-                if (boardController.IsCompletedWord(word))
+                if (boardController != null && boardController.IsCompletedWord(word))
                 {
-                    matchedWords.Add(word);
+                    matchedWords.Add(word.word);
                 }
                 else
                 {
-                    unmatchedWords.Add(word);
+                    unmatchedWords.Add(word.word, word);
                 }
             }
         }
+
 
         /// <summary>
         /// 맞춘단어 목록에 단어를 추가합니다.
         /// </summary>
         /// <returns>모두 맞췄을시 true 아닐시 false 를 반환합니다. </returns>
-        public bool AddMatchedWord(WordDataForGame wordDataForGame)
+        public bool AddMatchedWord(string word)
         {
-            unmatchedWords.Remove(wordDataForGame);
-            matchedWords.Add(wordDataForGame);
+            unmatchedWords.Remove(word);
+            matchedWords.Add(word);
 
             // 클리어.
             if (matchedWords.Count >= MAX_ANSWER_COUNT)
@@ -50,7 +52,7 @@ namespace HealingJam.Crossword
 
         public bool IsMatchedWord(WordDataForGame word)
         {
-            return matchedWords.Contains(word);
+            return matchedWords.Contains(word.word);
         }
 
         public WordDataForGame GetUnMatchedWord()
@@ -58,7 +60,7 @@ namespace HealingJam.Crossword
             if (unmatchedWords.Count == 0)
                 return null;
 
-            return unmatchedWords.ToArray()[0];
+            return unmatchedWords.Values.First();
         }
 
     }

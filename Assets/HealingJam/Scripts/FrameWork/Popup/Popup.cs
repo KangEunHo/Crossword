@@ -6,18 +6,20 @@ namespace HealingJam.Popups
     public class Popup : MonoBehaviour, IState
     {
         [SerializeField] private PopupID popupID = PopupID.None;
+        [SerializeField] private RectTransform window = null;
 
         #region Enum
 
         public enum PopupID
         {
-            None, Popup1, Popup2, Popup3
+            None, Shop, Option, Exit, DailyCommonSense
         }
 
         #endregion
 
         #region Properties
 
+        public RectTransform Window { get { return window; } }
         public bool IsShowing { get; private set; } = false;
 
         #endregion
@@ -42,7 +44,7 @@ namespace HealingJam.Popups
             gameObject.SetActive(false);
         }
 
-        public virtual void Close()
+        public virtual void Escape()
         {
             PopupMgr.Instance.ExitWithAnimation(popupID);
         }

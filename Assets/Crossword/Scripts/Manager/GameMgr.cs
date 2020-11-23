@@ -11,20 +11,8 @@ namespace HealingJam.Crossword
         private void Start()
         {
             SaveMgr.Instance.Load();
+            ScreenMgr.Instance.Enter(GameScreen.ScreenID.Title);
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Title);
-            if (Input.GetKeyDown(KeyCode.B))
-                ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Statistics);
-            if (Input.GetKeyDown(KeyCode.C))
-                ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.StageSelect);
-            if (Input.GetKeyDown(KeyCode.D))
-                ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Clear);
-            if (Input.GetKeyDown(KeyCode.E))
-                ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Option);
-        }
     }
 }

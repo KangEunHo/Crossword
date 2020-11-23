@@ -30,10 +30,10 @@ namespace HealingJam.Popups
 
         public void Init(Popup popup)
         {
-            targetTransform = popup.transform as RectTransform;
+            targetTransform = popup.Window;
 
             animationSequence = DOTween.Sequence()
-                .Append(targetTransform.DOAnchorPos(Vector2.zero, animationDuration).SetEase(Ease.OutBack))
+                .Append(targetTransform.DOAnchorPos(Vector2.zero, animationDuration).SetEase(Ease.InOutQuart))
                 .SetAutoKill(false)
                 .SetLink(popup.gameObject)
                 .Pause();

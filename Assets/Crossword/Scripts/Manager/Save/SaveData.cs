@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 
+using HealingJam.Crossword;
 namespace HealingJam.Crossword.Save
 {
     public class ProgressData
     {
-        public List<string> machedWords = new List<string>();
         public float elapsedTime;
+        public Dictionary<WordData.WordType, int> wrongCountTypes = new Dictionary<WordData.WordType, int>();
+        public List<string> machedWords = new List<string>();
     }
 
     public class CompleteData

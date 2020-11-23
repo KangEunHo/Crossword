@@ -10,7 +10,14 @@ namespace HealingJam.Crossword
 
         [SerializeField] private TextAsset[] crosswordTextAssets = null;
 
-        public int ActiveStageIndex;
+        private int activeStageIndex;
+        public int ActiveStageIndex { get { return activeStageIndex; }
+            set
+            {
+                if (value >= 0 && value < MaxStage())
+                    activeStageIndex = value;
+            }
+        }
         public CrosswordMap ActiveCrosswordMap = null;
 
         public int MaxStage()

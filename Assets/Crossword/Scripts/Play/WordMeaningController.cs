@@ -28,16 +28,16 @@ namespace HealingJam.Crossword
             }
         }
 
-        public void SetText(WordDataForGame wordDataForGame)
+        public void SetText(WordData wordData)
         {
-            if (wordDataForGame == null)
+            if (wordData == null)
             {
                 typeText.text = "";
                 meaningText.text = "";
                 return;
             }
-            typeText.text = "[" + WordTypeToString(wordDataForGame.wordType) + "]";
-            meaningText.text = wordDataForGame.info;
+            typeText.text = "[" + WordTypeToString(wordData.wordType) + "]";
+            meaningText.text = wordData.info;
 
             meaningText.rectTransform.sizeDelta = new Vector2(meaningText.rectTransform.sizeDelta.x, meaningText.preferredHeight);
         }

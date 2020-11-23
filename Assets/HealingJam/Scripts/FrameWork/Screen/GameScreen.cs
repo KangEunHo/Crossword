@@ -7,7 +7,7 @@ namespace HealingJam.GameScreens
     {
         public enum ScreenID
         {
-            None, Title, StageSelect, Statistics, Shop, Option, Clear, Play, CommonSenseTest
+            None, Title, StageSelect, Statistics, Clear, Play, WordMatchingPlay
         }
 
         #region Inspector Variables
@@ -41,6 +41,11 @@ namespace HealingJam.GameScreens
         public virtual void Exit(params object[] args)
         {
             gameObject.SetActive(false);
+        }
+
+        public virtual void Escape()
+        {
+            
         }
     }
 }

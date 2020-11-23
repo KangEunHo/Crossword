@@ -11,6 +11,7 @@ namespace HealingJam.Crossword
         public const int MAP_SIZE_Y = 9;
         public const float CellSize = 54f;
 
+        [SerializeField] private BoardCell boardCellPrefab = null;
         [SerializeField] private BoardCell[] childBoardCells = null;
         private BoardCell[,] boardCells = null;
         private RectTransform myRectTransform = null;
@@ -65,6 +66,31 @@ namespace HealingJam.Crossword
                     if (boardCell.HorizontalWordData == null && boardCell.VerticalWordData == null)
                         boardCell.SetUnuseState();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 단어 맞추기 모드에서 사용되는 보드를 생성합니다.
+        /// </summary>
+        /// <param name="wordData"></param>
+        public void GenerateBoard(WordData wordData)
+        {
+            if (boardCells != null)
+            {
+                for (int i = 0; i < boardCells.GetLength(1); ++i)
+                {
+                    if (boardCells[0, i].gameObject != null)
+                    {
+                        Destroy(boardCells[0, i].gameObject);
+                    }
+                }
+            }
+
+            boardCells = new BoardCell[1, wordData.word.Length];
+
+            for (int i = 0; i < wordData.word.Length; ++i)
+            {
+                boardCells[0, i] = Instantiate(boardCellPrefab, transform);
             }
         }
 
@@ -144,6 +170,23 @@ namespace HealingJam.Crossword
                     return false;
             }
             return true;
+        }
+
+        public void SetCompleteWord(WordDataForGame wordDataForGame)
+        {
+            for (int i = 0; i < wordDataForGame.word.Length; ++i)
+            {
+                int x = wordDataForGame.x;
+                int y = wordDataForGame.y;
+                if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
+                    x += i;
+                else if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
+                    y += i;
+
+                BoardCell boardCell = GetBoardCell(new Vector2Int(x, y));
+                boardCell.SetLetter(wordDataForGame.word[i]);
+                boardCell.SetCompleteState();
+            }
         }
     }
 }

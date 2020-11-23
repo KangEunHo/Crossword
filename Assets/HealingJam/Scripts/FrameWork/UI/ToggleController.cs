@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,8 +14,7 @@ namespace HealingJam
         public Image toggleBgImage;
         public RectTransform toggle;
 
-        public GameObject handle;
-        private RectTransform handleTransform;
+        public RectTransform handleTransform;
 
         private float handleSize;
         private float onPosX;
@@ -32,20 +30,31 @@ namespace HealingJam
         private float t = 0.0f;
 
         public bool switching { get; private set; } = false;
+        public event Action<bool> valueChangeAction = null;
 
+        private bool isInitialized = false;
 
-        void Awake()
+        private void Awake()
         {
-            handleTransform = handle.GetComponent<RectTransform>();
-            RectTransform handleRect = handle.GetComponent<RectTransform>();
-            handleSize = handleRect.sizeDelta.x;
+            if (isInitialized == false)
+                Init();
+        }
+
+        private void Init()
+        {
+            handleSize = handleTransform.sizeDelta.x;
             float toggleSizeX = toggle.sizeDelta.x;
             onPosX = (toggleSizeX / 2) - (handleSize / 2) - handleOffset;
             offPosX = onPosX * -1;
+
+            isInitialized = true;
         }
 
         public void SetPosition(bool isOn)
         {
+            if (isInitialized == false)
+                Init();
+
             this.isOn = isOn;
             if (isOn)
             {
@@ -69,11 +78,6 @@ namespace HealingJam
             }
         }
 
-        void Start()
-        {
-            SetPosition(isOn);
-        }
-
         void Update()
         {
             if (switching)
@@ -84,15 +88,13 @@ namespace HealingJam
 
         public void DoYourStaff()
         {
-            //Debug.Log(isOn);
+            valueChangeAction?.Invoke(isOn);
         }
 
         public void Switching()
         {
             switching = true;
         }
-
-
 
         public void Toggle(bool toggleStatus)
         {
@@ -113,7 +115,7 @@ namespace HealingJam
                     Transparency(onIcon, 1f, 0f);
                 if (offIcon != null)
                     Transparency(offIcon, 0f, 1f);
-                handleTransform.localPosition = SmoothMove(handle, onPosX, offPosX);
+                handleTransform.localPosition = SmoothMove(onPosX, offPosX);
             }
             else
             {
@@ -123,13 +125,13 @@ namespace HealingJam
                     Transparency(onIcon, 0f, 1f);
                 if (offIcon != null)
                     Transparency(offIcon, 1f, 0f);
-                handleTransform.localPosition = SmoothMove(handle, offPosX, onPosX);
+                handleTransform.localPosition = SmoothMove(offPosX, onPosX);
             }
 
         }
 
 
-        Vector3 SmoothMove(GameObject toggleHandle, float startPosX, float endPosX)
+        Vector3 SmoothMove(float startPosX, float endPosX)
         {
 
             Vector3 position = new Vector3(Mathf.Lerp(startPosX, endPosX, t += speed * Time.deltaTime), 0f, 0f);

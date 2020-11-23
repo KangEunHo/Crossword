@@ -1,30 +1,37 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
+using System;
 
 namespace HealingJam.Crossword.UI
 {
     public class StageSelectButtonController : MonoBehaviour
     {
         [SerializeField] private StageSelectButton[] stageSelectButtons = null;
+        [SerializeField] private Text pageText = null;
+
+        public Action<int> onClickAction = null;
 
         private int page;
-        public int SavedPage { get { return PlayerPrefs.GetInt("stage_page"); }
+
+        public int SavedPage { get { return PlayerPrefs.GetInt("stage_page", 0); }
             set
             {
                 PlayerPrefs.SetInt("stage_page", value);
             }
         }
 
+        public int MaxPage { get { return Mathf.CeilToInt(CrosswordMapManager.Instance.MaxStage() / (float)CrosswordMapManager.PACK_IN_STAGE_COUNT); } }
+
         private void Start()
         {
             page = SavedPage;
 
-            foreach(var v in stageSelectButtons)
+            foreach (var v in stageSelectButtons)
             {
                 v.onClickAction = OnStageSelectButtonClick;
             }
 
-            SetPage(0);
+            SetPage(page);
         }
 
         private void OnDestroy()
@@ -38,26 +45,21 @@ namespace HealingJam.Crossword.UI
             {
                 stageSelectButtons[i].SetUp(page * CrosswordMapManager.PACK_IN_STAGE_COUNT + i);
             }
+
+            pageText.text = (page + 1).ToString() + "/" + MaxPage;
         }
 
         private bool IsValidPage(int page)
         {
-            return page >= 0 && page < CrosswordMapManager.Instance.MaxStage();
+            return page >= 0 && page < MaxPage;
         }
 
         private void OnStageSelectButtonClick(int stageIndex)
         {
-            if (stageIndex < CrosswordMapManager.Instance.MaxStage())
-            {
-                CrosswordMapManager.Instance.ActiveStageIndex = stageIndex;
-                CrosswordMapManager.Instance.ActiveCrosswordMap = CrosswordMapManager.Instance.GetCrosswordMap(stageIndex);
-
-                HealingJam.GameScreens.ScreenMgr.Instance.Exit(GameScreens.GameScreen.ScreenID.StageSelect);
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Play");
-            }
+            onClickAction?.Invoke(stageIndex);
         }
 
-        public void OnNextButtonClick()
+        public void SetNextPage()
         {
             if (IsValidPage(page +1))
             {
@@ -65,7 +67,7 @@ namespace HealingJam.Crossword.UI
             }
         }
 
-        public void OnPrevButtonClick()
+        public void SetPrevPage()
         {
             if (IsValidPage(page - 1))
             {

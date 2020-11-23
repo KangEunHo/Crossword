@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Newtonsoft.Json;
+﻿using UnityEngine;
+using HealingJam.Crossword.Save;
+using HealingJam.GameScreens;
 
 namespace HealingJam.Crossword
 {
@@ -12,31 +11,46 @@ namespace HealingJam.Crossword
             Pause, Play, Fail, Clear
         }
 
-        [SerializeField] private TextAsset mapTextAsset = null;
         [SerializeField] private BoardController boardController = null;
-        [SerializeField] private LetterSelectionButtonContoller letterSelectionButtonContoller = null;
+        [SerializeField] private LetterSelectionButtonController letterSelectionButtonController = null;
         [SerializeField] private WordMeaningController wordMeaningController = null;
         [SerializeField] private BoardHighlightController boardHighlightController = null;
 
         private AnswerChecker answerChecker = null;
         public GameState State { get; private set; }
 
+        private ProgressData progressData = null;
+
         private void Start()
         {
-            // 크로스 워드맵 생성.
-            CrosswordMap crosswordMap = CrosswordMapManager.Instance.ActiveCrosswordMap; //JsonConvert.DeserializeObject<CrosswordMap>(mapTextAsset.text);
+            CrosswordMap crosswordMap = CrosswordMapManager.Instance.GetCrosswordMap(CrosswordMapManager.Instance.ActiveStageIndex);
 
             //초기화.
             boardController.GenerateBoard(crosswordMap);
-            letterSelectionButtonContoller.Init(crosswordMap);
-            answerChecker = new AnswerChecker(crosswordMap, boardController);
+            letterSelectionButtonController.Init();
+            letterSelectionButtonController.SetUpDatabase(crosswordMap);
+
+            // 저장된 정보가 있다면.
+            if (SaveMgr.Instance.TryGetProgressData(CrosswordMapManager.Instance.ActiveStageIndex, out progressData) && progressData != null)
+            {
+                foreach(var word in progressData.machedWords)
+                {
+                    boardController.SetCompleteWord(crosswordMap.GetWordData(word));
+                }
+            }
+            else
+            {
+                progressData = new ProgressData();
+            }
+
+            answerChecker = new AnswerChecker(crosswordMap.wordDatas, boardController);
             boardHighlightController.Init(boardController);
 
             // 콜백 등록.
             boardController.boardClickEventHandler += wordMeaningController.OnCellBoardClick;
-            boardController.boardClickEventHandler += letterSelectionButtonContoller.OnCellBoardClick;
+            boardController.boardClickEventHandler += letterSelectionButtonController.OnCellBoardClick;
 
-            letterSelectionButtonContoller.letterSelectionButtonClickHandler += boardHighlightController.OnLetterSelectionBoardClick;
+            letterSelectionButtonController.letterSelectionButtonClickHandler += boardHighlightController.OnLetterSelectionBoardClick;
 
             boardHighlightController.onCorrectAnswer += OnCorrectAnswer;
             boardHighlightController.onWrongAnswer += OnWrongAnswer;
@@ -48,11 +62,14 @@ namespace HealingJam.Crossword
             WordDataForGame unMatchedWord = answerChecker.GetUnMatchedWord();
             boardHighlightController.SetUpHighlightCells(unMatchedWord);
             wordMeaningController.SetText(unMatchedWord);
-            letterSelectionButtonContoller.SetButtonsLetter(unMatchedWord);
+            letterSelectionButtonController.SetButtonsLetter(unMatchedWord);
         }
 
         private void Update()
         {
+            if (State == GameState.Play)
+                progressData.elapsedTime += Time.deltaTime;
+
             if (Input.GetKeyDown(KeyCode.A))
             {
                 DarkMode.UseDarkMode = true;
@@ -61,33 +78,62 @@ namespace HealingJam.Crossword
             {
                 DarkMode.UseDarkMode = false;
             }
+        }
 
+        private void OnApplicationPause(bool pause)
+        {
+            if (pause)
+            {
+                if (progressData != null)
+                {
+                    SaveMgr.Instance.SetProgressData(CrosswordMapManager.Instance.ActiveStageIndex, progressData);
+                    SaveMgr.Instance.Save();
+                }
+            }
         }
 
         public void OnCorrectAnswer(WordDataForGame wordDataForGame)
         {
-            if (answerChecker.AddMatchedWord(wordDataForGame))
+            if (answerChecker.AddMatchedWord(wordDataForGame.word))
             {
                 State = GameState.Clear;
+
+                // 클리어 정보 저장.
+                bool perfectClear = progressData.wrongCountTypes.Values.Count == 0;
+                SaveMgr.Instance.SetCompleteData(CrosswordMapManager.Instance.ActiveStageIndex, new CompleteData() { perfectClear = perfectClear });
+                // 클리어시에 진행상황 삭제.
+                SaveMgr.Instance.DeleteProgressData(CrosswordMapManager.Instance.ActiveStageIndex);
+                SaveMgr.Instance.Save();
+
+                ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Clear);
             }
             else
             {
                 WordDataForGame unMatchedWord = answerChecker.GetUnMatchedWord();
                 boardHighlightController.SetUpHighlightCells(unMatchedWord);
                 wordMeaningController.SetText(unMatchedWord);
-                letterSelectionButtonContoller.SetButtonsLetter(unMatchedWord);
+                letterSelectionButtonController.SetButtonsLetter(unMatchedWord);
+
+                // 진행상황에 단어 추가.
+                progressData.machedWords.Add(wordDataForGame.word);
             }
         }
 
         public void OnWrongAnswer(WordDataForGame wordDataForGame)
         {
-            letterSelectionButtonContoller.ChangeButtonsStateToAllBasic();
+            if (progressData.wrongCountTypes.ContainsKey(wordDataForGame.wordType))
+                progressData.wrongCountTypes[wordDataForGame.wordType]++;
+            else
+                progressData.wrongCountTypes.Add(wordDataForGame.wordType, 1);
+
+
+            letterSelectionButtonController.ChangeButtonsStateToAllBasic();
         }
 
         public void OnResetButtonClick()
         {
             boardHighlightController.SetUpHighlightCells(boardHighlightController.SelectedWordData);
-            letterSelectionButtonContoller.SetButtonsLetter(boardHighlightController.SelectedWordData);
+            letterSelectionButtonController.SetButtonsLetter(boardHighlightController.SelectedWordData);
         }
     }
 }

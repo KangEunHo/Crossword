@@ -126,7 +126,7 @@ namespace HealingJam.Popups
             }
             else
             {
-                popup.Close();
+                popup.Escape();
                 return true;
             }
         }

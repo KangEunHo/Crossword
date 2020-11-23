@@ -5,12 +5,14 @@ namespace HealingJam.GameScreens
 {
     public class FadeScreen : GameScreen
     {
-        protected CanvasGroup canvasGroup = null;
+        [SerializeField] protected CanvasGroup canvasGroup = null;
+        protected float fadeDuration = 0.25f;
 
         public override void Init(object stateMachine)
         {
             base.Init(stateMachine);
-            canvasGroup = GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+                canvasGroup = GetComponent<CanvasGroup>();
         }
 
         public override void Enter(params object[] args)
@@ -18,7 +20,7 @@ namespace HealingJam.GameScreens
             base.Enter(args);
             canvasGroup.alpha = 0f;
             canvasGroup.blocksRaycasts = false;
-            canvasGroup.DOFade(1f, 0.5f).OnComplete(() => { canvasGroup.blocksRaycasts = true;
+            canvasGroup.DOFade(1f, fadeDuration).OnComplete(() => { canvasGroup.blocksRaycasts = true;
                 OnEnterFadeComplete(args);
             });
         }
@@ -27,7 +29,7 @@ namespace HealingJam.GameScreens
         {
             canvasGroup.alpha = 1f;
             canvasGroup.blocksRaycasts = false;
-            canvasGroup.DOFade(0f, 0.5f).OnComplete(() => { gameObject.SetActive(false);
+            canvasGroup.DOFade(0f, fadeDuration).OnComplete(() => { gameObject.SetActive(false);
                 OnExitFadeComplete(args);
             });
         }

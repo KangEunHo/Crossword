@@ -4,7 +4,7 @@ using System;
 
 namespace HealingJam.Crossword
 {
-    public class LetterSelectionButtonContoller : MonoBehaviour
+    public class LetterSelectionButtonController : MonoBehaviour
     {
         public const int BUTTON_COUNT = 12;
         [SerializeField] private LetterSelectionButton[] letterSelectionButtons = null;
@@ -13,19 +13,31 @@ namespace HealingJam.Crossword
 
         private List<char> letterDatabase = null;
 
-        public void Init(CrosswordMap crosswordMap)
+        public void SetUpDatabase(params CrosswordMap[] crosswordMaps)
         {
-            EditorDebug.Assert(letterSelectionButtons.Length == BUTTON_COUNT);
-
             letterDatabase = new List<char>();
+            HashSet<char> containsChecker = new HashSet<char>();
 
-            foreach (var word in crosswordMap.wordDatas)
+            foreach (var crosswordMap in crosswordMaps)
             {
-                for (int i = 0; i < word.word.Length; ++i)
+                foreach (var word in crosswordMap.wordDatas)
                 {
-                    letterDatabase.Add(word.word[i]);
+                    for (int i = 0; i < word.word.Length; ++i)
+                    {
+                        char character = word.word[i];
+                        if (containsChecker.Contains(character) == false)
+                        {
+                            letterDatabase.Add(character);
+                            containsChecker.Add(character);
+                        }
+                    }
                 }
             }
+        }
+
+        public void Init()
+        {
+            EditorDebug.Assert(letterSelectionButtons.Length == BUTTON_COUNT);
 
             foreach(var letterSelectionButton in letterSelectionButtons)
             {
@@ -57,13 +69,13 @@ namespace HealingJam.Crossword
         /// 들어가는 단어의 글자들을 집어 넣고 나머지 글자를 채웁니다.
         /// </summary>
         /// <param name="wordDataForGame"></param>
-        public void SetButtonsLetter(WordDataForGame wordDataForGame)
+        public void SetButtonsLetter(WordData wordData)
         {
             List<char> letters = new List<char>();
 
-            for (int i = 0; i < wordDataForGame.word.Length; ++i)
+            for (int i = 0; i < wordData.word.Length; ++i)
             {
-                letters.Add(wordDataForGame.word[i]);
+                letters.Add(wordData.word[i]);
             }
 
             for (int i = letters.Count; i < BUTTON_COUNT; ++i)

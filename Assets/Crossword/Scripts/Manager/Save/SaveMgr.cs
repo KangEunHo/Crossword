@@ -60,5 +60,31 @@ namespace HealingJam.Crossword.Save
 
             saveData.completeDatas[index] = completeData;
         }
+
+        public bool TryGetProgressData(int index, out ProgressData progressData)
+        {
+            progressData = null;
+
+            if (saveData == null)
+                return false;
+
+            return saveData.progressDatas.TryGetValue(index, out progressData);
+        }
+
+        public void SetProgressData(int index, ProgressData progressData)
+        {
+            if (saveData == null)
+                return;
+
+            saveData.progressDatas[index] = progressData;
+        }
+
+        public void DeleteProgressData(int index)
+        {
+            if (saveData == null)
+                return;
+
+            saveData.progressDatas.Remove(index);
+        }
     }
 }

@@ -28,9 +28,18 @@ namespace HealingJam.Crossword.UI
             CompleteData completeData = SaveMgr.Instance.GetCompleteData(stageIndex);
             if (completeData == null)
             {
-                // 투두. 로드 프로그래스.
-                // SaveMgr.Instance.
                 star.SetActive(false);
+
+                SaveMgr.Instance.TryGetProgressData(stageIndex, out ProgressData progressData);
+
+                if (progressData != null)
+                {
+                    progressCircle.fillAmount = progressData.machedWords.Count / (float)CrosswordMapManager.Instance.GetCrosswordMap(stageIndex).wordDatas.Count; 
+                }
+                else
+                {
+                    progressCircle.fillAmount = 0f;
+                }
             }
             else
             {
