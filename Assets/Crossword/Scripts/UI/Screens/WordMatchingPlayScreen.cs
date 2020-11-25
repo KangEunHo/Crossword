@@ -13,16 +13,21 @@ namespace HealingJam.Crossword.UI
         {
             base.Enter(args);
 
-            List<CrosswordMap> crosswordMaps = new List<CrosswordMap>()
+            List<WordDataForGame> answers = new List<WordDataForGame>();
+            int maxStage = CrosswordMapManager.Instance.MaxStage();
+            List<int> useMapIndex = new List<int>(maxStage);
+            for (int i = 0; i < maxStage; ++i)
             {
-                CrosswordMapManager.Instance.GetCrosswordMap(0),
-                CrosswordMapManager.Instance.GetCrosswordMap(1),
-                CrosswordMapManager.Instance.GetCrosswordMap(2),
-                CrosswordMapManager.Instance.GetCrosswordMap(3)
-            };
+                useMapIndex.Add(i);
+            }
 
+            useMapIndex.Shuffle();
 
-            gameController.SetUp(crosswordMaps.ToArray());
+            for (int i = 0; i < maxStage && i < 20; ++i)
+            {
+                answers.Add(CrosswordMapManager.Instance.GetCrosswordMap(useMapIndex[i]).wordDatas.RandomValue());
+            }
+            gameController.SetUp(answers);
         }
 
         protected override void OnExitFadeComplete(params object[] args)

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3094452453271151392}
   - component: {fileID: 5280575496335585756}
   - component: {fileID: 810895335814285929}
+  - component: {fileID: 779578111213578972}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -77,6 +78,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
+--- !u!114 &779578111213578972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371538917024500774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7647bcea3a4a64798fedad174af173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  darkModeColor: {r: 1, g: 1, b: 1, a: 1}
+  lightModeColor: {r: 0, g: 0, b: 0, a: 1}
+  graphic: {fileID: 810895335814285929}
 --- !u!1 &1143716405481919597
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,6 +179,7 @@ GameObject:
   - component: {fileID: 4996471108439886474}
   - component: {fileID: 174830082536322999}
   - component: {fileID: 6949101445820322846}
+  - component: {fileID: 6089791986901649758}
   m_Layer: 5
   m_Name: Stage Button
   m_TagString: Untagged
@@ -285,6 +302,21 @@ MonoBehaviour:
   stageText: {fileID: 810895335814285929}
   progressCircle: {fileID: 6045986388673367193}
   star: {fileID: 6343944262830056619}
+--- !u!114 &6089791986901649758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525049581770346499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7657e121266b9748a201386f1706fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightModeSprite: {fileID: 21300000, guid: 6e3e73612ff06f34082ee9db3e337c6f, type: 3}
+  darkModeSprite: {fileID: 21300000, guid: 935df25cafa3ab141ad8262d34166841, type: 3}
+  image: {fileID: 4996471108439886474}
 --- !u!1 &6343944262830056619
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +401,7 @@ GameObject:
   - component: {fileID: 7042571184223592994}
   - component: {fileID: 5523230553605797900}
   - component: {fileID: 6382976697634998270}
+  - component: {fileID: 2646111890502499567}
   m_Layer: 5
   m_Name: ProgressGaugeBack
   m_TagString: Untagged
@@ -433,6 +466,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2646111890502499567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6362244916722267666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7657e121266b9748a201386f1706fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightModeSprite: {fileID: 21300000, guid: 67cbafadfec71c143addaf5e51f28af7, type: 3}
+  darkModeSprite: {fileID: 21300000, guid: fea77eff129f6674398000c802b2d930, type: 3}
+  image: {fileID: 6382976697634998270}
 --- !u!1 &8198859953571231623
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,6 +492,7 @@ GameObject:
   - component: {fileID: 6414334168036300941}
   - component: {fileID: 4940906189079450330}
   - component: {fileID: 5166909098340516920}
+  - component: {fileID: 7734737609884810029}
   m_Layer: 5
   m_Name: StarBack
   m_TagString: Untagged
@@ -493,7 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -507,3 +556,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7734737609884810029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8198859953571231623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7657e121266b9748a201386f1706fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightModeSprite: {fileID: 21300000, guid: 176b9f9b515233545a6bd7a2c894797a, type: 3}
+  darkModeSprite: {fileID: 21300000, guid: 4dbab83d8b192db4aa1711f2d3aec245, type: 3}
+  image: {fileID: 5166909098340516920}

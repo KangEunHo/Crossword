@@ -11,10 +11,12 @@ namespace HealingJam.Crossword
 
         private HashSet<string> matchedWords = null;
         private Dictionary<string, WordDataForGame> unmatchedWords = null;
+        private BoardController boardController = null;
 
         public AnswerChecker(List<WordDataForGame> wordDataForGames, BoardController boardController)
         {
             MAX_ANSWER_COUNT = wordDataForGames.Count;
+            this.boardController = boardController;
 
             matchedWords = new HashSet<string>();
             unmatchedWords = new Dictionary<string, WordDataForGame>();
@@ -42,6 +44,8 @@ namespace HealingJam.Crossword
             unmatchedWords.Remove(word);
             matchedWords.Add(word);
 
+            // 한 단어를 맞출시에 이어진 단어를 맞출 수도 있으니 맞춰진 단어가 있으면 맞춘목록에 추가합니다.
+            MatchCheckAllUnmachedWord();
             // 클리어.
             if (matchedWords.Count >= MAX_ANSWER_COUNT)
             {
@@ -63,5 +67,22 @@ namespace HealingJam.Crossword
             return unmatchedWords.Values.First();
         }
 
+
+        private void MatchCheckAllUnmachedWord()
+        {
+            List<string> matchedWord = new List<string>();
+            foreach(var word in unmatchedWords.Values)
+            {
+                if (boardController.IsCompletedWord(word))
+                {
+                    matchedWord.Add(word.word);
+                }
+            }
+
+            foreach(var word in matchedWord)
+            {
+                AddMatchedWord(word);
+            }
+        }
     }
 }

@@ -5,14 +5,14 @@ namespace HealingJam.Popups
 {
     public class Popup : MonoBehaviour, IState
     {
-        [SerializeField] private PopupID popupID = PopupID.None;
-        [SerializeField] private RectTransform window = null;
+        [SerializeField] protected PopupID popupID = PopupID.None;
+        [SerializeField] protected RectTransform window = null;
 
         #region Enum
 
         public enum PopupID
         {
-            None, Shop, Option, Exit, DailyCommonSense
+            None, Shop, Option, PlayExit, DailyCommonSense
         }
 
         #endregion

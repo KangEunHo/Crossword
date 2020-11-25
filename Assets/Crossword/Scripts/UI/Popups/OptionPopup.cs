@@ -4,7 +4,7 @@ using HealingJam.Popups;
 
 namespace HealingJam.Crossword
 {
-    public class OptionPopup : Popup
+    public class OptionPopup : CallbackPopup
     {
         [SerializeField] private ToggleController bgmToggleController = null;
         [SerializeField] private ToggleController efxToggleController = null;

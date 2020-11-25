@@ -4,10 +4,10 @@ using System;
 
 namespace HealingJam.Crossword
 {
-    public class BoardHighlightController : MonoBehaviour
+    public class BoardHighlightController : DarkModeMonoBehaviour
     {
-        [SerializeField] private Sprite cellHighlightSprite = null;
-        [SerializeField] private Sprite cellHighlightSelectedSprite = null;
+        [SerializeField] private DarkModeSprite cellHighlightSprite = null;
+        [SerializeField] private DarkModeSprite cellHighlightSelectedSprite = null;
 
         private BoardController boardController = null;
 
@@ -17,6 +17,8 @@ namespace HealingJam.Crossword
 
         public Action<WordDataForGame> onCorrectAnswer = null;
         public Action<WordDataForGame> onWrongAnswer = null;
+
+        private bool darkModeChangeTrigger = false;
 
 
         public void Init(BoardController boardController)
@@ -123,7 +125,7 @@ namespace HealingJam.Crossword
         {
             for (int i = 0; i < highlightCells.Count; ++i)
             {
-                highlightCells[i].SetSprite(i == selectedLetterIndex ? cellHighlightSelectedSprite : cellHighlightSprite);
+                highlightCells[i].SetSprite(i == selectedLetterIndex ? cellHighlightSelectedSprite.ActiveModeSprite : cellHighlightSprite.ActiveModeSprite);
             }
         }
 
@@ -155,24 +157,35 @@ namespace HealingJam.Crossword
                 {
                     v.SetCompleteState();
                 }
-                OffHighlightCellsSprite();
+
                 onCorrectAnswer?.Invoke(SelectedWordData);
             }
             else
             {
-                ClearHighlightCellsLetter();
-                SetUpHighlightCells(SelectedWordData);
                 onWrongAnswer?.Invoke(SelectedWordData);
             }
         }
 
-        private void ClearHighlightCellsLetter()
+        public void ClearHighlightCellsLetter()
         {
             foreach (var v in highlightCells)
             {
                 if (v.State == BoardCell.CellState.None)
                     v.SetLetter(' ');
             }
+        }
+
+        private void LateUpdate()
+        {
+            if (darkModeChangeTrigger)
+            {
+                darkModeChangeTrigger = false;
+                OnHighlightCellsSprite();
+            }
+        }
+        public override void DarkModeChanged(bool darkMode)
+        {
+            darkModeChangeTrigger = true;
         }
     }
 }

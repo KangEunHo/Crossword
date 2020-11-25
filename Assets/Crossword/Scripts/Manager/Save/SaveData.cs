@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using HealingJam.Crossword;
 namespace HealingJam.Crossword.Save
 {
     public class ProgressData

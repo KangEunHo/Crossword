@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using HealingJam.GameScreens;
+using HealingJam.Popups;
 
 namespace HealingJam.Crossword.UI
 {
@@ -39,6 +40,11 @@ namespace HealingJam.Crossword.UI
         public override void Escape()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.Title);
+        }
+
+        public void OnOptionButtonClick()
+        {
+            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Option, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
         }
     }
 }

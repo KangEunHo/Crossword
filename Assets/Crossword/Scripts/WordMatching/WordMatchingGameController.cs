@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using HealingJam.Crossword.Save;
 using HealingJam.GameScreens;
 using System.Collections.Generic;
@@ -12,23 +13,25 @@ namespace HealingJam.Crossword
             Pause, Play, Fail, Clear
         }
 
-        [SerializeField] private TextAsset mapTextAsset = null;
         [SerializeField] private BoardController boardController = null;
         [SerializeField] private LetterSelectionButtonController letterSelectionButtonController = null;
         [SerializeField] private WordMeaningController wordMeaningController = null;
         [SerializeField] private BoardHighlightController boardHighlightController = null;
+        [SerializeField] private AnswerOXResult answerOXResult = null;
+        [SerializeField] private Text progressText = null;
 
         private AnswerChecker answerChecker = null;
         public GameState State { get; private set; }
 
         public float ElapsedTime { get; private set; }
+        private int maxAnswerCount;
+        private int curAnswerIndex;
 
-        public void SetUp(params CrosswordMap[] crosswordMaps)
+        public void SetUp(List<WordDataForGame> answers)
         {
             //초기화.
 
             letterSelectionButtonController.Init();
-            letterSelectionButtonController.SetUpDatabase(crosswordMaps);
 
             boardHighlightController.Init(boardController);
 
@@ -41,25 +44,15 @@ namespace HealingJam.Crossword
             State = GameState.Play;
 
             // 첫번째 맞출 단어 설정.
-            answerChecker = new AnswerChecker(crosswordMaps[0].wordDatas, null);
-            WordData unMatchedWord = answerChecker.GetUnMatchedWord();
-            boardController.GenerateBoard(unMatchedWord);
-            WordDataForGame wordDataForGame = new WordDataForGame()
-            {
-                direction = WordDataForGame.Direction.Horizontal,
-                x = 0,
-                y = 0,
-                info = unMatchedWord.info,
-                word = unMatchedWord.word,
-                wordType = unMatchedWord.wordType
-            };
-            boardHighlightController.SetUpHighlightCells(wordDataForGame);
-            wordMeaningController.SetText(unMatchedWord);
-            letterSelectionButtonController.SetButtonsLetter(unMatchedWord);
-            
-            ElapsedTime = 0f;
-        }
+            answerChecker = new AnswerChecker(answers, null);
+            SetHighlightUnMatchedWord();
 
+            ElapsedTime = 0f;
+
+            maxAnswerCount = answers.Count;
+            curAnswerIndex = 0;
+            ProgressTextUpdate();
+        }
 
         private void Update()
         {
@@ -73,29 +66,49 @@ namespace HealingJam.Crossword
             {
                 State = GameState.Clear;
 
-                ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Clear);
+                answerOXResult.ShowOResult(OnClear);
             }
             else
             {
-                WordData unMatchedWord = answerChecker.GetUnMatchedWord();
-                boardController.GenerateBoard(unMatchedWord);
-                WordDataForGame wordData = new WordDataForGame()
-                {
-                    direction = WordDataForGame.Direction.Horizontal,
-                    x = 0,
-                    y = 0,
-                    info = unMatchedWord.info,
-                    word = unMatchedWord.word,
-                    wordType = unMatchedWord.wordType
-                };
-                boardHighlightController.SetUpHighlightCells(wordData);
-                wordMeaningController.SetText(unMatchedWord);
-                letterSelectionButtonController.SetButtonsLetter(unMatchedWord);
+                answerOXResult.ShowOResult(SetHighlightUnMatchedWord);
             }
+
+            curAnswerIndex++;
+            ProgressTextUpdate();
         }
 
         public void OnWrongAnswer(WordDataForGame wordDataForGame)
         {
+            answerOXResult.ShowXResult(OnWrongAnimationEnd);
+        }
+
+        private void OnClear()
+        {
+            ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Clear);
+        }
+
+        private void SetHighlightUnMatchedWord()
+        {
+            WordData unMatchedWord = answerChecker.GetUnMatchedWord();
+            boardController.GenerateBoard(unMatchedWord);
+            WordDataForGame wordData = new WordDataForGame()
+            {
+                direction = WordDataForGame.Direction.Horizontal,
+                x = 0,
+                y = 0,
+                info = unMatchedWord.info,
+                word = unMatchedWord.word,
+                wordType = unMatchedWord.wordType
+            };
+            boardHighlightController.SetUpHighlightCells(wordData);
+            wordMeaningController.SetText(unMatchedWord);
+            letterSelectionButtonController.SetButtonsLetter(unMatchedWord);
+        }
+
+        private void OnWrongAnimationEnd()
+        {
+            WordDataForGame wordDataForGame = boardHighlightController.SelectedWordData;
+            boardHighlightController.SetUpHighlightCells(wordDataForGame);
             letterSelectionButtonController.ChangeButtonsStateToAllBasic();
         }
 
@@ -103,6 +116,11 @@ namespace HealingJam.Crossword
         {
             boardHighlightController.SetUpHighlightCells(boardHighlightController.SelectedWordData);
             letterSelectionButtonController.SetButtonsLetter(boardHighlightController.SelectedWordData);
+        }
+
+        private void ProgressTextUpdate()
+        {
+            progressText.text = curAnswerIndex.ToString() + '/' + maxAnswerCount.ToString();
         }
     }
 }

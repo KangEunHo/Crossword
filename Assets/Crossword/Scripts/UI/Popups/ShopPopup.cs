@@ -4,7 +4,7 @@ using HealingJam.Popups;
 
 namespace HealingJam.Crossword
 {
-    public class ShopPopup : Popup
+    public class ShopPopup : CallbackPopup
     {
 
     }

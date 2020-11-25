@@ -5,16 +5,14 @@ namespace HealingJam.Crossword
 {
     public abstract class DarkModeMonoBehaviour : MonoBehaviour, IDarkModeChangeable
     {
-        public bool startOneShot = true;
-
-        protected void Start()
-        {
-            if (startOneShot)
-                DarkModeChanged(DarkMode.UseDarkMode);
-        }
+        protected bool? darkMode;
 
         protected void OnEnable()
         {
+            if (darkMode == null || darkMode != DarkMode.UseDarkMode)
+            {
+                DarkModeChanged(DarkMode.UseDarkMode);
+            }
             DarkMode.DrakModeChangeAction += DarkModeChanged;
         }
 

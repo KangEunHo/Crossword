@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using HealingJam.GameScreens;
+using HealingJam.Popups;
 
 namespace HealingJam.Crossword
 {
@@ -15,6 +16,11 @@ namespace HealingJam.Crossword
             GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Word Matching Play Canvas", ScreenMgr.Instance.transform);
             ScreenMgr.Instance.RegisterState(playScreen);
             ScreenMgr.Instance.ChangeState(ScreenID.WordMatchingPlay);
+        }
+
+        public void OnOptionButtonClick()
+        {
+            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Option, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
         }
     }
 }

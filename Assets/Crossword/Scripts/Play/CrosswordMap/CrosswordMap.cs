@@ -18,5 +18,10 @@ namespace HealingJam.Crossword
             }
             return null;
         }
+
+        public List<WordDataForGame> GetWordDataToSameTpye(WordData.WordType wordType)
+        {
+            return wordDatas.FindAll(wordData => wordData.wordType == wordType);
+        }
     }
 }

@@ -11,30 +11,6 @@ namespace HealingJam.Crossword
 
         public event EventHandler<LetterSelectionButtonClickEventArgs> letterSelectionButtonClickHandler = null;
 
-        private List<char> letterDatabase = null;
-
-        public void SetUpDatabase(params CrosswordMap[] crosswordMaps)
-        {
-            letterDatabase = new List<char>();
-            HashSet<char> containsChecker = new HashSet<char>();
-
-            foreach (var crosswordMap in crosswordMaps)
-            {
-                foreach (var word in crosswordMap.wordDatas)
-                {
-                    for (int i = 0; i < word.word.Length; ++i)
-                    {
-                        char character = word.word[i];
-                        if (containsChecker.Contains(character) == false)
-                        {
-                            letterDatabase.Add(character);
-                            containsChecker.Add(character);
-                        }
-                    }
-                }
-            }
-        }
-
         public void Init()
         {
             EditorDebug.Assert(letterSelectionButtons.Length == BUTTON_COUNT);
@@ -80,7 +56,7 @@ namespace HealingJam.Crossword
 
             for (int i = letters.Count; i < BUTTON_COUNT; ++i)
             {
-                letters.Add(letterDatabase.RandomValue());
+                letters.Add(LetterDatabase.GetRandomValue());
             }
 
             letters.Shuffle();

@@ -35,9 +35,6 @@ namespace HealingJam.Crossword
 
         public override void DarkModeChanged(bool darkMode)
         {
-            basicSprite.DarkModeChanged(darkMode);
-            selectedSprite.DarkModeChanged(darkMode);
-
             SetState(buttonState);
         }
 
@@ -47,11 +44,11 @@ namespace HealingJam.Crossword
 
             if (buttonState == ButtonState.Basic)
             {
-                image.sprite = basicSprite.activeModeSprite;
+                image.sprite = basicSprite.ActiveModeSprite;
             }
             else
             {
-                image.sprite = selectedSprite.activeModeSprite;
+                image.sprite = selectedSprite.ActiveModeSprite;
             }
         }
     }

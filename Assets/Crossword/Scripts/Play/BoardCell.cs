@@ -4,15 +4,15 @@ using System.Collections;
 
 namespace HealingJam.Crossword
 {
-    public class BoardCell : MonoBehaviour
+    public class BoardCell : DarkModeMonoBehaviour
     {
         public enum CellState
         {
             None, Unuse, Completed
         }
 
-        [SerializeField] private Sprite cellCompleteSprite = null;
-        [SerializeField] private Sprite cellUnCompleteSprite = null;
+        [SerializeField] private DarkModeSprite cellCompleteSprite = null;
+        [SerializeField] private DarkModeSprite cellUnCompleteSprite = null;
 
         [SerializeField] private Text letterText = null;
         [SerializeField] private Image cellImage = null;
@@ -40,18 +40,18 @@ namespace HealingJam.Crossword
         public void SetCompleteState()
         {
             State = CellState.Completed;
-            cellImage.sprite = cellCompleteSprite;
+            cellImage.sprite = cellCompleteSprite.ActiveModeSprite;
         }
 
         public void SetSpriteToCurrentState()
         {
             if (State == CellState.None)
             {
-                cellImage.sprite = cellUnCompleteSprite;
+                cellImage.sprite = cellUnCompleteSprite.ActiveModeSprite;
             }
             else if (State == CellState.Completed)
             {
-                cellImage.sprite = cellCompleteSprite;
+                cellImage.sprite = cellCompleteSprite.ActiveModeSprite;
             }
         }
 
@@ -64,6 +64,11 @@ namespace HealingJam.Crossword
         {
             Letter = letter;
             letterText.text = letter.ToString();
+        }
+
+        public override void DarkModeChanged(bool darkMode)
+        {
+            SetSpriteToCurrentState();
         }
     }
 }
