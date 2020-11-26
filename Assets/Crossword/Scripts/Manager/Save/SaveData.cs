@@ -4,20 +4,20 @@ namespace HealingJam.Crossword.Save
 {
     public class ProgressData
     {
-        public float elapsedTime;
-        public Dictionary<WordData.WordType, int> wrongCountTypes = new Dictionary<WordData.WordType, int>();
         public List<string> machedWords = new List<string>();
     }
 
-    public class CompleteData
+    public class LevelData
     {
-        public bool perfectClear;
+        public bool completed = false;
+        public Dictionary<WordData.WordType, int> wrongCountsByType = new Dictionary<WordData.WordType, int>();
     }
 
     public class SaveData
     {
         public Dictionary<int, ProgressData> progressDatas = new Dictionary<int, ProgressData>();
-        public List<CompleteData> completeDatas = new List<CompleteData>();
-        public int unlockPackLevel = 0;
+        public List<bool> completeDatas = new List<bool>();
+        public List<LevelData> levelDatas = new List<LevelData>();
+        public int unlockPack = 0;
     }
 }

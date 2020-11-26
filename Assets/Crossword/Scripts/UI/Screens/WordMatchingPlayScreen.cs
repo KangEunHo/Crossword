@@ -25,7 +25,17 @@ namespace HealingJam.Crossword.UI
 
             for (int i = 0; i < maxStage && i < 20; ++i)
             {
-                answers.Add(CrosswordMapManager.Instance.GetCrosswordMap(useMapIndex[i]).wordDatas.RandomValue());
+                WordDataForGame randomWord = CrosswordMapManager.Instance.GetCrosswordMap(useMapIndex[i]).wordDatas.RandomValue();
+                WordDataForGame wordDataForGame = new WordDataForGame()
+                {
+                    direction = WordDataForGame.Direction.Horizontal,
+                    info = randomWord.info,
+                    word = randomWord.word,
+                    wordType = randomWord.wordType,
+                    x = 0,
+                    y = 0
+                };
+                answers.Add(wordDataForGame);
             }
             gameController.SetUp(answers);
         }

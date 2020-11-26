@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using HealingJam.GameScreens;
 using HealingJam.Popups;
+using HealingJam.Crossword.Save;
 
 namespace HealingJam.Crossword.UI
 {
@@ -15,15 +16,38 @@ namespace HealingJam.Crossword.UI
             stageSelectButtonController.onClickAction = OnStageSelectButtonClick;
         }
 
+        public override void Enter(params object[] args)
+        {
+            base.Enter(args);
+        }
+
         private void OnStageSelectButtonClick(int stageIndex)
         {
-            if (stageIndex < CrosswordMapManager.Instance.MaxStage())
-            {
-                CrosswordMapManager.Instance.ActiveStageIndex = stageIndex;
+            int level = stageIndex / CrosswordMapManager.PACK_IN_STAGE_COUNT;
+            bool unlockLevel = level == 0;
 
-                GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Play Screen", ScreenMgr.Instance.transform);
-                ScreenMgr.Instance.RegisterState(playScreen);
-                ScreenMgr.Instance.ChangeState(ScreenID.Play);
+            if (unlockLevel == false)
+            {
+                LevelData levelData = SaveMgr.Instance.GetLevelData(level -1);
+                if (levelData.completed)
+                    unlockLevel = true;
+            }
+
+            if (unlockLevel)
+            {
+                if (stageIndex < CrosswordMapManager.Instance.MaxStage())
+                {
+                    CrosswordMapManager.Instance.ActiveStageIndex = stageIndex;
+
+                    GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Play Screen", ScreenMgr.Instance.transform);
+                    ScreenMgr.Instance.RegisterState(playScreen);
+                    ScreenMgr.Instance.ChangeState(ScreenID.Play);
+                }
+            }
+            else
+            {
+                Debug.Log("이전 레벨을 먼저 클리어하세요");
+                //Toast 이전 레벨을 클리어하세요.
             }
         }
 

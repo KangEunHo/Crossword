@@ -12,7 +12,7 @@ namespace HealingJam.Crossword
         private BoardController boardController = null;
 
         public WordDataForGame SelectedWordData { get; private set; } = null;
-        private int selectedLetterIndex;
+        public int SelectedLetterIndex { get; private set; } = -1;
         private List<BoardCell> highlightCells = null;
 
         public Action<WordDataForGame> onCorrectAnswer = null;
@@ -47,7 +47,7 @@ namespace HealingJam.Crossword
         public void SetUpHighlightCells(WordDataForGame wordDataForGame)
         {
             SelectedWordData = wordDataForGame;
-            selectedLetterIndex = 0;
+            SelectedLetterIndex = 0;
             ClearHighlightCellsLetter();
             OffHighlightCellsSprite();
             if (wordDataForGame != null)
@@ -79,19 +79,19 @@ namespace HealingJam.Crossword
             int x = SelectedWordData.x;
             int y = SelectedWordData.y;
             if (SelectedWordData.direction == WordDataForGame.Direction.Horizontal)
-                x += selectedLetterIndex;
-            else y += selectedLetterIndex;
+                x += SelectedLetterIndex;
+            else y += SelectedLetterIndex;
 
             BoardCell boardCell = boardController.GetBoardCell(new Vector2Int(x, y));
             boardCell.SetLetter(args.letter);
 
-            selectedLetterIndex++;
+            SelectedLetterIndex++;
             SetNextSelectedBoardCell();
         }
 
         private void SetNextSelectedBoardCell()
         {
-            int i = selectedLetterIndex;
+            int i = SelectedLetterIndex;
             for (; i < SelectedWordData.word.Length; ++i)
             {
                 int x = SelectedWordData.x;
@@ -102,7 +102,7 @@ namespace HealingJam.Crossword
 
                 if (boardController.GetBoardCell(new Vector2Int(x, y)).State == BoardCell.CellState.Completed)
                 {
-                    selectedLetterIndex++;
+                    SelectedLetterIndex++;
                     continue;
                 }
                 else
@@ -125,8 +125,17 @@ namespace HealingJam.Crossword
         {
             for (int i = 0; i < highlightCells.Count; ++i)
             {
-                highlightCells[i].SetSprite(i == selectedLetterIndex ? cellHighlightSelectedSprite.ActiveModeSprite : cellHighlightSprite.ActiveModeSprite);
+                highlightCells[i].SetSprite(i == SelectedLetterIndex ? cellHighlightSelectedSprite.ActiveModeSprite : cellHighlightSprite.ActiveModeSprite);
             }
+        }
+
+        public BoardCell GetHighlightCell()
+        {
+            if (SelectedLetterIndex != -1 && SelectedLetterIndex < highlightCells.Count)
+            {
+                return highlightCells[SelectedLetterIndex];
+            }
+            return null;
         }
 
         private void OffHighlightCellsSprite()
@@ -140,6 +149,7 @@ namespace HealingJam.Crossword
 
         private void OnEndMatch()
         {
+            SelectedLetterIndex = -1;
             bool correctAnswer = true;
 
             for (int i = 0; i < highlightCells.Count; ++i)

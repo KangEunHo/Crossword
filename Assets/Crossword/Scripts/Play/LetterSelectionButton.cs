@@ -19,6 +19,7 @@ namespace HealingJam.Crossword
 
         public Action<LetterSelectionButton> onClick = null;
         private ButtonState buttonState = ButtonState.Basic;
+        public ButtonState GetButtonState => buttonState;
 
         private char letter;
         public char Letter

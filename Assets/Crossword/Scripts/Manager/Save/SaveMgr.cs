@@ -35,27 +35,27 @@ namespace HealingJam.Crossword.Save
             File.WriteAllText(FilePath, EncryptUtils.Encrypt(serializeData));
         }
 
-        public CompleteData GetCompleteData(int index)
+        public bool GetCompleteData(int index)
         {
             if (saveData == null)
-                return null;
+                return false;
 
             while (saveData.completeDatas.Count <= index)
             {
-                saveData.completeDatas.Add(null);
+                saveData.completeDatas.Add(false);
             }
 
             return saveData.completeDatas[index];
         }
 
-        public void SetCompleteData(int index, CompleteData completeData)
+        public void SetCompleteData(int index, bool completeData)
         {
             if (saveData == null)
                 return;
 
             while(saveData.completeDatas.Count <= index)
             {
-                saveData.completeDatas.Add(null);
+                saveData.completeDatas.Add(false);
             }
 
             saveData.completeDatas[index] = completeData;
@@ -85,6 +85,32 @@ namespace HealingJam.Crossword.Save
                 return;
 
             saveData.progressDatas.Remove(index);
+        }
+
+        public LevelData GetLevelData(int index)
+        {
+            if (saveData == null)
+                return null;
+
+            while (saveData.levelDatas.Count <= index)
+            {
+                saveData.levelDatas.Add(new LevelData());
+            }
+
+            return saveData.levelDatas[index];
+        }
+
+        public void SetLevelData(int index, LevelData levelData)
+        {
+            if (saveData == null)
+                return;
+
+            while (saveData.levelDatas.Count <= index -1)
+            {
+                saveData.levelDatas.Add(new LevelData());
+            }
+
+            saveData.levelDatas[index] = levelData;
         }
     }
 }

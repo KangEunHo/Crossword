@@ -81,5 +81,20 @@ namespace HealingJam.Crossword
                 letterSelectionButtons[i].SetState(LetterSelectionButton.ButtonState.Basic);
             }
         }
+
+        public void LetterSelectionButtonClickSameLetter(char letter)
+        {
+            for (int i = 0; i < BUTTON_COUNT; ++i)
+            {
+                if (letterSelectionButtons[i].GetButtonState == LetterSelectionButton.ButtonState.Basic)
+                {
+                    if (letterSelectionButtons[i].Letter == letter)
+                    {
+                        OnLetterSelectionButtonClick(letterSelectionButtons[i]);
+                        return;
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using HealingJam.Crossword.Save;
 
 namespace HealingJam.Crossword.UI
 {
     public class StageSelectButtonController : MonoBehaviour
     {
         [SerializeField] private StageSelectButton[] stageSelectButtons = null;
+        [SerializeField] private GameObject badgeObject = null;
+        [SerializeField] private GameObject badgeGaugeObject = null;
+        [SerializeField] private Image badgeGaugeImage = null;
         [SerializeField] private Text pageText = null;
 
         public Action<int> onClickAction = null;
@@ -22,10 +26,13 @@ namespace HealingJam.Crossword.UI
 
         public int MaxPage { get { return Mathf.CeilToInt(CrosswordMapManager.Instance.MaxStage() / (float)CrosswordMapManager.PACK_IN_STAGE_COUNT); } }
 
-        private void Start()
+        private void Awake()
         {
             page = SavedPage;
+        }
 
+        private void OnEnable()
+        {
             foreach (var v in stageSelectButtons)
             {
                 v.onClickAction = OnStageSelectButtonClick;
@@ -41,9 +48,26 @@ namespace HealingJam.Crossword.UI
 
         private void SetPage(int page)
         {
+            int completeCount = 0;
             for (int i = 0; i < CrosswordMapManager.PACK_IN_STAGE_COUNT; ++i)
             {
-                stageSelectButtons[i].SetUp(page * CrosswordMapManager.PACK_IN_STAGE_COUNT + i);
+                int index = page * CrosswordMapManager.PACK_IN_STAGE_COUNT + i;
+                stageSelectButtons[i].SetUp(index);
+
+                if (SaveMgr.Instance.GetCompleteData(index))
+                { 
+                    completeCount++;
+                }
+            }
+
+            bool pageCompleted = completeCount == CrosswordMapManager.PACK_IN_STAGE_COUNT;
+
+            badgeObject.SetActive(pageCompleted);
+            badgeGaugeObject.SetActive(pageCompleted == false);
+            if (pageCompleted == false)
+            {
+                float pageProgress = completeCount / (float)CrosswordMapManager.PACK_IN_STAGE_COUNT * 0.8f;
+                badgeGaugeImage.fillAmount = 0.1f + pageProgress;
             }
 
             pageText.text = (page + 1).ToString() + "/" + MaxPage;

@@ -163,7 +163,7 @@ namespace HealingJam.Crossword
                 int y = wordDataForGame.y;
                 if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
                     x += i;
-                else if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
+                else if (wordDataForGame.direction == WordDataForGame.Direction.Vertical)
                     y += i;
 
                 if (GetBoardCell(new Vector2Int(x, y)).State == BoardCell.CellState.None)
@@ -180,7 +180,7 @@ namespace HealingJam.Crossword
                 int y = wordDataForGame.y;
                 if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
                     x += i;
-                else if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
+                else if (wordDataForGame.direction == WordDataForGame.Direction.Vertical)
                     y += i;
 
                 BoardCell boardCell = GetBoardCell(new Vector2Int(x, y));

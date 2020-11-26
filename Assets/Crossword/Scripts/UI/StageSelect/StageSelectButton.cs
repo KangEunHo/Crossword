@@ -25,28 +25,24 @@ namespace HealingJam.Crossword.UI
 
         public void SetUp(int stageIndex)
         {
-            CompleteData completeData = SaveMgr.Instance.GetCompleteData(stageIndex);
-            if (completeData == null)
+            bool completeData = SaveMgr.Instance.GetCompleteData(stageIndex);
+            if (completeData)
             {
-                star.SetActive(false);
-
-                SaveMgr.Instance.TryGetProgressData(stageIndex, out ProgressData progressData);
-
-                if (progressData != null)
+                progressCircle.fillAmount = 1f;
+            }
+            else
+            {
+                if (SaveMgr.Instance.TryGetProgressData(stageIndex, out ProgressData progressData))
                 {
-                    progressCircle.fillAmount = progressData.machedWords.Count / (float)CrosswordMapManager.Instance.GetCrosswordMap(stageIndex).wordDatas.Count; 
+                    progressCircle.fillAmount = progressData.machedWords.Count / (float)CrosswordMapManager.Instance.GetCrosswordMap(stageIndex).wordDatas.Count;
                 }
                 else
                 {
                     progressCircle.fillAmount = 0f;
                 }
             }
-            else
-            {
-                progressCircle.fillAmount = 1f;
-                star.SetActive(completeData.perfectClear);
-            }
 
+            star.SetActive(completeData);
             stageText.text = (stageIndex + 1).ToString();
             this.stageIndex = stageIndex;
         }

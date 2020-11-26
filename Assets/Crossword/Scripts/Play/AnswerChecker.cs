@@ -45,7 +45,10 @@ namespace HealingJam.Crossword
             matchedWords.Add(word);
 
             // 한 단어를 맞출시에 이어진 단어를 맞출 수도 있으니 맞춰진 단어가 있으면 맞춘목록에 추가합니다.
-            MatchCheckAllUnmachedWord();
+            if (boardController != null)
+            {
+                MatchCheckAllUnmachedWord();
+            }
             // 클리어.
             if (matchedWords.Count >= MAX_ANSWER_COUNT)
             {
@@ -67,6 +70,46 @@ namespace HealingJam.Crossword
             return unmatchedWords.Values.First();
         }
 
+        public WordDataForGame GetUnMatchedWordOrderByRange(Vector2Int index)
+        {
+            if (unmatchedWords.Count == 0)
+                return null;
+            var list = unmatchedWords.Values.OrderBy(word => Mathf.Abs(word.x - index.x) + Mathf.Abs(word.y - index.y));
+            return list.First();
+        }
+
+        public WordDataForGame GetUnMatchedWordByConnecte(WordDataForGame wordDataForGame, BoardController boardController)
+        {
+            if (unmatchedWords.Count == 0)
+                return null;
+            
+            for (int i = 0; i < wordDataForGame.word.Length; ++i)
+            {
+                int x = wordDataForGame.x;
+                int y = wordDataForGame.y;
+
+                if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
+                    x += i;
+                else y += i;
+
+                BoardCell boardCell = boardController.GetBoardCell(new Vector2Int(x, y));
+                if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
+                {
+                    if (boardCell.VerticalWordData != null && unmatchedWords.ContainsKey(boardCell.VerticalWordData.word))
+                    {
+                        return boardCell.VerticalWordData;
+                    }
+                }
+                else
+                {
+                    if (boardCell.HorizontalWordData != null && unmatchedWords.ContainsKey(boardCell.HorizontalWordData.word))
+                    {
+                        return boardCell.HorizontalWordData;
+                    }
+                }
+            }
+            return null;
+        }
 
         private void MatchCheckAllUnmachedWord()
         {

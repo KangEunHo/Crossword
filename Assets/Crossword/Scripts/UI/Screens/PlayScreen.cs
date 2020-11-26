@@ -73,6 +73,7 @@ namespace HealingJam.Crossword.UI
                 }
                 else if (message == "exit")
                 {
+                    gameController.SaveProgressData();
                     ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);
                 }
             }

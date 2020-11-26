@@ -11,6 +11,11 @@ namespace HealingJam.Crossword
             ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);
         }
 
+        public void OnStatisticsButtonClick()
+        {
+            ScreenMgr.Instance.ChangeState(ScreenID.Statistics);
+        }
+
         public void OnWordMatchingGameStart()
         {
             GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Word Matching Play Canvas", ScreenMgr.Instance.transform);

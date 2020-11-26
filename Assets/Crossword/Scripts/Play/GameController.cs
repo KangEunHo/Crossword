@@ -18,7 +18,7 @@ namespace HealingJam.Crossword
         [SerializeField] private WordMeaningController wordMeaningController = null;
         [SerializeField] private BoardHighlightController boardHighlightController = null;
         [SerializeField] private AnswerOXResult answerOXResult = null;
-        [SerializeField] private Text timeText = null; 
+        [SerializeField] private HintController hintController = null;
 
         private AnswerChecker answerChecker = null;
         public GameState State { get; set; }
@@ -48,6 +48,7 @@ namespace HealingJam.Crossword
 
             answerChecker = new AnswerChecker(crosswordMap.wordDatas, boardController);
             boardHighlightController.Init(boardController);
+            hintController.Init(boardHighlightController, letterSelectionButtonController);
 
             // 콜백 등록.
             boardController.boardClickEventHandler += wordMeaningController.OnCellBoardClick;
@@ -65,27 +66,20 @@ namespace HealingJam.Crossword
             SetHighlightUnMatchedWord();
         }
 
-        private void Update()
-        {
-            if (State == GameState.Play)
-            {
-                progressData.elapsedTime += Time.deltaTime;
-                TimeSpan t = TimeSpan.FromSeconds(progressData.elapsedTime);
-                string str = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
-
-                timeText.text = str;
-            }
-        }
-
         private void OnApplicationPause(bool pause)
         {
             if (pause)
             {
-                if (progressData != null)
-                {
-                    SaveMgr.Instance.SetProgressData(CrosswordMapManager.Instance.ActiveStageIndex, progressData);
-                    SaveMgr.Instance.Save();
-                }
+                SaveProgressData();
+            }
+        }
+
+        public void SaveProgressData()
+        {
+            if (progressData != null)
+            {
+                SaveMgr.Instance.SetProgressData(CrosswordMapManager.Instance.ActiveStageIndex, progressData);
+                SaveMgr.Instance.Save();
             }
         }
 
@@ -95,9 +89,8 @@ namespace HealingJam.Crossword
             {
                 State = GameState.Clear;
 
-                // 클리어 정보 저장.
-                bool perfectClear = progressData.wrongCountTypes.Values.Count == 0;
-                SaveMgr.Instance.SetCompleteData(CrosswordMapManager.Instance.ActiveStageIndex, new CompleteData() { perfectClear = perfectClear });
+
+                SaveMgr.Instance.SetCompleteData(CrosswordMapManager.Instance.ActiveStageIndex, true);
                 // 클리어시에 진행상황 삭제.
                 SaveMgr.Instance.DeleteProgressData(CrosswordMapManager.Instance.ActiveStageIndex);
                 SaveMgr.Instance.Save();
@@ -115,10 +108,10 @@ namespace HealingJam.Crossword
 
         public void OnWrongAnswer(WordDataForGame wordDataForGame)
         {
-            if (progressData.wrongCountTypes.ContainsKey(wordDataForGame.wordType))
-                progressData.wrongCountTypes[wordDataForGame.wordType]++;
-            else
-                progressData.wrongCountTypes.Add(wordDataForGame.wordType, 1);
+            //if (progressData.wrongCountTypes.ContainsKey(wordDataForGame.wordType))
+            //    progressData.wrongCountTypes[wordDataForGame.wordType]++;
+            //else
+            //    progressData.wrongCountTypes.Add(wordDataForGame.wordType, 1);
 
             answerOXResult.ShowXResult(OnWrongAnimationEnd);
         }
@@ -130,7 +123,27 @@ namespace HealingJam.Crossword
 
         private void SetHighlightUnMatchedWord()
         {
-            WordDataForGame unMatchedWord = answerChecker.GetUnMatchedWord();
+            WordDataForGame wordDataForGame = boardHighlightController.SelectedWordData;
+            WordDataForGame unMatchedWord = null;
+            if (wordDataForGame == null)
+            {
+                unMatchedWord = answerChecker.GetUnMatchedWord();
+            }
+            else
+            {
+                unMatchedWord = answerChecker.GetUnMatchedWordByConnecte(wordDataForGame, boardController);
+                if (unMatchedWord == null)
+                {
+                    //Vector2Int lastIndex = new Vector2Int(wordDataForGame.x, wordDataForGame.y);
+                    //if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
+                    //    lastIndex.x += wordDataForGame.word.Length;
+                    //else
+                    //    lastIndex.y += wordDataForGame.word.Length;
+
+                    unMatchedWord = answerChecker.GetUnMatchedWordOrderByRange(new Vector2Int(wordDataForGame.x, wordDataForGame.y));
+                }
+            }
+
             boardHighlightController.SetUpHighlightCells(unMatchedWord);
             wordMeaningController.SetText(unMatchedWord);
             letterSelectionButtonController.SetButtonsLetter(unMatchedWord);

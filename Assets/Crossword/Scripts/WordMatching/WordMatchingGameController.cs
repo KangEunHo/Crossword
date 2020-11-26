@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using HealingJam.Crossword.Save;
+using System;
 using HealingJam.GameScreens;
 using System.Collections.Generic;
 
@@ -18,7 +18,10 @@ namespace HealingJam.Crossword
         [SerializeField] private WordMeaningController wordMeaningController = null;
         [SerializeField] private BoardHighlightController boardHighlightController = null;
         [SerializeField] private AnswerOXResult answerOXResult = null;
+        [SerializeField] private HintController hintController = null;
+        [SerializeField] private ReadyAnimator readyAnimator = null;
         [SerializeField] private Text progressText = null;
+        [SerializeField] private Text timeText = null;
 
         private AnswerChecker answerChecker = null;
         public GameState State { get; private set; }
@@ -34,18 +37,23 @@ namespace HealingJam.Crossword
             letterSelectionButtonController.Init();
 
             boardHighlightController.Init(boardController);
-
+            hintController.Init(boardHighlightController, letterSelectionButtonController);
             letterSelectionButtonController.letterSelectionButtonClickHandler += boardHighlightController.OnLetterSelectionBoardClick;
 
             boardHighlightController.onCorrectAnswer += OnCorrectAnswer;
             boardHighlightController.onWrongAnswer += OnWrongAnswer;
             //
 
-            State = GameState.Play;
+            State = GameState.Pause;
 
+            readyAnimator.PlayAnimation(() =>
+            {
+                answerChecker = new AnswerChecker(answers, null);
+                SetHighlightUnMatchedWord();
+                State = GameState.Play;
+            });
             // 첫번째 맞출 단어 설정.
-            answerChecker = new AnswerChecker(answers, null);
-            SetHighlightUnMatchedWord();
+
 
             ElapsedTime = 0f;
 
@@ -57,7 +65,13 @@ namespace HealingJam.Crossword
         private void Update()
         {
             if (State == GameState.Play)
+            {
                 ElapsedTime += Time.deltaTime;
+                TimeSpan t = TimeSpan.FromSeconds(ElapsedTime);
+                string str = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
+
+                timeText.text = str;
+            }
         }
 
         public void OnCorrectAnswer(WordDataForGame wordDataForGame)
