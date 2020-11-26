@@ -147,6 +147,7 @@ namespace HealingJam.Crossword
             boardHighlightController.SetUpHighlightCells(unMatchedWord);
             wordMeaningController.SetText(unMatchedWord);
             letterSelectionButtonController.SetButtonsLetter(unMatchedWord);
+            SetCompletedLetterSelectionButton(unMatchedWord);
         }
 
         private void OnWrongAnimationEnd()
@@ -160,6 +161,25 @@ namespace HealingJam.Crossword
         {
             boardHighlightController.SetUpHighlightCells(boardHighlightController.SelectedWordData);
             letterSelectionButtonController.SetButtonsLetter(boardHighlightController.SelectedWordData);
+            SetCompletedLetterSelectionButton(boardHighlightController.SelectedWordData);
+        }
+
+        private void SetCompletedLetterSelectionButton(WordDataForGame wordDataForGame)
+        {
+            for (int i = 0; i < wordDataForGame.word.Length; ++i)
+            {
+                int x = wordDataForGame.x;
+                int y = wordDataForGame.y;
+                if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
+                    x += i;
+                else y += i;
+
+                if (boardController.GetBoardCell(new Vector2Int(x, y)).State == BoardCell.CellState.Completed)
+                {
+                    char completedCharacter = wordDataForGame.word[i];
+                    letterSelectionButtonController.LetterSelectionButtonStateChangeSameLetter(completedCharacter);
+                }
+            }
         }
     }
 }
