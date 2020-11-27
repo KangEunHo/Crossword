@@ -12,7 +12,7 @@ namespace HealingJam.Popups
 
         public enum PopupID
         {
-            None, Shop, Option, PlayExit, DailyCommonSense
+            None, Shop, Option, PlayExit, DailyCommonSense, InternetConnectionWarning
         }
 
         #endregion

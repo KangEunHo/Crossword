@@ -6,6 +6,16 @@ namespace HealingJam.Crossword
 {
     public class TitleScreen : FadeAndScaleTweenScreen
     {
+        [SerializeField] private DailyCommonsenseLoader dailyCommonsenseLoader = null;
+
+        public override void Enter(params object[] args)
+        {
+            base.Enter(args);
+            
+            if (dailyCommonsenseLoader.Showed == false)
+                dailyCommonsenseLoader.Show();
+        }
+
         public void OnGameStartButtonClick()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);

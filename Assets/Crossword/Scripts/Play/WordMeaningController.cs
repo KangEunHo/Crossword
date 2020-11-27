@@ -38,7 +38,7 @@ namespace HealingJam.Crossword
                 return;
             }
             typeText.text = "[" + WordTypeToString(wordData.wordType) + "]";
-            meaningText.text = wordData.info + wordData.info;
+            meaningText.text = wordData.info;
 
             meaningText.rectTransform.sizeDelta = new Vector2(meaningText.rectTransform.sizeDelta.x, meaningText.preferredHeight);
 

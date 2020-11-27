@@ -79,7 +79,7 @@ namespace HealingJam.Crossword.UI
                 gameController.State = WordMatchingGameController.GameState.Pause;
 
                 PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.PlayExit, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
-                    new PopupClosedDelegate(OnPlayExitPopupClosed));
+                    new PopupClosedDelegate(OnPlayExitPopupClosed), "나가시겠습니까?\n 나가게 되면 보상을 받을 수 없습니다.");
             }
         }
 
