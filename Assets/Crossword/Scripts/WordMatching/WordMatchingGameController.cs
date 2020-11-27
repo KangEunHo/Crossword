@@ -24,7 +24,7 @@ namespace HealingJam.Crossword
         [SerializeField] private Text timeText = null;
 
         private AnswerChecker answerChecker = null;
-        public GameState State { get; private set; }
+        public GameState State { get; set; }
 
         public float ElapsedTime { get; private set; }
         private int maxAnswerCount;

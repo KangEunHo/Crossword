@@ -8,6 +8,7 @@ namespace HealingJam.Crossword
     {
         [SerializeField] private Text typeText = null;
         [SerializeField] private Text meaningText = null;
+        [SerializeField] private RectTransform content = null;
 
         public void OnCellBoardClick(object sender, BoardClickEvent boardClickEvent)
         {
@@ -37,9 +38,11 @@ namespace HealingJam.Crossword
                 return;
             }
             typeText.text = "[" + WordTypeToString(wordData.wordType) + "]";
-            meaningText.text = wordData.info;
+            meaningText.text = wordData.info + wordData.info;
 
             meaningText.rectTransform.sizeDelta = new Vector2(meaningText.rectTransform.sizeDelta.x, meaningText.preferredHeight);
+
+            content.anchoredPosition = content.anchoredPosition.NewY(0f);
         }
 
 
