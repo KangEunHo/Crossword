@@ -2,7 +2,7 @@
 using HealingJam.GameScreens;
 using HealingJam.Popups;
 
-namespace HealingJam.Crossword
+namespace HealingJam.Crossword.UI
 {
     public class TitleScreen : FadeAndScaleTweenScreen
     {
@@ -30,7 +30,7 @@ namespace HealingJam.Crossword
         {
             GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Word Matching Play Canvas", ScreenMgr.Instance.transform);
             ScreenMgr.Instance.RegisterState(playScreen);
-            ScreenMgr.Instance.ChangeState(ScreenID.WordMatchingPlay);
+            ScreenMgr.Instance.ChangeState(ScreenID.WordMatchingPlay, WordMatchingPlayScreen.GameMode.AbilityTest);
         }
 
         public void OnOptionButtonClick()

@@ -11,7 +11,7 @@ namespace HealingJam.Crossword.UI
         public override void Enter(params object[] args)
         {
             base.Enter(args);
-            bool packLastStage = CrosswordMapManager.Instance.ActiveStageIndex > 0 && (CrosswordMapManager.Instance.ActiveStageIndex % CrosswordMapManager.PACK_IN_STAGE_COUNT) == 0;
+            bool packLastStage = CrosswordMapManager.Instance.ActiveStageIndex > 0 && (CrosswordMapManager.Instance.ActiveStageIndex % CrosswordMapManager.LEVEL_IN_PACK_COUNT) == 0;
             nextStageButton.SetActive(packLastStage == false);
         }
         protected override void OnExitFadeComplete(params object[] args)

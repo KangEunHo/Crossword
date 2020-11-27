@@ -3,11 +3,14 @@ using UnityEngine.UI;
 using System;
 using HealingJam.GameScreens;
 using System.Collections.Generic;
+using HealingJam.Crossword.UI;
+using DG.Tweening;
 
 namespace HealingJam.Crossword
 {
     public class WordMatchingGameController : MonoBehaviour
     {
+        private const float ANSWER_RATE_GAUGE_WIDTH = 380f;
         public enum GameState
         {
             Pause, Play, Fail, Clear
@@ -22,6 +25,9 @@ namespace HealingJam.Crossword
         [SerializeField] private ReadyAnimator readyAnimator = null;
         [SerializeField] private Text progressText = null;
         [SerializeField] private Text timeText = null;
+        [SerializeField] private GameObject timeObject = null;
+        [SerializeField] private RectTransform answerRateGauge = null;
+        [SerializeField] private Text percentText = null;
 
         private AnswerChecker answerChecker = null;
         public GameState State { get; set; }
@@ -29,8 +35,11 @@ namespace HealingJam.Crossword
         public float ElapsedTime { get; private set; }
         private int maxAnswerCount;
         private int curAnswerIndex;
+        private int wrongCount;
+        WordMatchingPlayScreen.GameMode gameMode;
+        private Tween answerRateGaugeTween = null;
 
-        public void SetUp(List<WordDataForGame> answers)
+        public void SetUp(WordMatchingPlayScreen.GameMode gameMode, List<WordDataForGame> answers)
         {
             //초기화.
 
@@ -60,11 +69,21 @@ namespace HealingJam.Crossword
             maxAnswerCount = answers.Count;
             curAnswerIndex = 0;
             ProgressTextUpdate();
+
+            this.gameMode = gameMode;
+            if (gameMode == WordMatchingPlayScreen.GameMode.AbilityTest)
+            {
+                timeObject.SetActive(true);
+            }
+            else
+            {
+                timeObject.SetActive(false);
+            }
         }
 
         private void Update()
         {
-            if (State == GameState.Play)
+            if (State == GameState.Play && gameMode == WordMatchingPlayScreen.GameMode.AbilityTest)
             {
                 ElapsedTime += Time.deltaTime;
                 TimeSpan t = TimeSpan.FromSeconds(ElapsedTime);
@@ -89,11 +108,16 @@ namespace HealingJam.Crossword
 
             curAnswerIndex++;
             ProgressTextUpdate();
+            AnswerRateUpdate();
         }
 
         public void OnWrongAnswer(WordDataForGame wordDataForGame)
         {
             answerOXResult.ShowXResult(OnWrongAnimationEnd);
+
+            wrongCount++;
+
+            AnswerRateUpdate();
         }
 
         private void OnClear()
@@ -135,6 +159,20 @@ namespace HealingJam.Crossword
         private void ProgressTextUpdate()
         {
             progressText.text = curAnswerIndex.ToString() + '/' + maxAnswerCount.ToString();
+        }
+
+        private void AnswerRateUpdate()
+        {
+            float answerRate = 1f - (wrongCount / (float)(curAnswerIndex + 1));
+
+            percentText.text = (answerRate * 100).ToString("F0") + "%";
+
+            if (answerRateGaugeTween != null)
+                answerRateGaugeTween.Kill(true);
+
+            float x = ANSWER_RATE_GAUGE_WIDTH * answerRate;
+            float y = answerRateGauge.sizeDelta.y;
+            answerRateGaugeTween = answerRateGauge.DOSizeDelta(new Vector2(x, y), 0.5f);
         }
     }
 }

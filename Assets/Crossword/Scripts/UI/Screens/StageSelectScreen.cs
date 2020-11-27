@@ -23,7 +23,7 @@ namespace HealingJam.Crossword.UI
 
         private void OnStageSelectButtonClick(int stageIndex)
         {
-            int level = stageIndex / CrosswordMapManager.PACK_IN_STAGE_COUNT;
+            int level = stageIndex / CrosswordMapManager.LEVEL_IN_PACK_COUNT;
             bool unlockLevel = level == 0;
 
             if (unlockLevel == false)

@@ -4516,6 +4516,9 @@ MonoBehaviour:
   readyAnimator: {fileID: 7618640126614701868}
   progressText: {fileID: 5301372697137152067}
   timeText: {fileID: 5301372697809481753}
+  timeObject: {fileID: 5301372696006300525}
+  answerRateGauge: {fileID: 5301372697568811347}
+  percentText: {fileID: 5301372697809481753}
 --- !u!114 &5301372697378242599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5366,7 +5369,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 00:24
+  m_Text: 00:00
 --- !u!114 &3430816146193163458
 MonoBehaviour:
   m_ObjectHideFlags: 0

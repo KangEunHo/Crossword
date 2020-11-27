@@ -6,7 +6,7 @@ namespace HealingJam.Crossword
 {
     public class CrosswordMapManager : MonoSingleton<CrosswordMapManager>
     {
-        public const int PACK_IN_STAGE_COUNT = 8;
+        public const int LEVEL_IN_PACK_COUNT = 8;
 
         [SerializeField] private TextAsset[] crosswordTextAssets = null;
 
@@ -18,6 +18,8 @@ namespace HealingJam.Crossword
                     activeStageIndex = value;
             }
         }
+        public int ActiveLevelIndex { get; set; }
+
         public CrosswordMap ActiveCrosswordMap = null;
 
         public int MaxStage()

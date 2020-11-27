@@ -24,7 +24,7 @@ namespace HealingJam.Crossword.UI
             }
         }
 
-        public int MaxPage { get { return Mathf.CeilToInt(CrosswordMapManager.Instance.MaxStage() / (float)CrosswordMapManager.PACK_IN_STAGE_COUNT); } }
+        public int MaxPage { get { return Mathf.CeilToInt(CrosswordMapManager.Instance.MaxStage() / (float)CrosswordMapManager.LEVEL_IN_PACK_COUNT); } }
 
         private void Awake()
         {
@@ -49,9 +49,9 @@ namespace HealingJam.Crossword.UI
         private void SetPage(int page)
         {
             int completeCount = 0;
-            for (int i = 0; i < CrosswordMapManager.PACK_IN_STAGE_COUNT; ++i)
+            for (int i = 0; i < CrosswordMapManager.LEVEL_IN_PACK_COUNT; ++i)
             {
-                int index = page * CrosswordMapManager.PACK_IN_STAGE_COUNT + i;
+                int index = page * CrosswordMapManager.LEVEL_IN_PACK_COUNT + i;
                 stageSelectButtons[i].SetUp(index);
 
                 if (SaveMgr.Instance.GetCompleteData(index))
@@ -60,13 +60,13 @@ namespace HealingJam.Crossword.UI
                 }
             }
 
-            bool pageCompleted = completeCount == CrosswordMapManager.PACK_IN_STAGE_COUNT;
+            bool pageCompleted = completeCount == CrosswordMapManager.LEVEL_IN_PACK_COUNT;
 
             badgeObject.SetActive(pageCompleted);
             badgeGaugeObject.SetActive(pageCompleted == false);
             if (pageCompleted == false)
             {
-                float pageProgress = completeCount / (float)CrosswordMapManager.PACK_IN_STAGE_COUNT * 0.8f;
+                float pageProgress = completeCount / (float)CrosswordMapManager.LEVEL_IN_PACK_COUNT * 0.8f;
                 badgeGaugeImage.fillAmount = 0.1f + pageProgress;
             }
 
