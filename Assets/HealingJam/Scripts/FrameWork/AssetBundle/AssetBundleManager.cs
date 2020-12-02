@@ -459,7 +459,8 @@ namespace AssetBundles
 			{
                 UnityWebRequest download = s_DownloadingWebrequests[key];
 				s_DownloadingWebrequests.Remove(key);
-				download.Dispose();
+                if (download != null)
+				    download.Dispose();
 			}
 	
 			// Update all in progress operations

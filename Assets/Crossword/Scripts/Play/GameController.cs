@@ -51,8 +51,7 @@ namespace HealingJam.Crossword
             hintController.Init(boardHighlightController, letterSelectionButtonController);
 
             // 콜백 등록.
-            boardController.boardClickEventHandler += wordMeaningController.OnCellBoardClick;
-            boardController.boardClickEventHandler += letterSelectionButtonController.OnCellBoardClick;
+            boardController.boardClickEventHandler += OnCellBoardClick;
 
             letterSelectionButtonController.letterSelectionButtonClickHandler += boardHighlightController.OnLetterSelectionBoardClick;
 
@@ -64,6 +63,34 @@ namespace HealingJam.Crossword
 
             // 첫번째 맞출 단어 설정.
             SetHighlightUnMatchedWord();
+        }
+
+        public void OnCellBoardClick(object sender, BoardClickEvent boardClickEvent)
+        {
+            BoardCell boardCell = boardClickEvent.boardCell;
+            WordDataForGame.Direction direction = boardClickEvent.direction;
+
+            if (direction == WordDataForGame.Direction.None)
+            {
+                wordMeaningController.SetText(null);
+            }
+            else if (direction == WordDataForGame.Direction.Horizontal)
+            {
+                wordMeaningController.SetText(boardCell.HorizontalWordData);
+                SetHighlightCellsAndLetterButtons(boardCell.HorizontalWordData);
+            }
+            else if (direction == WordDataForGame.Direction.Vertical)
+            {
+                wordMeaningController.SetText(boardCell.VerticalWordData);
+                SetHighlightCellsAndLetterButtons(boardCell.VerticalWordData);
+            }
+        }
+
+        public void SetHighlightCellsAndLetterButtons(WordDataForGame wordDataForGame)
+        {
+            boardHighlightController.SetUpHighlightCells(wordDataForGame);
+            letterSelectionButtonController.SetButtonsLetter(wordDataForGame);
+            SetCompletedLetterSelectionButton(wordDataForGame);
         }
 
         private void OnApplicationPause(bool pause)
@@ -108,11 +135,6 @@ namespace HealingJam.Crossword
 
         public void OnWrongAnswer(WordDataForGame wordDataForGame)
         {
-            //if (progressData.wrongCountTypes.ContainsKey(wordDataForGame.wordType))
-            //    progressData.wrongCountTypes[wordDataForGame.wordType]++;
-            //else
-            //    progressData.wrongCountTypes.Add(wordDataForGame.wordType, 1);
-
             answerOXResult.ShowXResult(OnWrongAnimationEnd);
         }
 
@@ -134,34 +156,24 @@ namespace HealingJam.Crossword
                 unMatchedWord = answerChecker.GetUnMatchedWordByConnecte(wordDataForGame, boardController);
                 if (unMatchedWord == null)
                 {
-                    //Vector2Int lastIndex = new Vector2Int(wordDataForGame.x, wordDataForGame.y);
-                    //if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
-                    //    lastIndex.x += wordDataForGame.word.Length;
-                    //else
-                    //    lastIndex.y += wordDataForGame.word.Length;
-
                     unMatchedWord = answerChecker.GetUnMatchedWordOrderByRange(new Vector2Int(wordDataForGame.x, wordDataForGame.y));
                 }
             }
 
-            boardHighlightController.SetUpHighlightCells(unMatchedWord);
             wordMeaningController.SetText(unMatchedWord);
-            letterSelectionButtonController.SetButtonsLetter(unMatchedWord);
-            SetCompletedLetterSelectionButton(unMatchedWord);
+            SetHighlightCellsAndLetterButtons(unMatchedWord);
         }
 
         private void OnWrongAnimationEnd()
         {
-            WordDataForGame wordDataForGame = boardHighlightController.SelectedWordData;
-            boardHighlightController.SetUpHighlightCells(wordDataForGame);
+            boardHighlightController.SetUpHighlightCells(boardHighlightController.SelectedWordData);
             letterSelectionButtonController.ChangeButtonsStateToAllBasic();
+            SetCompletedLetterSelectionButton(boardHighlightController.SelectedWordData);
         }
 
         public void OnResetButtonClick()
         {
-            boardHighlightController.SetUpHighlightCells(boardHighlightController.SelectedWordData);
-            letterSelectionButtonController.SetButtonsLetter(boardHighlightController.SelectedWordData);
-            SetCompletedLetterSelectionButton(boardHighlightController.SelectedWordData);
+            SetHighlightCellsAndLetterButtons(boardHighlightController.SelectedWordData);
         }
 
         private void SetCompletedLetterSelectionButton(WordDataForGame wordDataForGame)

@@ -3,6 +3,7 @@
     "com.coffee.ui-effect": "https://github.com/mob-sakai/UIEffect.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
+    "com.unity.assetbundlebrowser": "https://github.com/Unity-Technologies/AssetBundles-Browser.git",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.1.4",
@@ -46,6 +47,10 @@
     "com.coffee.ui-effect": {
       "revision": "HEAD",
       "hash": "b43e40508b167d143330d8b9eff0d5c9965cdf3c"
+    },
+    "com.unity.assetbundlebrowser": {
+      "revision": "HEAD",
+      "hash": "b7c279278d1a343c6957c9f15b45173d3211f01c"
     }
   }
 }

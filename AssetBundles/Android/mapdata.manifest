@@ -1,0 +1,41 @@
+ManifestFileVersion: 0
+CRC: 3291381037
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b7c9b12bcb9ace109136ce2559e99418
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Crossword/MapData/newSave_70.json
+- Assets/Crossword/MapData/newSave_79.json
+- Assets/Crossword/MapData/newSave_92.json
+- Assets/Crossword/MapData/newSave_90.json
+- Assets/Crossword/MapData/newSave_74.json
+- Assets/Crossword/MapData/newSave_76.json
+- Assets/Crossword/MapData/newSave_89.json
+- Assets/Crossword/MapData/newSave_87.json
+- Assets/Crossword/MapData/newSave_80.json
+- Assets/Crossword/MapData/newSave_83.json
+- Assets/Crossword/MapData/newSave_95.json
+- Assets/Crossword/MapData/newSave_86.json
+- Assets/Crossword/MapData/newSave_84.json
+- Assets/Crossword/MapData/newSave_81.json
+- Assets/Crossword/MapData/newSave_71.json
+- Assets/Crossword/MapData/newSave_82.json
+- Assets/Crossword/MapData/newSave_72.json
+- Assets/Crossword/MapData/newSave_94.json
+- Assets/Crossword/MapData/newSave_93.json
+- Assets/Crossword/MapData/newSave_73.json
+- Assets/Crossword/MapData/newSave_88.json
+- Assets/Crossword/MapData/newSave_75.json
+- Assets/Crossword/MapData/newSave_85.json
+- Assets/Crossword/MapData/newSave_91.json
+- Assets/Crossword/MapData/newSave_78.json
+- Assets/Crossword/MapData/newSave_77.json
+Dependencies: []

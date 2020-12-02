@@ -193,7 +193,7 @@ namespace AssetBundles
             if (m_Request == null && m_DownloadingError != null)
             {
 #if UNITY_EDITOR
-                Debug.LogError(m_DownloadingError);
+                Debug.LogWarning(m_DownloadingError);
 #endif
                 return true;
             }

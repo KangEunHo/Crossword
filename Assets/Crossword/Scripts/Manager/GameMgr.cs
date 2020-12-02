@@ -8,11 +8,13 @@ namespace HealingJam.Crossword
 {
     public class GameMgr : MonoSingleton<GameMgr>
     {
+        [SerializeField] private GameObject contentDownloadMessage = null;
 
         private IEnumerator Start()
         {
             SaveMgr.Instance.Load();
 
+            contentDownloadMessage.SetActive(true);
             yield return StartCoroutine(CrosswordMapManager.Instance.LoadCrosswordMapAtAssetBundle());
 
             SetUpDatabase();
@@ -20,6 +22,7 @@ namespace HealingJam.Crossword
             DailyCommonsensePopup dailyCommonsensePopup = PopupMgr.Instance.GetPopupById(Popup.PopupID.DailyCommonSense) as DailyCommonsensePopup;
 
             yield return StartCoroutine(dailyCommonsensePopup.LoadCommonSenseAsync());
+            contentDownloadMessage.SetActive(false);
 
             ScreenMgr.Instance.Enter(GameScreen.ScreenID.Title);
 

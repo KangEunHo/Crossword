@@ -105,7 +105,7 @@ namespace HealingJam.Crossword
                 {
                     if (letterSelectionButtons[i].Letter == letter)
                     {
-                        letterSelectionButtons[i].SetState(LetterSelectionButton.ButtonState.Selected);
+                        letterSelectionButtons[i].SetState(LetterSelectionButton.ButtonState.AlreadySelected);
                         return;
                     }
                 }

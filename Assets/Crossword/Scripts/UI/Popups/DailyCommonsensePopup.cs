@@ -56,10 +56,10 @@ namespace HealingJam.Crossword
         [SerializeField] private Text dateText = null;
         [SerializeField] private ImageSwap zoomImageSwap = null;
 
-        private int page = 0;
+        private int curPage = 0;
         private bool isZoomed = false;
         public int MaxPage => dailyCommonsenses.Count;
-        public bool IsLoaded { get; private set; } = false;
+        public bool IsLoaded => dailyCommonsenses.Count > 0;
         private List<DailyCommonsense> dailyCommonsenses = new List<DailyCommonsense>();
 
 
@@ -73,7 +73,9 @@ namespace HealingJam.Crossword
 
         public IEnumerator LoadCommonSenseAsync()
         {
-            for (int i = 0; i < 7; ++i)
+            dailyCommonsenses.Clear();
+
+            for (int i = 7; i >= 0; --i)
             {
                 string date = KOREA_TIME.AddDays(-i).ToString("yyyyMMdd");
                 string fileName = date + ".txt";
@@ -84,14 +86,12 @@ namespace HealingJam.Crossword
                     yield return request.SendWebRequest();
                     if (request.isNetworkError || request.isHttpError)
                     {
-                        EditorDebug.LogWarning(request.error);
-                        IsLoaded = false;
+                        EditorDebug.Log(request.error);
                     }
                     else
                     {
                         if (request.downloadHandler.isDone)
                         {
-                            dailyCommonsenses.Clear();
 
                             StringReader s = new StringReader(request.downloadHandler.text);
                             DailyCommonsense dailyCommonsense = new DailyCommonsense
@@ -102,9 +102,6 @@ namespace HealingJam.Crossword
                             };
 
                             dailyCommonsenses.Add(dailyCommonsense);
-                            dailyCommonsenses.Reverse();
-
-                            IsLoaded = true;
                         }
                     }
                 }
@@ -113,25 +110,27 @@ namespace HealingJam.Crossword
 
         private void SetPage(int page)
         {
+            curPage = page;
+
             wordText.text = dailyCommonsenses[page].word;
             meaningText.text = dailyCommonsenses[page].meaning;
             dateText.text = dailyCommonsenses[page].date.Insert(4,"/").Insert(7, "/");
 
             ContentSizeUpdated();
 
-            nextButton.interactable = page + 1 < MaxPage;
-            prevButton.interactable = page - 1 > 0;
+            nextButton.interactable = curPage + 1 < MaxPage;
+            prevButton.interactable = curPage - 1 >= 0;
 
         }
 
         public void OnNextButtonClick()
         {
-            SetPage(page + 1);
+            SetPage(curPage + 1);
         }
 
         public void OnPrevButtonClick()
         {
-            SetPage(page - 1);
+            SetPage(curPage - 1);
         }
 
         public void OnZoomButtonClick()
