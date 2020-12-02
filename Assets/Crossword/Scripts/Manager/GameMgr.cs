@@ -32,8 +32,6 @@ namespace HealingJam.Crossword
         {
             int maxStage = CrosswordMapManager.Instance.MaxStage();
 
-            Debug.Log(maxStage);
-
             CrosswordMap[] crosswordMaps = new CrosswordMap[maxStage];
             for (int i = 0; i < maxStage; ++i)
             {

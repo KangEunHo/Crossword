@@ -10,10 +10,14 @@ namespace HealingJam
             return Instance.StartCoroutine(coroutine);
         }
 
-        static public IEnumerator RunAfterDelay(float delayTime, System.Action action)
+        static public Coroutine RunAfterDelay(float delay, System.Action action)
         {
-            yield return new WaitForSeconds(delayTime);
+            return Instance.StartCoroutine(RunAfterDelayCoroutine(delay, action));
+        }
 
+        static private IEnumerator RunAfterDelayCoroutine(float delay, System.Action action)
+        {
+            yield return new WaitForSeconds(delay);
             action?.Invoke();
         }
     }

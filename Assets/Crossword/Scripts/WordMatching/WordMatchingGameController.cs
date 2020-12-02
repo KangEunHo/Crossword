@@ -5,6 +5,7 @@ using HealingJam.GameScreens;
 using System.Collections.Generic;
 using HealingJam.Crossword.UI;
 using DG.Tweening;
+using HealingJam.Crossword.Save;
 
 namespace HealingJam.Crossword
 {
@@ -32,12 +33,15 @@ namespace HealingJam.Crossword
         private AnswerChecker answerChecker = null;
         public GameState State { get; set; }
 
+        private WordMatchingPlayScreen.GameMode gameMode;
         public float ElapsedTime { get; private set; }
         private int maxAnswerCount;
         private int curAnswerIndex;
-        private int wrongCount;
-        WordMatchingPlayScreen.GameMode gameMode;
+        private int answerCount;
         private Tween answerRateGaugeTween = null;
+
+        public Dictionary<WordData.WordType, int> correctAnswerCountsByType = new Dictionary<WordData.WordType, int>();
+        public Dictionary<WordData.WordType, int> answerCountsByType = new Dictionary<WordData.WordType, int>();
 
         public void SetUp(WordMatchingPlayScreen.GameMode gameMode, List<WordDataForGame> answers)
         {
@@ -68,6 +72,15 @@ namespace HealingJam.Crossword
 
             maxAnswerCount = answers.Count;
             curAnswerIndex = 0;
+
+            foreach(var answer in answers)
+            {
+                if (answerCountsByType.ContainsKey(answer.wordType) == false)
+                    answerCountsByType[answer.wordType] = 0;
+
+                answerCountsByType[answer.wordType]++;
+            }
+
             ProgressTextUpdate();
 
             this.gameMode = gameMode;
@@ -95,6 +108,12 @@ namespace HealingJam.Crossword
 
         public void OnCorrectAnswer(WordDataForGame wordDataForGame)
         {
+            if (correctAnswerCountsByType.ContainsKey(wordDataForGame.wordType) == false)
+                answerCountsByType[wordDataForGame.wordType] = 0;
+
+            answerCountsByType[wordDataForGame.wordType]++;
+
+
             if (answerChecker.AddMatchedWord(wordDataForGame.word))
             {
                 State = GameState.Clear;
@@ -106,6 +125,7 @@ namespace HealingJam.Crossword
                 answerOXResult.ShowOResult(SetHighlightUnMatchedWord);
             }
 
+            answerCount++;
             curAnswerIndex++;
             ProgressTextUpdate();
             AnswerRateUpdate();
@@ -113,10 +133,20 @@ namespace HealingJam.Crossword
 
         public void OnWrongAnswer(WordDataForGame wordDataForGame)
         {
-            answerOXResult.ShowXResult(OnWrongAnimationEnd);
+            if (answerChecker.AddMatchedWord(wordDataForGame.word))
+            {
+                State = GameState.Clear;
 
-            wrongCount++;
+                answerOXResult.ShowXResult(OnClear);
+            }
+            else
+            {
+                answerOXResult.ShowXResult(SetHighlightUnMatchedWord);
+            }
+            //answerOXResult.ShowXResult(SetHighlightUnMatchedWord);// OnWrongAnimationEnd);
 
+            curAnswerIndex++;
+            ProgressTextUpdate();
             AnswerRateUpdate();
         }
 
@@ -163,7 +193,11 @@ namespace HealingJam.Crossword
 
         private void AnswerRateUpdate()
         {
-            float answerRate = 1f - (wrongCount / (float)(curAnswerIndex + 1));
+            float answerRate = 0;
+            if (curAnswerIndex > 0)
+            {
+                answerRate = (answerCount / (float)curAnswerIndex);
+            }
 
             percentText.text = (answerRate * 100).ToString("F0") + "%";
 

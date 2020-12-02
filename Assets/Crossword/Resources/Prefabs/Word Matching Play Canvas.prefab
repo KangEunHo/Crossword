@@ -2531,7 +2531,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 100%
+  m_Text: 0%
 --- !u!114 &1261205696325282016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4826,7 +4826,7 @@ MonoBehaviour:
   timeText: {fileID: 5301372697809481753}
   timeObject: {fileID: 5301372696006300525}
   answerRateGauge: {fileID: 5301372697568811347}
-  percentText: {fileID: 5301372697809481753}
+  percentText: {fileID: 5301372695932266310}
 --- !u!114 &5301372697378242599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5140,7 +5140,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 380, y: 20}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5301372697568811345
 CanvasRenderer:

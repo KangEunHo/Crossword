@@ -16,9 +16,14 @@ namespace HealingJam.Crossword.UI
             
             if (showedDailyCommonsense == false)
             {
-                dailyCommonsenseLoader.Show();
+                CoroutineHelper.RunAfterDelay(0.5f, ShowDailyCommonsense);
                 showedDailyCommonsense = true;
             }
+        }
+
+        private void ShowDailyCommonsense()
+        {
+            dailyCommonsenseLoader.Show();
         }
 
         public void OnGameStartButtonClick()
@@ -33,7 +38,7 @@ namespace HealingJam.Crossword.UI
 
         public void OnDailyCommonsenseButtonClick()
         {
-            dailyCommonsenseLoader.Show();
+            ShowDailyCommonsense();
         }
 
         public void OnWordMatchingGameStart()
