@@ -6,14 +6,19 @@ namespace HealingJam.Crossword.UI
 {
     public class TitleScreen : FadeAndScaleTweenScreen
     {
+        public bool showedDailyCommonsense = false;
+
         [SerializeField] private DailyCommonsenseLoader dailyCommonsenseLoader = null;
 
         public override void Enter(params object[] args)
         {
             base.Enter(args);
             
-            if (dailyCommonsenseLoader.Showed == false)
+            if (showedDailyCommonsense == false)
+            {
                 dailyCommonsenseLoader.Show();
+                showedDailyCommonsense = true;
+            }
         }
 
         public void OnGameStartButtonClick()
@@ -24,6 +29,11 @@ namespace HealingJam.Crossword.UI
         public void OnStatisticsButtonClick()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.Statistics);
+        }
+
+        public void OnDailyCommonsenseButtonClick()
+        {
+            dailyCommonsenseLoader.Show();
         }
 
         public void OnWordMatchingGameStart()

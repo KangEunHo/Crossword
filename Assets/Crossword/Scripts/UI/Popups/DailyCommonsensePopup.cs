@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using HealingJam.Popups;
 using System;
 using UnityEngine.UI;
+using System.IO;
+using System.Collections;
+using UnityEngine.Networking;
 
 namespace HealingJam.Crossword
 {
@@ -15,6 +18,8 @@ namespace HealingJam.Crossword
 
     public class DailyCommonsensePopup : Popup
     {
+        private const string URL_PATH = "http://healingjam.cafe24.com/crossword";
+
         private const int ZOOM_FONT_SIZE = 36;
         private const int BASIC_FONT_SIZE = 24;
 
@@ -54,18 +59,56 @@ namespace HealingJam.Crossword
         private int page = 0;
         private bool isZoomed = false;
         public int MaxPage => dailyCommonsenses.Count;
-
-        private List<DailyCommonsense> dailyCommonsenses = null;
+        public bool IsLoaded { get; private set; } = false;
+        private List<DailyCommonsense> dailyCommonsenses = new List<DailyCommonsense>();
 
 
         public override void Enter(params object[] args)
         {
             base.Enter(args);
 
-            dailyCommonsenses = args[0] as List<DailyCommonsense>;
-
             if (dailyCommonsenses.Count > 0)
-                SetPage(0);
+                SetPage(MaxPage - 1);
+        }
+
+        public IEnumerator LoadCommonSenseAsync()
+        {
+            for (int i = 0; i < 7; ++i)
+            {
+                string date = KOREA_TIME.AddDays(-i).ToString("yyyyMMdd");
+                string fileName = date + ".txt";
+                string webPath = Path.Combine(URL_PATH, fileName);
+
+                using (UnityWebRequest request = UnityWebRequest.Get(webPath))
+                {
+                    yield return request.SendWebRequest();
+                    if (request.isNetworkError || request.isHttpError)
+                    {
+                        EditorDebug.LogWarning(request.error);
+                        IsLoaded = false;
+                    }
+                    else
+                    {
+                        if (request.downloadHandler.isDone)
+                        {
+                            dailyCommonsenses.Clear();
+
+                            StringReader s = new StringReader(request.downloadHandler.text);
+                            DailyCommonsense dailyCommonsense = new DailyCommonsense
+                            {
+                                date = date,
+                                word = s.ReadLine(),
+                                meaning = s.ReadToEnd()
+                            };
+
+                            dailyCommonsenses.Add(dailyCommonsense);
+                            dailyCommonsenses.Reverse();
+
+                            IsLoaded = true;
+                        }
+                    }
+                }
+            }
         }
 
         private void SetPage(int page)
@@ -74,7 +117,7 @@ namespace HealingJam.Crossword
             meaningText.text = dailyCommonsenses[page].meaning;
             dateText.text = dailyCommonsenses[page].date.Insert(4,"/").Insert(7, "/");
 
-            ContentSizeUpdateed();
+            ContentSizeUpdated();
 
             nextButton.interactable = page + 1 < MaxPage;
             prevButton.interactable = page - 1 > 0;
@@ -101,7 +144,7 @@ namespace HealingJam.Crossword
                 OffZoomText();
         }
 
-        private void ContentSizeUpdateed()
+        private void ContentSizeUpdated()
         {
             meaningText.rectTransform.sizeDelta = meaningText.rectTransform.sizeDelta.NewY(meaningText.preferredHeight);
 
@@ -110,14 +153,14 @@ namespace HealingJam.Crossword
         private void OnZoomText()
         {
             meaningText.fontSize = ZOOM_FONT_SIZE;
-            ContentSizeUpdateed();
+            ContentSizeUpdated();
             zoomImageSwap.SetSprite(false);
         }
 
         private void OffZoomText()
         {
             meaningText.fontSize = BASIC_FONT_SIZE;
-            ContentSizeUpdateed();
+            ContentSizeUpdated();
             zoomImageSwap.SetSprite(true);
         }
     }

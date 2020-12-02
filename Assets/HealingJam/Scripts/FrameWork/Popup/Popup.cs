@@ -54,6 +54,11 @@ namespace HealingJam.Popups
             return popupID.ToString();
         }
 
+        public PopupID GetID()
+        {
+            return popupID;
+        }
+
         public virtual void SetAnimation(IPopupAnimation popupAnimation)
         {
             if (this.PopupAnimation != null)

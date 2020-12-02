@@ -130,5 +130,15 @@ namespace HealingJam.Popups
                 return true;
             }
         }
+
+        public Popup GetPopupById(PopupID popupID)
+        {
+            foreach(var popup in popups)
+            {
+                if (popup.GetID() == popupID)
+                    return popup;
+            }
+            return null;
+        }
     }
 }
