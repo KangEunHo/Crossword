@@ -8,7 +8,8 @@ namespace HealingJam.Crossword.UI
     public class StageSelectButtonController : MonoBehaviour
     {
         [SerializeField] private StageSelectButton[] stageSelectButtons = null;
-        [SerializeField] private GameObject badgeObject = null;
+        [SerializeField] private Image badgeImage = null;
+        [SerializeField] private Text badgeLevelText = null;
         [SerializeField] private GameObject badgeGaugeObject = null;
         [SerializeField] private Image badgeGaugeImage = null;
         [SerializeField] private Text pageText = null;
@@ -62,12 +63,17 @@ namespace HealingJam.Crossword.UI
 
             bool pageCompleted = completeCount == CrosswordMapManager.LEVEL_IN_PACK_COUNT;
 
-            badgeObject.SetActive(pageCompleted);
+            badgeImage.transform.parent.gameObject.SetActive(pageCompleted);
             badgeGaugeObject.SetActive(pageCompleted == false);
             if (pageCompleted == false)
             {
                 float pageProgress = completeCount / (float)CrosswordMapManager.LEVEL_IN_PACK_COUNT * 0.8f;
                 badgeGaugeImage.fillAmount = 0.1f + pageProgress;
+            }
+            else
+            {
+                badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSprite(page);
+                badgeLevelText.text = page.ToString();
             }
 
             pageText.text = (page + 1).ToString() + "/" + MaxPage;

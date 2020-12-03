@@ -7,7 +7,7 @@ namespace HealingJam.Crossword.Save
 {
     public class SaveMgr : Singleton<SaveMgr>
     {
-        public string FilePath { get { return Path.Combine(Application.dataPath, "save.dat"); } }
+        public string FilePath { get { return Path.Combine(Application.persistentDataPath, "save.dat"); } }
 
         private SaveData saveData = null;
 
@@ -111,6 +111,14 @@ namespace HealingJam.Crossword.Save
             }
 
             saveData.levelDatas[index] = levelData;
+        }
+
+        public int GetUnlockLevel()
+        {
+            if (saveData == null)
+                return 0;
+
+            return saveData.unlockLevel;
         }
     }
 }

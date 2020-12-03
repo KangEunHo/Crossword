@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace HealingJam
@@ -34,15 +35,17 @@ namespace HealingJam
     public class InstantiateObjectFactory<T> : IObjectFactory<T> where T : Object 
     {
         private readonly T originObject;
+        private readonly Transform parent;
 
-        public InstantiateObjectFactory(T originObject)
+        public InstantiateObjectFactory(T originObject, Transform parent)
         {
             this.originObject = originObject;
+            this.parent = parent;
         }
 
         public T Create()
         {
-            return Object.Instantiate(originObject);
+            return Object.Instantiate(originObject, parent);
         }
     }
 }

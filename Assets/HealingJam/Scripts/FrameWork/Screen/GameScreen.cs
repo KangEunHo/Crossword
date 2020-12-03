@@ -7,7 +7,7 @@ namespace HealingJam.GameScreens
     {
         public enum ScreenID
         {
-            None, Title, StageSelect, Statistics, Clear, Play, WordMatchingPlay
+            None, Title, StageSelect, Statistics, Clear, Play, WordMatchingPlay, CommonSenseResult
         }
 
         #region Inspector Variables

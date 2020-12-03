@@ -35,7 +35,7 @@ namespace HealingJam.Crossword.UI
         private List<WordDataForGame> CreateBadgePlayAnswers()
         {
             Dictionary<WordData.WordType, List<WordDataForGame>> allAnswers = new Dictionary<WordData.WordType, List<WordDataForGame>>();
-            for (int i = 0; i < (int)WordData.WordType.Max; ++i)
+            for (int i = 1; i < (int)WordData.WordType.Max; ++i)
             {
                 allAnswers.Add((WordData.WordType)i, new List<WordDataForGame>());
             }
@@ -53,7 +53,7 @@ namespace HealingJam.Crossword.UI
                 }
             }
 
-            for (int i = 0; i < (int)WordData.WordType.Max; ++i)
+            for (int i = 1; i < (int)WordData.WordType.Max; ++i)
             {
                 List<WordDataForGame> words = allAnswers[(WordData.WordType)i];
                 
@@ -75,7 +75,7 @@ namespace HealingJam.Crossword.UI
                     answers.Add(wordDataForGame);
                 }
             }
-
+            answers.Shuffle();
             return answers;
         }
 
@@ -96,7 +96,6 @@ namespace HealingJam.Crossword.UI
             {
                 crosswordMapIndexes.Add(i);
             }
-            crosswordMapIndexes.Shuffle();
             crosswordMapIndexes.Shuffle();
 
             int levelIndex = CrosswordMapManager.Instance.ActiveLevelIndex;
@@ -148,6 +147,7 @@ namespace HealingJam.Crossword.UI
                 }
             }
 
+            answers.Shuffle();
             return answers;
         }
 

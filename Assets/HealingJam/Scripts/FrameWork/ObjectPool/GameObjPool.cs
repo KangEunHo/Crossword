@@ -45,8 +45,8 @@ namespace HealingJam
         {
             base.Push(item);
 
-            item.transform.SetParent(itemParent, false);
             item.gameObject.SetActive(false);
+            item.transform.SetParent(itemParent, false);
         }
 
         public override void DisposeAll()

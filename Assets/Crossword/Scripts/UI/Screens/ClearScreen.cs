@@ -14,10 +14,6 @@ namespace HealingJam.Crossword.UI
             bool packLastStage = CrosswordMapManager.Instance.ActiveStageIndex > 0 && (CrosswordMapManager.Instance.ActiveStageIndex % CrosswordMapManager.LEVEL_IN_PACK_COUNT) == 0;
             nextStageButton.SetActive(packLastStage == false);
         }
-        protected override void OnExitFadeComplete(params object[] args)
-        {
-            ScreenMgr.Instance.UnRegisterState(this);
-        }
 
         public override void Escape()
         {

@@ -9,6 +9,13 @@ using HealingJam.Crossword.Save;
 
 namespace HealingJam.Crossword
 {
+    // 맞춘 갯수랑 문제갯수 데이터.
+    public class RightAnswerCountData
+    {
+        public int rightAnswerCount;
+        public int answerCount;
+    }
+
     public class WordMatchingGameController : MonoBehaviour
     {
         private const float ANSWER_RATE_GAUGE_WIDTH = 380f;
@@ -40,8 +47,8 @@ namespace HealingJam.Crossword
         private int answerCount;
         private Tween answerRateGaugeTween = null;
 
-        public Dictionary<WordData.WordType, int> correctAnswerCountsByType = new Dictionary<WordData.WordType, int>();
-        public Dictionary<WordData.WordType, int> answerCountsByType = new Dictionary<WordData.WordType, int>();
+        public List<RightAnswerCountData> rightAnswerCountDatas = new List<RightAnswerCountData>();
+        private List<AnswerItem.AnswerItemData> answerItemDatas = null;
 
         public void SetUp(WordMatchingPlayScreen.GameMode gameMode, List<WordDataForGame> answers)
         {
@@ -74,12 +81,20 @@ namespace HealingJam.Crossword
             maxAnswerCount = answers.Count;
             curAnswerIndex = 0;
 
-            foreach(var answer in answers)
+            for (int i = 0; i < (int)WordData.WordType.Max; ++i)
             {
-                if (answerCountsByType.ContainsKey(answer.wordType) == false)
-                    answerCountsByType[answer.wordType] = 0;
+                rightAnswerCountDatas.Add(new RightAnswerCountData());
+            }
 
-                answerCountsByType[answer.wordType]++;
+            answerItemDatas = new List<AnswerItem.AnswerItemData>();
+            foreach (var answer in answers)
+            {
+                answerItemDatas.Add(new AnswerItem.AnswerItemData()
+                {
+                    correctAnswer = false,
+                    wordData = answer
+                });
+                rightAnswerCountDatas[(int)answer.wordType].answerCount++;
             }
 
             ProgressTextUpdate();
@@ -109,11 +124,13 @@ namespace HealingJam.Crossword
 
         public void OnCorrectAnswer(WordDataForGame wordDataForGame)
         {
-            if (correctAnswerCountsByType.ContainsKey(wordDataForGame.wordType) == false)
-                answerCountsByType[wordDataForGame.wordType] = 0;
+            rightAnswerCountDatas[(int)wordDataForGame.wordType].rightAnswerCount++;
+            answerItemDatas[curAnswerIndex].correctAnswer = true;
 
-            answerCountsByType[wordDataForGame.wordType]++;
-
+            answerCount++;
+            curAnswerIndex++;
+            ProgressTextUpdate();
+            AnswerRateUpdate();
 
             if (answerChecker.AddMatchedWord(wordDataForGame.word))
             {
@@ -125,15 +142,15 @@ namespace HealingJam.Crossword
             {
                 answerOXResult.ShowOResult(SetHighlightUnMatchedWord);
             }
-
-            answerCount++;
-            curAnswerIndex++;
-            ProgressTextUpdate();
-            AnswerRateUpdate();
         }
 
         public void OnWrongAnswer(WordDataForGame wordDataForGame)
         {
+            answerItemDatas[curAnswerIndex].correctAnswer = false;
+            curAnswerIndex++;
+            ProgressTextUpdate();
+            AnswerRateUpdate();
+
             if (answerChecker.AddMatchedWord(wordDataForGame.word))
             {
                 State = GameState.Clear;
@@ -146,14 +163,11 @@ namespace HealingJam.Crossword
             }
             //answerOXResult.ShowXResult(SetHighlightUnMatchedWord);// OnWrongAnimationEnd);
 
-            curAnswerIndex++;
-            ProgressTextUpdate();
-            AnswerRateUpdate();
         }
 
         private void OnClear()
         {
-            ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Clear);
+            ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.CommonSenseResult, answerItemDatas, rightAnswerCountDatas);
         }
 
         private void SetHighlightUnMatchedWord()

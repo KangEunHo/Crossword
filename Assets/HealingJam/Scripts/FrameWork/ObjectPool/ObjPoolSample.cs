@@ -16,7 +16,7 @@ namespace HealingJam
         // Use this for initialization
         void Start()
         {
-            gop = new GameObjPool(new InstantiateObjectFactory<GameObject>(prefab), new ObjPoolData(transform, 5));
+            gop = new GameObjPool(new InstantiateObjectFactory<GameObject>(prefab, transform), new ObjPoolData(transform, 5));
         }
 
         private void Update()

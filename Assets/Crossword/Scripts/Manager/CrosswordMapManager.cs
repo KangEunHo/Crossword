@@ -10,8 +10,10 @@ namespace HealingJam.Crossword
     {
         private const string ASSET_BUNDLE_NAME = "mapdata";
         public const int LEVEL_IN_PACK_COUNT = 8;
+        public const int BADGE_IN_LEVEL_COUNT = 5;
 
         [SerializeField] private TextAsset[] crosswordTextAssets = null;
+        [SerializeField] private Sprite[] badgeSprites = null;
         private List<TextAsset> listOfCrosswordMap = null;
 
         private int activeStageIndex;
@@ -72,6 +74,14 @@ namespace HealingJam.Crossword
             }
 
             AddCrosswordMaps(textAssets);
+        }
+
+        public Sprite GetBadgeSprite(int levelIndex)
+        {
+            int badgeSpriteIndex = Mathf.FloorToInt(levelIndex / BADGE_IN_LEVEL_COUNT);
+            badgeSpriteIndex = Mathf.Clamp(badgeSpriteIndex, 0, badgeSprites.Length - 1);
+
+            return badgeSprites[badgeSpriteIndex];
         }
     }
 }

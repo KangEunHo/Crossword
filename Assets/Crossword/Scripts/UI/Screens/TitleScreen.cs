@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using HealingJam.GameScreens;
 using HealingJam.Popups;
+using HealingJam.Crossword.Save;
 
 namespace HealingJam.Crossword.UI
 {
@@ -9,6 +11,8 @@ namespace HealingJam.Crossword.UI
         public bool showedDailyCommonsense = false;
 
         [SerializeField] private DailyCommonsenseLoader dailyCommonsenseLoader = null;
+        [SerializeField] private Image badgeImage = null;
+        [SerializeField] private Text badgeLevelText = null;
 
         public override void Enter(params object[] args)
         {
@@ -19,6 +23,11 @@ namespace HealingJam.Crossword.UI
                 CoroutineHelper.RunAfterDelay(0.5f, ShowDailyCommonsense);
                 showedDailyCommonsense = true;
             }
+
+            int unlockLevel = SaveMgr.Instance.GetUnlockLevel();
+            badgeImage.gameObject.SetActive(unlockLevel > 0);
+            badgeImage.sprite = unlockLevel == 0 ? null : CrosswordMapManager.Instance.GetBadgeSprite(unlockLevel -1);
+            badgeLevelText.text = unlockLevel.ToString();
         }
 
         private void ShowDailyCommonsense()

@@ -51,6 +51,13 @@ namespace HealingJam.Crossword.UI
             }
         }
 
+        public void OnBadgeButtonClick()
+        {
+            GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Word Matching Play Canvas", ScreenMgr.Instance.transform);
+            ScreenMgr.Instance.RegisterState(playScreen);
+            ScreenMgr.Instance.ChangeState(ScreenID.WordMatchingPlay, WordMatchingPlayScreen.GameMode.BadgePlay);
+        }
+
         public void OnNextButtonClick()
         {
             stageSelectButtonController.SetNextPage();

@@ -13,7 +13,7 @@ namespace HealingJam.Crossword
 
         public WordDataForGame SelectedWordData { get; private set; } = null;
         public int SelectedLetterIndex { get; private set; } = -1;
-        private List<BoardCell> highlightCells = null;
+        private List<BoardCell> highlightCells = new List<BoardCell>();
 
         public Action<WordDataForGame> onCorrectAnswer = null;
         public Action<WordDataForGame> onWrongAnswer = null;
@@ -23,7 +23,6 @@ namespace HealingJam.Crossword
 
         public void Init(BoardController boardController)
         {
-            highlightCells = new List<BoardCell>();
             this.boardController = boardController;
             boardController.boardClickEventHandler += OnCellBoardClick;
         }
