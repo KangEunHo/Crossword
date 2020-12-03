@@ -121,6 +121,19 @@ namespace HealingJam.Crossword
             }
         }
         
+        public void SetCompleteHighlightCell()
+        {
+            BoardCell boardCell = GetHighlightCell();
+            if (boardCell != null)
+            {
+                char letter = SelectedWordData.word[SelectedLetterIndex];
+                boardCell.SetLetter(letter);
+                boardCell.SetCompleteState();
+                SelectedLetterIndex++;
+                SetNextSelectedBoardCell();
+            }
+        }
+
         private void OnHighlightCellsSprite()
         {
             for (int i = 0; i < highlightCells.Count; ++i)

@@ -24,11 +24,11 @@ namespace HealingJam.Crossword
             if (boardHighlightController.SelectedWordData != null)
             {
                 BoardCell boardCell = boardHighlightController.GetHighlightCell();
-                if (boardCell)
+                if (boardCell != null)
                 {
+                    //할것.
                     //if (coin >)
-                    char letter = boardHighlightController.SelectedWordData.word[boardHighlightController.SelectedLetterIndex];
-                    letterSelectionButtonController.LetterSelectionButtonClickSameLetter(letter);
+                    boardHighlightController.SetCompleteHighlightCell();
                 }
             }
         }

@@ -51,6 +51,7 @@ namespace HealingJam.Crossword
 
             boardHighlightController.Init(boardController);
             hintController.Init(boardHighlightController, letterSelectionButtonController);
+
             letterSelectionButtonController.letterSelectionButtonClickHandler += boardHighlightController.OnLetterSelectionBoardClick;
 
             boardHighlightController.onCorrectAnswer += OnCorrectAnswer;

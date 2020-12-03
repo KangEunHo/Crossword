@@ -316,9 +316,22 @@ namespace AssetBundles
             if (isLoadingAssetBundleManifest)
                 download = UnityWebRequestAssetBundle.GetAssetBundle(url);
             else
-            {   
+            {
                 if (s_AssetBundleManifest)
+                {
                     download = UnityWebRequestAssetBundle.GetAssetBundle(url, s_AssetBundleManifest.GetAssetBundleHash(assetBundleName), 0);
+
+                    if (AllowOnlyOneCache)
+                    {
+                        List<Hash128> listOfCachedVersions = new List<Hash128>();
+                        Caching.GetCachedVersions(assetBundleName, listOfCachedVersions);
+
+                        if (listOfCachedVersions.Count > 0)
+                        {
+                            Caching.ClearOtherCachedVersions(assetBundleName, listOfCachedVersions[0]);
+                        }
+                    }
+                }
                 else if (UseCashWhenOffline)
                 {
                     List<Hash128> listOfCachedVersions = new List<Hash128>();
@@ -332,6 +345,8 @@ namespace AssetBundles
                         if (AllowOnlyOneCache)
                             Caching.ClearOtherCachedVersions(assetBundleName, recentHash);
                     }
+                    else
+                        download = null;
                 }
             }
 

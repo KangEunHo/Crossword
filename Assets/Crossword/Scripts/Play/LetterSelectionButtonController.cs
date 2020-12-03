@@ -82,7 +82,7 @@ namespace HealingJam.Crossword
             }
         }
 
-        public void LetterSelectionButtonClickSameLetter(char letter)
+        public bool LetterSelectionButtonClickSameLetter(char letter)
         {
             for (int i = 0; i < BUTTON_COUNT; ++i)
             {
@@ -91,10 +91,11 @@ namespace HealingJam.Crossword
                     if (letterSelectionButtons[i].Letter == letter)
                     {
                         OnLetterSelectionButtonClick(letterSelectionButtons[i]);
-                        return;
+                        return true;
                     }
                 }
             }
+            return false;
         }
 
         public void LetterSelectionButtonStateChangeSameLetter(char letter)
