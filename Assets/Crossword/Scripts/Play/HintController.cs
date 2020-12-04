@@ -28,7 +28,10 @@ namespace HealingJam.Crossword
                 {
                     //할것.
                     //if (coin >)
+                    char letter = boardHighlightController.SelectedWordData.word[boardHighlightController.SelectedLetterIndex];
+                    letterSelectionButtonController.LetterSelectionButtonChangeChangeAlreadySelectedStateSameLetter(letter);
                     boardHighlightController.SetCompleteHighlightCell();
+
                 }
             }
         }

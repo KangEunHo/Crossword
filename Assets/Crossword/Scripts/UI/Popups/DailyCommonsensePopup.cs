@@ -24,30 +24,18 @@ namespace HealingJam.Crossword
         private const int BASIC_FONT_SIZE = 24;
 
         public static DateTime KOREA_TIME { get { return DateTime.UtcNow.AddHours(9); } }
-
-        public static DateTime LAST_VIEW_TIME
+        public static string KOREA_TIME_STRING { get { return DateTime.UtcNow.AddHours(9).ToString("yyyyMMdd"); } }
+        public static string GET_REWARD_TIME
         {
             get {
-                string lastVeiwTime = PlayerPrefs.GetString("last_view_time", "19700101");
-
-                if (DateTime.TryParseExact(lastVeiwTime, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out DateTime result))
-                {
-                    return result;
-                }
-                else
-                    return new DateTime(1970, 1, 1);
+                return PlayerPrefs.GetString("get_reward_time", "19700101");
             }
             set
             {
-                PlayerPrefs.SetString("last_view_time", value.ToString("yyyyMMdd"));
+                PlayerPrefs.SetString("get_reward_time", value);
             }
         }
-
-        public static bool GET_LAST_DAILY_REAWRD
-        {
-            get{ return PlayerPrefs.GetInt("get_last_daily_reward", 0) == 1 ? true : false;}
-            set { PlayerPrefs.SetInt("get_last_daily_reward", value ? 1 : 0); }
-        }
+        public static bool GET_TODAY_REWARDED => GET_REWARD_TIME == KOREA_TIME_STRING;
 
         [SerializeField] private Button nextButton = null;
         [SerializeField] private Button prevButton = null;
@@ -55,13 +43,14 @@ namespace HealingJam.Crossword
         [SerializeField] private Text meaningText = null;
         [SerializeField] private Text dateText = null;
         [SerializeField] private ImageSwap zoomImageSwap = null;
+        [SerializeField] private GameObject questionMarkObject = null;
 
         private int curPage = 0;
         private bool isZoomed = false;
         public int MaxPage => dailyCommonsenses.Count;
         public bool IsLoaded => dailyCommonsenses.Count > 0;
         private List<DailyCommonsense> dailyCommonsenses = new List<DailyCommonsense>();
-
+        public static bool ReadyTodayCommonsense { get; private set; } = false;
 
         public override void Enter(params object[] args)
         {
@@ -92,7 +81,6 @@ namespace HealingJam.Crossword
                     {
                         if (request.downloadHandler.isDone)
                         {
-
                             StringReader s = new StringReader(request.downloadHandler.text);
                             DailyCommonsense dailyCommonsense = new DailyCommonsense
                             {
@@ -102,6 +90,11 @@ namespace HealingJam.Crossword
                             };
 
                             dailyCommonsenses.Add(dailyCommonsense);
+
+                            if (i == 0)
+                            {
+                                ReadyTodayCommonsense = true;
+                            }
                         }
                     }
                 }
@@ -121,6 +114,20 @@ namespace HealingJam.Crossword
             nextButton.interactable = curPage + 1 < MaxPage;
             prevButton.interactable = curPage - 1 >= 0;
 
+            string todayDate = KOREA_TIME_STRING;
+
+            bool isTodayCommonsense = dailyCommonsenses[page].date == todayDate;
+
+            if (isTodayCommonsense && GET_TODAY_REWARDED == false)
+            {
+                wordText.gameObject.SetActive(false);
+                questionMarkObject.SetActive(true);
+            }
+            else
+            {
+                wordText.gameObject.SetActive(true);
+                questionMarkObject.SetActive(false);
+            }
         }
 
         public void OnNextButtonClick()
@@ -161,6 +168,16 @@ namespace HealingJam.Crossword
             meaningText.fontSize = BASIC_FONT_SIZE;
             ContentSizeUpdated();
             zoomImageSwap.SetSprite(true);
+        }
+
+        public void GetTodayReward()
+        {
+            GET_REWARD_TIME = KOREA_TIME_STRING;
+            wordText.gameObject.SetActive(true);
+            questionMarkObject.SetActive(false);
+
+            // 할것.
+            // 코인추가
         }
     }
 }

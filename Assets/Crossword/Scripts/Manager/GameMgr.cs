@@ -13,6 +13,9 @@ namespace HealingJam.Crossword
         private IEnumerator Start()
         {
             DG.Tweening.DOTween.SetTweensCapacity(tweenersCapacity: 300, sequencesCapacity: 200);
+            DG.Tweening.DOTween.defaultAutoKill = true;
+
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
             SaveMgr.Instance.Load();
 

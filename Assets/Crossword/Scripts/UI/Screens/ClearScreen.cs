@@ -11,7 +11,7 @@ namespace HealingJam.Crossword.UI
         public override void Enter(params object[] args)
         {
             base.Enter(args);
-            bool packLastStage = CrosswordMapManager.Instance.ActiveStageIndex > 0 && (CrosswordMapManager.Instance.ActiveStageIndex % CrosswordMapManager.LEVEL_IN_PACK_COUNT) == 0;
+            bool packLastStage = CrosswordMapManager.Instance.ActivePackIndex > 0 && (CrosswordMapManager.Instance.ActivePackIndex % CrosswordMapManager.LEVEL_IN_PACK_COUNT) == 0;
             nextStageButton.SetActive(packLastStage == false);
         }
 
@@ -32,7 +32,7 @@ namespace HealingJam.Crossword.UI
 
         public void OnNextLevelButtonClick()
         {
-            CrosswordMapManager.Instance.ActiveStageIndex++;
+            CrosswordMapManager.Instance.ActivePackIndex++;
 
             GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Play Screen", ScreenMgr.Instance.transform);
             ScreenMgr.Instance.RegisterState(playScreen);

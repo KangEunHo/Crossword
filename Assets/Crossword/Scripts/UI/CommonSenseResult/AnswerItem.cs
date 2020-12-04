@@ -14,19 +14,23 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private ImageSwap oxImageSwap = null;
         [SerializeField] private Text wordText = null;
 
+        private int index = 0;
         private AnswerItemData answerItemData;
 
-        public void SetUp(AnswerItemData answerItemData)
+        public System.Action<int> PlusButtonClickAction { get; set; } = null;
+
+        public void SetUp(int index, AnswerItemData answerItemData)
         {
             this.answerItemData = answerItemData;
+            this.index = index;
 
             wordText.text = answerItemData.wordData.word;
             oxImageSwap.SetSprite(answerItemData.correctAnswer);
         }
 
-        public void OnPlusButtonClikck()
+        public void OnPlusButtonClik()
         {
-
+            PlusButtonClickAction?.Invoke(index);
         }
     }
 }

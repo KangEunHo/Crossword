@@ -21,9 +21,9 @@ namespace HealingJam.Crossword.UI
             base.Enter(args);
         }
 
-        private void OnStageSelectButtonClick(int stageIndex)
+        private void OnStageSelectButtonClick(int packIndex)
         {
-            int level = stageIndex / CrosswordMapManager.LEVEL_IN_PACK_COUNT;
+            int level = packIndex / CrosswordMapManager.LEVEL_IN_PACK_COUNT;
             bool unlockLevel = level == 0;
 
             if (unlockLevel == false)
@@ -35,9 +35,9 @@ namespace HealingJam.Crossword.UI
 
             if (unlockLevel)
             {
-                if (stageIndex < CrosswordMapManager.Instance.MaxStage())
+                if (packIndex < CrosswordMapManager.Instance.MaxStage())
                 {
-                    CrosswordMapManager.Instance.ActiveStageIndex = stageIndex;
+                    CrosswordMapManager.Instance.ActivePackIndex = packIndex;
 
                     GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Play Screen", ScreenMgr.Instance.transform);
                     ScreenMgr.Instance.RegisterState(playScreen);
@@ -47,12 +47,13 @@ namespace HealingJam.Crossword.UI
             else
             {
                 Debug.Log("이전 레벨을 먼저 클리어하세요");
-                //Toast 이전 레벨을 클리어하세요.
+                // 할것. Toast 이전 레벨을 클리어하세요.
             }
         }
 
         public void OnBadgeButtonClick()
         {
+            CrosswordMapManager.Instance.ActiveLevelIndex = stageSelectButtonController.GetCurrentPage();
             GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Word Matching Play Canvas", ScreenMgr.Instance.transform);
             ScreenMgr.Instance.RegisterState(playScreen);
             ScreenMgr.Instance.ChangeState(ScreenID.WordMatchingPlay, WordMatchingPlayScreen.GameMode.BadgePlay);

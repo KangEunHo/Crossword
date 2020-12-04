@@ -14,14 +14,17 @@ namespace HealingJam.Crossword
 
         [SerializeField] private TextAsset[] crosswordTextAssets = null;
         [SerializeField] private Sprite[] badgeSprites = null;
+
+        public int BadgeSpriteLength => badgeSprites.Length;
+
         private List<TextAsset> listOfCrosswordMap = null;
 
-        private int activeStageIndex;
-        public int ActiveStageIndex { get { return activeStageIndex; }
+        private int activePackIndex;
+        public int ActivePackIndex { get { return activePackIndex; }
             set
             {
                 if (value >= 0 && value < MaxStage())
-                    activeStageIndex = value;
+                    activePackIndex = value;
             }
         }
         public int ActiveLevelIndex { get; set; }
@@ -76,12 +79,19 @@ namespace HealingJam.Crossword
             AddCrosswordMaps(textAssets);
         }
 
-        public Sprite GetBadgeSprite(int levelIndex)
+        public Sprite GetBadgeSpriteToLevelIndex(int levelIndex)
         {
             int badgeSpriteIndex = Mathf.FloorToInt(levelIndex / BADGE_IN_LEVEL_COUNT);
             badgeSpriteIndex = Mathf.Clamp(badgeSpriteIndex, 0, badgeSprites.Length - 1);
 
             return badgeSprites[badgeSpriteIndex];
+        }
+
+        public Sprite GetBadgeSpriteToBadgeIndex(int badgeIndex)
+        {
+            badgeIndex = Mathf.Clamp(badgeIndex, 0, badgeSprites.Length - 1);
+
+            return badgeSprites[badgeIndex];
         }
     }
 }

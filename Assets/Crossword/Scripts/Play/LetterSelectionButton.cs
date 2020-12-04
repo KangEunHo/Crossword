@@ -41,6 +41,7 @@ namespace HealingJam.Crossword
             .Join(image.DOFade(0f, 0.5f))
             .Join(letterText.DOFade(0f, 0.5f))
             .SetAutoKill(false)
+            .SetLink(gameObject)
             .Pause();
         }
 

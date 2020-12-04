@@ -2,6 +2,13 @@
 
 namespace HealingJam.Crossword.Save
 {
+    // 맞춘 갯수랑 문제갯수 데이터.
+    public class RightAnswerCountData
+    {
+        public int rightAnswerCount;
+        public int answerCount;
+    }
+
     public class ProgressData
     {
         public List<string> machedWords = new List<string>();
@@ -10,7 +17,7 @@ namespace HealingJam.Crossword.Save
     public class LevelData
     {
         public bool completed = false;
-        public Dictionary<WordData.WordType, int> wrongCountsByType = new Dictionary<WordData.WordType, int>();
+        public List<RightAnswerCountData> rightAnswerCountDatas = new List<RightAnswerCountData>();
     }
 
     public class SaveData
@@ -18,6 +25,5 @@ namespace HealingJam.Crossword.Save
         public Dictionary<int, ProgressData> progressDatas = new Dictionary<int, ProgressData>();
         public List<bool> completeDatas = new List<bool>();
         public List<LevelData> levelDatas = new List<LevelData>();
-        public int unlockLevel = 0;
     }
 }

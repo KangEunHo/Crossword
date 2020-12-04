@@ -6,13 +6,22 @@ namespace HealingJam.Crossword.UI
 {
     public class StatisticsScreen : FadeAndScaleTweenScreen
     {
-        [SerializeField] StatisticsController statisticsController = null;
+        [SerializeField] private StatisticsController statisticsController = null;
+        [SerializeField] private StatisticsBadgeButtonController statisticsBadgeButtonController = null;
+
+        private bool isInited = false;
 
         public override void Enter(params object[] args)
         {
             base.Enter(args);
 
-            statisticsController.SetUp(0, 5);
+            if (isInited == false)
+            {
+                isInited = true;
+                statisticsBadgeButtonController.Init();
+            }
+            statisticsBadgeButtonController.SetUp();
+            statisticsController.PlayAnimation(0);
         }
 
         public override void Escape()

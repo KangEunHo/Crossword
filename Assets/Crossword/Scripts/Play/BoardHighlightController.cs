@@ -8,6 +8,7 @@ namespace HealingJam.Crossword
     {
         [SerializeField] private DarkModeSprite cellHighlightSprite = null;
         [SerializeField] private DarkModeSprite cellHighlightSelectedSprite = null;
+        [SerializeField] private GameObject boardGradation = null;
 
         private BoardController boardController = null;
 
@@ -113,10 +114,12 @@ namespace HealingJam.Crossword
             if (i >= SelectedWordData.word.Length)
             {
                 OnEndMatch();
+                OffCellGradation();
             }
             else
             {
                 OnHighlightCellsSprite();
+                OnHighlightCellGradation();
             }
         }
         
@@ -139,6 +142,18 @@ namespace HealingJam.Crossword
             {
                 highlightCells[i].SetSprite(i == SelectedLetterIndex ? cellHighlightSelectedSprite.ActiveModeSprite : cellHighlightSprite.ActiveModeSprite);
             }
+        }
+        
+        private void OnHighlightCellGradation()
+        {
+            boardGradation.SetActive(true);
+            boardGradation.transform.SetParent(highlightCells[SelectedLetterIndex].transform, false);
+        }
+
+        public void OffCellGradation()
+        {
+            boardGradation.SetActive(false);
+            boardGradation.transform.SetParent(transform, false);
         }
 
         public BoardCell GetHighlightCell()

@@ -20,13 +20,16 @@ namespace HealingJam.Crossword.UI
             
             if (showedDailyCommonsense == false)
             {
-                CoroutineHelper.RunAfterDelay(0.5f, ShowDailyCommonsense);
+                if (DailyCommonsensePopup.ReadyTodayCommonsense && DailyCommonsensePopup.GET_TODAY_REWARDED == false)
+                {
+                    CoroutineHelper.RunAfterDelay(0.5f, ShowDailyCommonsense);
+                }
                 showedDailyCommonsense = true;
             }
 
             int unlockLevel = SaveMgr.Instance.GetUnlockLevel();
             badgeImage.gameObject.SetActive(unlockLevel > 0);
-            badgeImage.sprite = unlockLevel == 0 ? null : CrosswordMapManager.Instance.GetBadgeSprite(unlockLevel -1);
+            badgeImage.sprite = unlockLevel == 0 ? null : CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(unlockLevel -1);
             badgeLevelText.text = unlockLevel.ToString();
         }
 

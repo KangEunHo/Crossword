@@ -105,7 +105,7 @@ namespace HealingJam.Crossword.Save
             if (saveData == null)
                 return;
 
-            while (saveData.levelDatas.Count <= index -1)
+            while (saveData.levelDatas.Count < index + 1)
             {
                 saveData.levelDatas.Add(new LevelData());
             }
@@ -117,8 +117,12 @@ namespace HealingJam.Crossword.Save
         {
             if (saveData == null)
                 return 0;
-
-            return saveData.unlockLevel;
+            for (int i = 0; i < saveData.levelDatas.Count; ++i)
+            {
+                if (saveData.levelDatas[i].completed == false)
+                    return i;
+            }
+            return saveData.levelDatas.Count -1;
         }
     }
 }

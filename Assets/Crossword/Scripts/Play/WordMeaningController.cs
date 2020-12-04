@@ -46,7 +46,7 @@ namespace HealingJam.Crossword
         }
 
 
-        private string WordTypeToString(WordData.WordType wordType)
+        public static string WordTypeToString(WordData.WordType wordType)
         {
             switch (wordType)
             {
@@ -67,7 +67,7 @@ namespace HealingJam.Crossword
                 case WordData.WordType.History:
                     return "역사";
                 case WordData.WordType.Science:
-                    return "과학,IT,수학";
+                    return "과학,수학,IT";
                 case WordData.WordType.Politics:
                     return "정치,법률";
                 case WordData.WordType.Economy:

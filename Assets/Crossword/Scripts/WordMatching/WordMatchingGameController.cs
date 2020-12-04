@@ -9,13 +9,6 @@ using HealingJam.Crossword.Save;
 
 namespace HealingJam.Crossword
 {
-    // 맞춘 갯수랑 문제갯수 데이터.
-    public class RightAnswerCountData
-    {
-        public int rightAnswerCount;
-        public int answerCount;
-    }
-
     public class WordMatchingGameController : MonoBehaviour
     {
         private const float ANSWER_RATE_GAUGE_WIDTH = 380f;
@@ -41,7 +34,7 @@ namespace HealingJam.Crossword
         public GameState State { get; set; }
 
         private WordMatchingPlayScreen.GameMode gameMode;
-        public float ElapsedTime { get; private set; }
+        public float LimitTime { get; private set; }
         private int maxAnswerCount;
         private int curAnswerIndex;
         private int answerCount;
@@ -52,6 +45,7 @@ namespace HealingJam.Crossword
 
         public void SetUp(WordMatchingPlayScreen.GameMode gameMode, List<WordDataForGame> answers)
         {
+            this.gameMode = gameMode;
             //초기화.
 
             letterSelectionButtonController.Init();
@@ -76,7 +70,7 @@ namespace HealingJam.Crossword
             // 첫번째 맞출 단어 설정.
 
 
-            ElapsedTime = 0f;
+            LimitTime = 60 * 5f;
 
             maxAnswerCount = answers.Count;
             curAnswerIndex = 0;
@@ -99,7 +93,6 @@ namespace HealingJam.Crossword
 
             ProgressTextUpdate();
 
-            this.gameMode = gameMode;
             if (gameMode == WordMatchingPlayScreen.GameMode.AbilityTest)
             {
                 timeObject.SetActive(true);
@@ -112,10 +105,24 @@ namespace HealingJam.Crossword
 
         private void Update()
         {
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                OnClear();
+            }
+#endif
+
             if (State == GameState.Play && gameMode == WordMatchingPlayScreen.GameMode.AbilityTest)
             {
-                ElapsedTime += Time.deltaTime;
-                TimeSpan t = TimeSpan.FromSeconds(ElapsedTime);
+                LimitTime -= Time.deltaTime;
+
+                if (LimitTime <= 0)
+                {
+                    LimitTime = 0f;
+                    State = GameState.Fail;
+                    OnClear();
+                }
+                TimeSpan t = TimeSpan.FromSeconds(LimitTime);
                 string str = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
 
                 timeText.text = str;
@@ -167,12 +174,26 @@ namespace HealingJam.Crossword
 
         private void OnClear()
         {
+            if (gameMode == WordMatchingPlayScreen.GameMode.AbilityTest)
+            {
+
+            }
+            else
+            {
+                SaveMgr.Instance.SetLevelData(CrosswordMapManager.Instance.ActiveLevelIndex, new LevelData()
+                {
+                    completed = true,
+                    rightAnswerCountDatas = rightAnswerCountDatas
+                });
+                SaveMgr.Instance.Save();
+            }
             ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.CommonSenseResult, answerItemDatas, rightAnswerCountDatas);
         }
 
         private void SetHighlightUnMatchedWord()
         {
             WordData unMatchedWord = answerChecker.GetUnMatchedWord();
+            boardHighlightController.OffCellGradation();
             boardController.GenerateBoard(unMatchedWord);
             WordDataForGame wordData = new WordDataForGame()
             {
@@ -203,7 +224,7 @@ namespace HealingJam.Crossword
 
         private void ProgressTextUpdate()
         {
-            progressText.text = curAnswerIndex.ToString() + '/' + maxAnswerCount.ToString();
+            progressText.text = Mathf.Min((curAnswerIndex +1), maxAnswerCount).ToString() + '/' + maxAnswerCount.ToString();
         }
 
         private void AnswerRateUpdate()

@@ -16,25 +16,25 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private GameObject star = null;
 
         public Action<int> onClickAction = null;
-        private int stageIndex;
+        private int packIndex;
 
         private void Start()
         {
-            GetComponent<Button>().onClick.AddListener(() => { onClickAction?.Invoke(stageIndex); });
+            GetComponent<Button>().onClick.AddListener(() => { onClickAction?.Invoke(packIndex); });
         }
 
-        public void SetUp(int stageIndex)
+        public void SetUp(int packIndex)
         {
-            bool completeData = SaveMgr.Instance.GetCompleteData(stageIndex);
+            bool completeData = SaveMgr.Instance.GetCompleteData(packIndex);
             if (completeData)
             {
                 progressCircle.fillAmount = 1f;
             }
             else
             {
-                if (SaveMgr.Instance.TryGetProgressData(stageIndex, out ProgressData progressData))
+                if (SaveMgr.Instance.TryGetProgressData(packIndex, out ProgressData progressData))
                 {
-                    progressCircle.fillAmount = progressData.machedWords.Count / (float)CrosswordMapManager.Instance.GetCrosswordMap(stageIndex).wordDatas.Count;
+                    progressCircle.fillAmount = progressData.machedWords.Count / (float)CrosswordMapManager.Instance.GetCrosswordMap(packIndex).wordDatas.Count;
                 }
                 else
                 {
@@ -43,8 +43,8 @@ namespace HealingJam.Crossword.UI
             }
 
             star.SetActive(completeData);
-            stageText.text = (stageIndex + 1).ToString();
-            this.stageIndex = stageIndex;
+            stageText.text = (packIndex + 1).ToString();
+            this.packIndex = packIndex;
         }
     }
 }

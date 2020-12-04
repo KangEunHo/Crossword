@@ -10,6 +10,7 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private StageSelectButton[] stageSelectButtons = null;
         [SerializeField] private Image badgeImage = null;
         [SerializeField] private Text badgeLevelText = null;
+        [SerializeField] private Text guegeLevelText = null;
         [SerializeField] private GameObject badgeGaugeObject = null;
         [SerializeField] private Image badgeGaugeImage = null;
         [SerializeField] private Text pageText = null;
@@ -30,15 +31,16 @@ namespace HealingJam.Crossword.UI
         private void Awake()
         {
             page = SavedPage;
-        }
 
-        private void OnEnable()
-        {
             foreach (var v in stageSelectButtons)
             {
                 v.onClickAction = OnStageSelectButtonClick;
             }
 
+        }
+
+        private void OnEnable()
+        {
             SetPage(page);
         }
 
@@ -52,10 +54,10 @@ namespace HealingJam.Crossword.UI
             int completeCount = 0;
             for (int i = 0; i < CrosswordMapManager.LEVEL_IN_PACK_COUNT; ++i)
             {
-                int index = page * CrosswordMapManager.LEVEL_IN_PACK_COUNT + i;
-                stageSelectButtons[i].SetUp(index);
+                int packIndex = page * CrosswordMapManager.LEVEL_IN_PACK_COUNT + i;
+                stageSelectButtons[i].SetUp(packIndex);
 
-                if (SaveMgr.Instance.GetCompleteData(index))
+                if (SaveMgr.Instance.GetCompleteData(packIndex))
                 { 
                     completeCount++;
                 }
@@ -69,11 +71,12 @@ namespace HealingJam.Crossword.UI
             {
                 float pageProgress = completeCount / (float)CrosswordMapManager.LEVEL_IN_PACK_COUNT * 0.8f;
                 badgeGaugeImage.fillAmount = 0.1f + pageProgress;
+                guegeLevelText.text = (page +1).ToString();
             }
             else
             {
-                badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSprite(page);
-                badgeLevelText.text = page.ToString();
+                badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(page);
+                badgeLevelText.text = (page +1).ToString();
             }
 
             pageText.text = (page + 1).ToString() + "/" + MaxPage;
@@ -103,6 +106,11 @@ namespace HealingJam.Crossword.UI
             {
                 SetPage(--page);
             }
+        }
+
+        public int GetCurrentPage()
+        {
+            return page;
         }
     }
 }

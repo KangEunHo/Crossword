@@ -27,14 +27,14 @@ namespace HealingJam.Crossword
 
         private void Start()
         {
-            CrosswordMap crosswordMap = CrosswordMapManager.Instance.GetCrosswordMap(CrosswordMapManager.Instance.ActiveStageIndex);
+            CrosswordMap crosswordMap = CrosswordMapManager.Instance.GetCrosswordMap(CrosswordMapManager.Instance.ActivePackIndex);
 
             //초기화.
             boardController.GenerateBoard(crosswordMap);
             letterSelectionButtonController.Init();
 
             // 저장된 정보가 있다면.
-            if (SaveMgr.Instance.TryGetProgressData(CrosswordMapManager.Instance.ActiveStageIndex, out progressData) && progressData != null)
+            if (SaveMgr.Instance.TryGetProgressData(CrosswordMapManager.Instance.ActivePackIndex, out progressData) && progressData != null)
             {
                 foreach(var word in progressData.machedWords)
                 {
@@ -64,6 +64,16 @@ namespace HealingJam.Crossword
             // 첫번째 맞출 단어 설정.
             SetHighlightUnMatchedWord();
         }
+
+#if UNITY_EDITOR
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                OnClear();
+            }
+        }
+#endif
 
         public void OnCellBoardClick(object sender, BoardClickEvent boardClickEvent)
         {
@@ -105,7 +115,7 @@ namespace HealingJam.Crossword
         {
             if (progressData != null)
             {
-                SaveMgr.Instance.SetProgressData(CrosswordMapManager.Instance.ActiveStageIndex, progressData);
+                SaveMgr.Instance.SetProgressData(CrosswordMapManager.Instance.ActivePackIndex, progressData);
                 SaveMgr.Instance.Save();
             }
         }
@@ -115,12 +125,6 @@ namespace HealingJam.Crossword
             if (answerChecker.AddMatchedWord(wordDataForGame.word))
             {
                 State = GameState.Clear;
-
-
-                SaveMgr.Instance.SetCompleteData(CrosswordMapManager.Instance.ActiveStageIndex, true);
-                // 클리어시에 진행상황 삭제.
-                SaveMgr.Instance.DeleteProgressData(CrosswordMapManager.Instance.ActiveStageIndex);
-                SaveMgr.Instance.Save();
 
                 answerOXResult.ShowOResult(OnClear);
             }
@@ -140,6 +144,10 @@ namespace HealingJam.Crossword
 
         private void OnClear()
         {
+            SaveMgr.Instance.SetCompleteData(CrosswordMapManager.Instance.ActivePackIndex, true);
+            // 클리어시에 진행상황 삭제.
+            SaveMgr.Instance.DeleteProgressData(CrosswordMapManager.Instance.ActivePackIndex);
+            SaveMgr.Instance.Save();
             ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Clear);
         }
 

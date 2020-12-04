@@ -17,41 +17,37 @@ namespace HealingJam.Crossword.UI
 
         private Sequence animationSequence = null;
 
-        public void SetUp(int min, int max)
+        public void PlayAnimation(int badgeIndex)
         {
-            List<int> wrongCountsByType = new List<int>();
-            while (wrongCountsByType.Count < (int)WordData.WordType.Max)
+            List<RightAnswerCountData> rightAnswerCountData = new List<RightAnswerCountData>();
+
+            for (int i = 0; i< (int)WordData.WordType.Max; ++i)
             {
-                wrongCountsByType.Add(0);
+                rightAnswerCountData.Add(new RightAnswerCountData());
             }
 
-            for (int i = min; i < max; ++i)
+            for (int i = 0; i < CrosswordMapManager.BADGE_IN_LEVEL_COUNT; ++i)
             {
-                LevelData levelData = SaveMgr.Instance.GetLevelData(min);
+                int levelIndex = badgeIndex * CrosswordMapManager.BADGE_IN_LEVEL_COUNT + i;
+                LevelData levelData = SaveMgr.Instance.GetLevelData(levelIndex);
+                if (levelData.completed == false || levelData.rightAnswerCountDatas.Count == 0)
+                    continue;
 
-                foreach(var v in levelData.wrongCountsByType.Keys)
+                for (int j = 1; j < (int)WordData.WordType.Max; ++j)
                 {
-                    wrongCountsByType[(int)v] += levelData.wrongCountsByType[v];
+                    rightAnswerCountData[j].rightAnswerCount += levelData.rightAnswerCountDatas[j].rightAnswerCount;
                 }
             }
 
-#if UNITY_EDITOR
-            //테스트.
-            wrongCountsByType[9] = 2;
-            wrongCountsByType[1] = 1;
+            for (int j = 1; j < (int)WordData.WordType.Max; ++j)
+            {
+                rightAnswerCountData[j].answerCount += 2 * CrosswordMapManager.BADGE_IN_LEVEL_COUNT;
+            }
 
-            wrongCountsByType[2] = 5;
-            wrongCountsByType[4] = 7;
-            wrongCountsByType[7] = 8;
-            wrongCountsByType[6] = 10;
-
-#endif
-
-            int answerCount = (max - min) * 2;
-            PlayAnimation(answerCount, wrongCountsByType);
+            PlayAnimation(rightAnswerCountData);
         }
 
-        private void PlayAnimation(int answerCount, List<int> wrongCountsByType)
+        private void PlayAnimation(List<RightAnswerCountData> rightAnswerCountData)
         {
             bottomGauge.fillAmount = 0f;
             foreach(var branch in branches)
@@ -67,9 +63,9 @@ namespace HealingJam.Crossword.UI
             animationSequence = DOTween.Sequence()
                 .Append(bottomGauge.DOFillAmount(1f, 0.2f));
             
-            for (int i = 1; i < wrongCountsByType.Count; ++i)
+            for (int i = 1; i < (int)WordData.WordType.Max; ++i)
             {
-                float percentageOfCorrectAnswers = 1 - (wrongCountsByType[i] / (float)answerCount);
+                float percentageOfCorrectAnswers = rightAnswerCountData[i].rightAnswerCount / (float)rightAnswerCountData[i].answerCount;
 
                 float height = Mathf.Max(20f, BRANCH_MAX_HEIGHT * percentageOfCorrectAnswers);
                 if (i == 1)
