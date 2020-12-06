@@ -20,7 +20,7 @@ namespace HealingJam.Crossword.UI
             
             if (showedDailyCommonsense == false)
             {
-                if (DailyCommonsensePopup.ReadyTodayCommonsense && DailyCommonsensePopup.GET_TODAY_REWARDED == false)
+                if (DailyCommonsensePopup.READY_TO_DAY_COMMONSENSE_AND_NOT_GET_TODAY_REWARD)
                 {
                     CoroutineHelper.RunAfterDelay(0.5f, ShowDailyCommonsense);
                 }

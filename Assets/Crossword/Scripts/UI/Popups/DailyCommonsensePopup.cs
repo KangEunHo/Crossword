@@ -23,8 +23,8 @@ namespace HealingJam.Crossword
         private const int ZOOM_FONT_SIZE = 36;
         private const int BASIC_FONT_SIZE = 24;
 
-        public static DateTime KOREA_TIME { get { return DateTime.UtcNow.AddHours(9); } }
-        public static string KOREA_TIME_STRING { get { return DateTime.UtcNow.AddHours(9).ToString("yyyyMMdd"); } }
+        //public static DateTime KOREA_TIME { get { return DateTime.UtcNow.AddHours(9); } }
+        //public static string KOREA_TIME_STRING { get { return DateTime.UtcNow.AddHours(9).ToString("yyyyMMdd"); } }
         public static string GET_REWARD_TIME
         {
             get {
@@ -35,7 +35,6 @@ namespace HealingJam.Crossword
                 PlayerPrefs.SetString("get_reward_time", value);
             }
         }
-        public static bool GET_TODAY_REWARDED => GET_REWARD_TIME == KOREA_TIME_STRING;
 
         [SerializeField] private Button nextButton = null;
         [SerializeField] private Button prevButton = null;
@@ -49,8 +48,13 @@ namespace HealingJam.Crossword
         private bool isZoomed = false;
         public int MaxPage => dailyCommonsenses.Count;
         public bool IsLoaded => dailyCommonsenses.Count > 0;
+
+        public DateTime TodayKoreaDateTime;
+        public string TodayKoreaDateToString => TodayKoreaDateTime.ToString("yyyyMMdd");
+        public bool IsLoadTodayDate { get; private set; } = false;
+        public bool getTodayRward => GET_REWARD_TIME == TodayKoreaDateToString;
         private List<DailyCommonsense> dailyCommonsenses = new List<DailyCommonsense>();
-        public static bool ReadyTodayCommonsense { get; private set; } = false;
+        public static bool READY_TO_DAY_COMMONSENSE_AND_NOT_GET_TODAY_REWARD { get; private set; } = false;
 
         public override void Enter(params object[] args)
         {
@@ -60,13 +64,20 @@ namespace HealingJam.Crossword
                 SetPage(MaxPage - 1);
         }
 
+        // 서버에서 단어들을 가져옵니다.
+        // 가져오기전에 날짜를 먼저 가져오고, 날짜를 가져오기 실패할 시 단어들을 가져오지 않습니다.
         public IEnumerator LoadCommonSenseAsync()
         {
+            yield return CoroutineHelper.StartStaticCoroutine(LoadTodayDate());
+
+            if (IsLoadTodayDate == false)
+                yield break;
+
             dailyCommonsenses.Clear();
 
             for (int i = 7; i >= 0; --i)
             {
-                string date = KOREA_TIME.AddDays(-i).ToString("yyyyMMdd");
+                string date = TodayKoreaDateTime.AddDays(-i).ToString("yyyyMMdd");
                 string fileName = date + ".txt";
                 string webPath = Path.Combine(URL_PATH, fileName);
 
@@ -93,10 +104,35 @@ namespace HealingJam.Crossword
 
                             if (i == 0)
                             {
-                                ReadyTodayCommonsense = true;
+                                if (getTodayRward == false)
+                                    READY_TO_DAY_COMMONSENSE_AND_NOT_GET_TODAY_REWARD = true;
                             }
                         }
                     }
+                }
+            }
+        }
+
+        // 현재 날짜를 서버에서 가져옵니다.
+        private IEnumerator LoadTodayDate()
+        {
+            string webPath = "http://healingjam.cafe24.com/";
+            using (UnityWebRequest request = UnityWebRequest.Get(webPath))
+            {
+                yield return request.SendWebRequest();
+
+                if (request.isNetworkError || request.isHttpError)
+                {
+                    EditorDebug.Log(request.error);
+                }
+                else
+                {
+                    string date = request.GetResponseHeader("date");
+                    if (string.IsNullOrEmpty(date))
+                        yield break;
+
+                    TodayKoreaDateTime = DateTime.Parse(date).ToUniversalTime().AddHours(9);
+                    IsLoadTodayDate = true;
                 }
             }
         }
@@ -114,11 +150,11 @@ namespace HealingJam.Crossword
             nextButton.interactable = curPage + 1 < MaxPage;
             prevButton.interactable = curPage - 1 >= 0;
 
-            string todayDate = KOREA_TIME_STRING;
+            string todayDate = TodayKoreaDateToString;
 
             bool isTodayCommonsense = dailyCommonsenses[page].date == todayDate;
 
-            if (isTodayCommonsense && GET_TODAY_REWARDED == false)
+            if (isTodayCommonsense && getTodayRward == false)
             {
                 wordText.gameObject.SetActive(false);
                 questionMarkObject.SetActive(true);
@@ -172,10 +208,11 @@ namespace HealingJam.Crossword
 
         public void GetTodayReward()
         {
-            GET_REWARD_TIME = KOREA_TIME_STRING;
+            GET_REWARD_TIME = TodayKoreaDateToString;
             wordText.gameObject.SetActive(true);
             questionMarkObject.SetActive(false);
 
+            READY_TO_DAY_COMMONSENSE_AND_NOT_GET_TODAY_REWARD = false;
             // 할것.
             // 코인추가
         }
