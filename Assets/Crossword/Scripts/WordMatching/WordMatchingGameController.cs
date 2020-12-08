@@ -20,6 +20,7 @@ namespace HealingJam.Crossword
         [SerializeField] private BoardController boardController = null;
         [SerializeField] private LetterSelectionButtonController letterSelectionButtonController = null;
         [SerializeField] private WordMeaningController wordMeaningController = null;
+        [SerializeField] private WordMeaningController bigWordMeaningController = null;
         [SerializeField] private BoardHighlightController boardHighlightController = null;
         [SerializeField] private AnswerOXResult answerOXResult = null;
         [SerializeField] private HintController hintController = null;
@@ -30,6 +31,7 @@ namespace HealingJam.Crossword
         [SerializeField] private RectTransform answerRateGauge = null;
         [SerializeField] private Text percentText = null;
         [SerializeField] private WrongWordAnimator wrongWordAnimator = null;
+        [SerializeField] private PressChecker zoomPressChecker = null;
 
         private AnswerChecker answerChecker = null;
         public GameState State { get; set; }
@@ -43,6 +45,7 @@ namespace HealingJam.Crossword
 
         public List<RightAnswerCountData> rightAnswerCountDatas = new List<RightAnswerCountData>();
         private List<AnswerItem.AnswerItemData> answerItemDatas = null;
+
 
         public void SetUp(WordMatchingPlayScreen.GameMode gameMode, List<WordDataForGame> answers)
         {
@@ -102,6 +105,19 @@ namespace HealingJam.Crossword
             {
                 timeObject.SetActive(false);
             }
+
+            zoomPressChecker.OnPointerDown = OnZoomButtonPressDown;
+            zoomPressChecker.OnPointerUp = OnZoomButtonPressUp;
+        }
+
+        private void OnZoomButtonPressDown()
+        {
+            bigWordMeaningController.gameObject.SetActive(true);
+        }
+
+        private void OnZoomButtonPressUp()
+        {
+            bigWordMeaningController.gameObject.SetActive(false);
         }
 
         private void Update()
@@ -207,6 +223,7 @@ namespace HealingJam.Crossword
             };
             boardHighlightController.SetUpHighlightCells(wordData);
             wordMeaningController.SetText(unMatchedWord);
+            bigWordMeaningController.SetText(unMatchedWord);
             letterSelectionButtonController.SetButtonsLetter(unMatchedWord);
         }
 

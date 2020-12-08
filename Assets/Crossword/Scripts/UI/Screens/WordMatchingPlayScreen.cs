@@ -217,5 +217,11 @@ namespace HealingJam.Crossword.UI
                 }
             }
         }
+
+        public void OnModifyReviewButtonClick()
+        {
+            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.ModifyReview, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
+                null, (CrosswordMapManager.Instance.ActivePackIndex));
+        }
     }
 }

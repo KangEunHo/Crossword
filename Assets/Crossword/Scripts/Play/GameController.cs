@@ -16,9 +16,11 @@ namespace HealingJam.Crossword
         [SerializeField] private BoardController boardController = null;
         [SerializeField] private LetterSelectionButtonController letterSelectionButtonController = null;
         [SerializeField] private WordMeaningController wordMeaningController = null;
+        [SerializeField] private WordMeaningController bigWordMeaningController = null;
         [SerializeField] private BoardHighlightController boardHighlightController = null;
         [SerializeField] private AnswerOXResult answerOXResult = null;
         [SerializeField] private HintController hintController = null;
+        [SerializeField] private PressChecker zoomPressChecker = null;
 
         private AnswerChecker answerChecker = null;
         public GameState State { get; set; }
@@ -63,8 +65,20 @@ namespace HealingJam.Crossword
 
             // 첫번째 맞출 단어 설정.
             SetHighlightUnMatchedWord();
+
+            zoomPressChecker.OnPointerDown = OnZoomButtonPressDown;
+            zoomPressChecker.OnPointerUp = OnZoomButtonPressUp;
         }
 
+        private void OnZoomButtonPressDown()
+        {
+            bigWordMeaningController.gameObject.SetActive(true);
+        }
+
+        private void OnZoomButtonPressUp()
+        {
+            bigWordMeaningController.gameObject.SetActive(false);
+        }
 #if UNITY_EDITOR
         private void Update()
         {
@@ -83,15 +97,18 @@ namespace HealingJam.Crossword
             if (direction == WordDataForGame.Direction.None)
             {
                 wordMeaningController.SetText(null);
+                bigWordMeaningController.SetText(null);
             }
             else if (direction == WordDataForGame.Direction.Horizontal)
             {
                 wordMeaningController.SetText(boardCell.HorizontalWordData);
+                bigWordMeaningController.SetText(boardCell.HorizontalWordData);
                 SetHighlightCellsAndLetterButtons(boardCell.HorizontalWordData);
             }
             else if (direction == WordDataForGame.Direction.Vertical)
             {
                 wordMeaningController.SetText(boardCell.VerticalWordData);
+                bigWordMeaningController.SetText(boardCell.VerticalWordData);
                 SetHighlightCellsAndLetterButtons(boardCell.VerticalWordData);
             }
         }
@@ -170,6 +187,7 @@ namespace HealingJam.Crossword
             }
 
             wordMeaningController.SetText(unMatchedWord);
+            bigWordMeaningController.SetText(unMatchedWord);
             SetHighlightCellsAndLetterButtons(unMatchedWord);
         }
 

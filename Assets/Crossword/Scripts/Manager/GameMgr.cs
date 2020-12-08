@@ -45,12 +45,14 @@ namespace HealingJam.Crossword
             if (pause)
             {
                 SaveMgr.Instance.Save();
+                SettingMgr.SaveToLocal();
             }
         }
 
         protected override void OnApplicationQuit()
         {
             SaveMgr.Instance.Save();
+            SettingMgr.SaveToLocal();
         }
     }
 }

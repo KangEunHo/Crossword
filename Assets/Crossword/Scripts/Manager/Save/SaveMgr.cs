@@ -160,5 +160,19 @@ namespace HealingJam.Crossword.Save
                 return 0;
             return saveData.coin;
         }
+
+        public void SetLoginType(SaveData.LoginType loginType)
+        {
+            if (saveData == null)
+                return;
+            saveData.loginType = loginType;
+        }
+
+        public SaveData.LoginType GetLoginType()
+        {
+            if (saveData == null)
+                return  SaveData.LoginType.None;
+            return saveData.loginType;
+        }
     }
 }

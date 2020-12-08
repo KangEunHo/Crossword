@@ -24,13 +24,34 @@ namespace HealingJam.Crossword.UI
         {
             base.Enter(args);
 
-            if (LoadedServerContents)
+            if (SaveMgr.Instance.GetLoginType() == SaveData.LoginType.None)
             {
-                OnEnterContent();
+                PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Login, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
+                    new PopupClosedDelegate((str)=> {
+                        if (LoadedServerContents)
+                        {
+                            OnEnterContent();
+                        }
+                        else
+                        {
+                            StartCoroutine(LoadServerContents(OnEnterContent));
+                        }
+                    }));
             }
             else
             {
-                StartCoroutine(LoadServerContents(OnEnterContent));
+                if (LoadedServerContents)
+                {
+                    OnEnterContent();
+                }
+                else
+                {
+                    StartCoroutine(LoadServerContents(OnEnterContent));
+
+                    // 할것.
+                    // 구글 로그인 시도.
+
+                }
             }
         }
 
