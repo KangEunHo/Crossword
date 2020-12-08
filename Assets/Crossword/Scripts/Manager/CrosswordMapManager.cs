@@ -36,6 +36,18 @@ namespace HealingJam.Crossword
             listOfCrosswordMap = new List<TextAsset>(crosswordTextAssets);
         }
 
+        public void SetUpDatabase()
+        {
+            int maxStage = Instance.MaxStage();
+
+            CrosswordMap[] crosswordMaps = new CrosswordMap[maxStage];
+            for (int i = 0; i < maxStage; ++i)
+            {
+                crosswordMaps[i] = Instance.GetCrosswordMap(i);
+            }
+            LetterDatabase.SetUpDatabase(crosswordMaps);
+        }
+
         public void AddCrosswordMaps(List<TextAsset> crosswordMaps)
         {
             listOfCrosswordMap.AddRange(crosswordMaps);

@@ -86,7 +86,7 @@ namespace HealingJam.Crossword
                     yield return request.SendWebRequest();
                     if (request.isNetworkError || request.isHttpError)
                     {
-                        EditorDebug.Log(request.error);
+                        //EditorDebug.Log(request.error);
                     }
                     else
                     {

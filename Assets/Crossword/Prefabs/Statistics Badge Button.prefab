@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2316587046061209012}
   - component: {fileID: 6216251597134650047}
   - component: {fileID: 7512053845802776517}
+  - component: {fileID: 6438819097114541001}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -77,6 +78,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1~5
+--- !u!114 &6438819097114541001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2290446494277662349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7647bcea3a4a64798fedad174af173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  darkModeColor: {r: 1, g: 1, b: 1, a: 1}
+  lightModeColor: {r: 0, g: 0, b: 0, a: 1}
+  graphic: {fileID: 7512053845802776517}
 --- !u!1 &5711518259453382122
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +199,7 @@ GameObject:
   - component: {fileID: 7178959755236059831}
   - component: {fileID: 2686722062927804513}
   - component: {fileID: 6813938490519003008}
+  - component: {fileID: 6485615951148148813}
   m_Layer: 5
   m_Name: Statistics Badge Button
   m_TagString: Untagged
@@ -317,6 +334,21 @@ MonoBehaviour:
   badgeOriginImage: {fileID: 3894508002382371981}
   badgeGrayscaleImage: {fileID: 3547828606486173337}
   stageText: {fileID: 7512053845802776517}
+--- !u!114 &6485615951148148813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7084325280416974695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7657e121266b9748a201386f1706fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightModeSprite: {fileID: 21300000, guid: efbe6985cf43a3e4ca2bfab6adc47ff1, type: 3}
+  darkModeSprite: {fileID: 21300000, guid: a691adebdd593314a94d09b89c5ed9ea, type: 3}
+  image: {fileID: 7178959755236059831}
 --- !u!1 &8944571155755071686
 GameObject:
   m_ObjectHideFlags: 0

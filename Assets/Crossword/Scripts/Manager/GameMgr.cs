@@ -3,48 +3,30 @@ using System.Collections;
 using HealingJam.GameScreens;
 using HealingJam.Crossword.Save;
 using HealingJam.Popups;
+using HealingJam.Crossword.UI;
 
 namespace HealingJam.Crossword
 {
     public class GameMgr : MonoSingleton<GameMgr>
     {
-        [SerializeField] private GameObject contentDownloadMessage = null;
+        public TopUIController topUIController = null;
 
-        private IEnumerator Start()
+        protected override void Awake()
         {
-            DG.Tweening.DOTween.SetTweensCapacity(tweenersCapacity: 300, sequencesCapacity: 200);
+            base.Awake();
+
+            DG.Tweening.DOTween.SetTweensCapacity(tweenersCapacity: 150, sequencesCapacity: 100);
             DG.Tweening.DOTween.defaultAutoKill = true;
 
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
             SaveMgr.Instance.Load();
-
-            contentDownloadMessage.SetActive(true);
-            yield return StartCoroutine(CrosswordMapManager.Instance.LoadCrosswordMapAtAssetBundle());
-
-            SetUpDatabase();
-
-            DailyCommonsensePopup dailyCommonsensePopup = PopupMgr.Instance.GetPopupById(Popup.PopupID.DailyCommonSense) as DailyCommonsensePopup;
-
-            yield return StartCoroutine(dailyCommonsensePopup.LoadCommonSenseAsync());
-            contentDownloadMessage.SetActive(false);
-
-            ScreenMgr.Instance.Enter(GameScreen.ScreenID.Title);
-
         }
 
-        private void SetUpDatabase()
+        private void Start()
         {
-            int maxStage = CrosswordMapManager.Instance.MaxStage();
-
-            CrosswordMap[] crosswordMaps = new CrosswordMap[maxStage];
-            for (int i = 0; i < maxStage; ++i)
-            {
-                crosswordMaps[i] = CrosswordMapManager.Instance.GetCrosswordMap(i);
-            }
-            LetterDatabase.SetUpDatabase(crosswordMaps);
+            ScreenMgr.Instance.Enter(GameScreen.ScreenID.Title);
         }
-
 
         private void Update()
         {
@@ -56,6 +38,19 @@ namespace HealingJam.Crossword
             {
                 DarkMode.UseDarkMode = false;
             }
+        }
+
+        private void OnApplicationPause(bool pause)
+        {
+            if (pause)
+            {
+                SaveMgr.Instance.Save();
+            }
+        }
+
+        protected override void OnApplicationQuit()
+        {
+            SaveMgr.Instance.Save();
         }
     }
 }

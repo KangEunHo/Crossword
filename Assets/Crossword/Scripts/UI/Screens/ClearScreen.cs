@@ -1,23 +1,25 @@
 ﻿using UnityEngine;
 using HealingJam.GameScreens;
 using HealingJam.Popups;
-
+using HealingJam.Crossword.Save;
 namespace HealingJam.Crossword.UI
 {
     public class ClearScreen : FadeAndScaleTweenScreen
     {
-        [SerializeField] private GameObject nextStageButton = null;
+        [SerializeField] private ClearUIController clearUIController = null;
 
         public override void Enter(params object[] args)
         {
             base.Enter(args);
-            bool packLastStage = ((CrosswordMapManager.Instance.ActivePackIndex +1) % CrosswordMapManager.LEVEL_IN_PACK_COUNT) == 0;
-            nextStageButton.SetActive(packLastStage == false);
+
+            bool alreadyCompleted = (bool)args[0];
+            int addCoinAmount = alreadyCompleted ? 0 : 30;
+            clearUIController.SetUp(alreadyCompleted, addCoinAmount);
         }
 
         public override void Escape()
         {
-            ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);
+            //ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);
         }
 
         public void OnCoinButtonClick()

@@ -14,11 +14,12 @@ namespace HealingJam.Crossword
 
         public override void DarkModeChanged(bool darkMode)
         {
+            this.darkMode = darkMode;
             if (image == null)
                 image = GetComponent<Image>();
+
             image.sprite = darkMode ? darkModeSprite : lightModeSprite;
 
-            this.darkMode = darkMode;
         }
     }
 }

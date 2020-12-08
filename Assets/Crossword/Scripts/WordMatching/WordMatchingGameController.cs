@@ -174,12 +174,14 @@ namespace HealingJam.Crossword
 
         private void OnClear()
         {
+            bool alreadyCompleted = false;
             if (gameMode == WordMatchingPlayScreen.GameMode.AbilityTest)
             {
 
             }
             else
             {
+                alreadyCompleted = SaveMgr.Instance.GetLevelData(CrosswordMapManager.Instance.ActiveLevelIndex).completed;
                 SaveMgr.Instance.SetLevelData(CrosswordMapManager.Instance.ActiveLevelIndex, new LevelData()
                 {
                     completed = true,
@@ -187,7 +189,7 @@ namespace HealingJam.Crossword
                 });
                 SaveMgr.Instance.Save();
             }
-            ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.CommonSenseResult, answerItemDatas, rightAnswerCountDatas);
+            ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.CommonSenseResult, gameMode, alreadyCompleted, answerItemDatas, rightAnswerCountDatas);
         }
 
         private void SetHighlightUnMatchedWord()

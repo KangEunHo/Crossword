@@ -144,11 +144,12 @@ namespace HealingJam.Crossword
 
         private void OnClear()
         {
+            bool alreadyCompleted = SaveMgr.Instance.GetCompleteData(CrosswordMapManager.Instance.ActivePackIndex);
             SaveMgr.Instance.SetCompleteData(CrosswordMapManager.Instance.ActivePackIndex, true);
             // 클리어시에 진행상황 삭제.
             SaveMgr.Instance.DeleteProgressData(CrosswordMapManager.Instance.ActivePackIndex);
             SaveMgr.Instance.Save();
-            ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Clear);
+            ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Clear, alreadyCompleted);
         }
 
         private void SetHighlightUnMatchedWord()

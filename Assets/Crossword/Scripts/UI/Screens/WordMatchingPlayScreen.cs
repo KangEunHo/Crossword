@@ -158,7 +158,7 @@ namespace HealingJam.Crossword.UI
 
         public override void Escape()
         {
-            ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);
+            OnBackButtonClick();
         }
 
         public void OnCoinButtonClick()

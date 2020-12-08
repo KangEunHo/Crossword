@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
+using System;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -8,13 +8,20 @@ namespace HealingJam.Crossword.Save
     public class SaveMgr : Singleton<SaveMgr>
     {
         public string FilePath { get { return Path.Combine(Application.persistentDataPath, "save.dat"); } }
+        public event Action<int> CoinChangeAction = null;
+        public event Action<int> CoinAddAction = null;
 
         private SaveData saveData = null;
 
         private SaveMgr() { }
 
+        public bool Loaded { get; private set; } = false;
+
         public void Load()
         {
+            if (Loaded)
+                return;
+
             if (File.Exists(FilePath))
             {
                 string text = File.ReadAllText(FilePath);
@@ -24,6 +31,7 @@ namespace HealingJam.Crossword.Save
             {
                 saveData = new SaveData();
             }
+            Loaded = true;
         }
 
         public void Save()
@@ -122,7 +130,35 @@ namespace HealingJam.Crossword.Save
                 if (saveData.levelDatas[i].completed == false)
                     return i;
             }
-            return saveData.levelDatas.Count -1;
+            return 0;
+        }
+
+        public void SetCoin(int coin)
+        {
+            if (saveData == null)
+                return;
+
+            if (coin < 0)
+                coin = 0;
+
+            saveData.coin = coin;
+            CoinChangeAction?.Invoke(coin);
+        }
+
+        public void AddCoin(int amount)
+        {
+            if (saveData == null)
+                return;
+
+            SetCoin(saveData.coin + amount);
+            CoinAddAction?.Invoke(amount);
+        }
+
+        public int GetCoin()
+        {
+            if (saveData == null)
+                return 0;
+            return saveData.coin;
         }
     }
 }
