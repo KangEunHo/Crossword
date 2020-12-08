@@ -63,7 +63,7 @@ namespace HealingJam.Crossword
             if (buttonState == ButtonState.Basic)
             {
                 image.sprite = basicSprite.ActiveModeSprite;
-
+                letterText.SetAlpha(1f);
                 if (animationTween != null)
                 {
                     animationTween.Rewind();
@@ -84,7 +84,7 @@ namespace HealingJam.Crossword
             else
             {
                 image.sprite = selectedSprite.ActiveModeSprite;
-
+                letterText.SetAlpha(0.8f);
                 if (animationTween != null)
                 {
                     animationTween.Rewind();
@@ -97,7 +97,6 @@ namespace HealingJam.Crossword
         {
             transform.localScale = Vector3.one;
             image.SetAlpha(1f);
-            letterText.SetAlpha(1f);
         }
     }
 }

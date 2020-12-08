@@ -102,6 +102,8 @@ namespace HealingJam.Crossword.UI
                     Invoke(nameof(ShowAnswerItems), 3f);
                 }
             }
+
+            GoogleMobileAdsMgr.Instance.ShowDelayInterstitial();
         }
 
         private void PlayGaugeAnimation()

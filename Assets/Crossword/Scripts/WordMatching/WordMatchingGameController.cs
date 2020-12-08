@@ -170,6 +170,10 @@ namespace HealingJam.Crossword
 
         public void OnWrongAnswer(WordDataForGame wordDataForGame)
         {
+            SaveMgr.Instance.AddCoin(-1);
+            if (SettingMgr.UseVibration)
+                Vibration.Vibrate();
+
             answerItemDatas[curAnswerIndex].correctAnswer = false;
             curAnswerIndex++;
             ProgressTextUpdate();

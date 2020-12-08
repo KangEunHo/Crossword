@@ -165,7 +165,7 @@ PlayerSettings:
     Android: com.healingjam.crossword
     Standalone: com.Company.ProductName
   buildNumber: {}
-  AndroidBundleVersionCode: 100
+  AndroidBundleVersionCode: 104
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -255,18 +255,18 @@ PlayerSettings:
   clonedFromGUID: 5f34be1353de5cf4398729fda238591b
   templatePackageId: com.unity.template.2d@3.2.5
   templateDefaultScene: Assets/Scenes/SampleScene.unity
-  AndroidTargetArchitectures: 1
+  AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: '{inproject}: Keystore/crossword.keystore'
+  AndroidKeyaliasName: healingjam
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 0
+  androidUseCustomKeystore: 1
   m_AndroidBanners:
   - width: 320
     height: 180
@@ -644,9 +644,21 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    4: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    7: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    13: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    14: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    19: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    21: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    25: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    27: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    28: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    29: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    Android: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}

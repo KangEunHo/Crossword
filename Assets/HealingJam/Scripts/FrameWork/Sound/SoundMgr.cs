@@ -40,7 +40,6 @@ namespace HealingJam
 
         [Header("Max number allowed of same sounds playing together")]
         public int maxSimultaneousSounds = 7;
-
         #endregion
 
         #region Public Variables
@@ -48,7 +47,6 @@ namespace HealingJam
         // List of sounds used in this game
 
         [Header("BGM list")]
-        public Sound bgm;
 
         [Header("Sound list")]
         public Sound efx;

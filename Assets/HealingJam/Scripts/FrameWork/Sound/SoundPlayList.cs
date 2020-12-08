@@ -18,11 +18,14 @@ public class SoundPlayList : MonoBehaviour
 
     #region Initialize Methods
 
+    private bool isInitialized = false;
     public void Initialize(AudioSource audioSource)
     {
         this.audioSource = audioSource;
         if (this.audioSource == null)
         {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
             this.audioSource = this.gameObject.AddComponent<AudioSource>();
         }
 
@@ -30,6 +33,8 @@ public class SoundPlayList : MonoBehaviour
         this.audioSource.loop = false;
 
         playList = new List<AudioClip>();
+
+        isInitialized = true;
     }
 
     #endregion
@@ -54,6 +59,9 @@ public class SoundPlayList : MonoBehaviour
 
     public void AddSound(AudioClip clip)
     {
+        if (isInitialized == false)
+            Initialize(null);
+
         if (playList.Contains(clip))
             return;
 
@@ -68,6 +76,9 @@ public class SoundPlayList : MonoBehaviour
 
     public void RemoveSound(AudioClip clip)
     {
+        if (isInitialized == false)
+            Initialize(null);
+
         if (playList.Contains(clip) == false)
             return;
 

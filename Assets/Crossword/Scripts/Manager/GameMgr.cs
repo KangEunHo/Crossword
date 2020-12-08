@@ -4,6 +4,7 @@ using HealingJam.GameScreens;
 using HealingJam.Crossword.Save;
 using HealingJam.Popups;
 using HealingJam.Crossword.UI;
+using HealingJam;
 
 namespace HealingJam.Crossword
 {
@@ -21,11 +22,21 @@ namespace HealingJam.Crossword
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
             SaveMgr.Instance.Load();
+
+            OnDarkModeChanged(SettingMgr.UseDarkMode);
+            OnVibrationChanged(SettingMgr.UseVibration);
+
+            SettingMgr.UseDarkModeChangedAction += OnDarkModeChanged;
+            SettingMgr.UseVibrationChangedAction += OnVibrationChanged;
+
+            Vibration.Init();
         }
 
         private void Start()
         {
             ScreenMgr.Instance.Enter(GameScreen.ScreenID.Title);
+
+            GoogleMobileAdsMgr.Instance.ShowBannerAD();
         }
 
         private void Update()
@@ -53,6 +64,16 @@ namespace HealingJam.Crossword
         {
             SaveMgr.Instance.Save();
             SettingMgr.SaveToLocal();
+        }
+
+        private void OnDarkModeChanged(bool value)
+        {
+            DarkMode.UseDarkMode = value;
+        }
+
+        private void OnVibrationChanged(bool value)
+        {
+
         }
     }
 }

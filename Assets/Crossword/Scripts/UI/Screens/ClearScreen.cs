@@ -15,6 +15,16 @@ namespace HealingJam.Crossword.UI
             bool alreadyCompleted = (bool)args[0];
             int addCoinAmount = alreadyCompleted ? 0 : 30;
             clearUIController.SetUp(alreadyCompleted, addCoinAmount);
+
+            GoogleMobileAdsMgr.Instance.ShowDelayInterstitial();
+            GameMgr.Instance.topUIController.gameObject.SetActive(false);
+        }
+
+        public override void Exit(params object[] args)
+        {
+            base.Exit(args);
+
+            GameMgr.Instance.topUIController.gameObject.SetActive(true);
         }
 
         public override void Escape()

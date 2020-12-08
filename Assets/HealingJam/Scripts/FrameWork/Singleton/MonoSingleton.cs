@@ -68,7 +68,7 @@ namespace HealingJam
 
         protected virtual void Awake()
         {
-            if (Instantiated && instance != null)
+            if (Instantiated && instance != null && instance != this)
             {
                 Debug.LogWarning("There is more than one instance of Singleton of type \"" + typeof(T) +
                  "\". Keeping the first one. Destroying the others.");
