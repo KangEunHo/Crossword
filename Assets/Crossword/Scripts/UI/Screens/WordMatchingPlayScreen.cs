@@ -28,8 +28,18 @@ namespace HealingJam.Crossword.UI
             {
                 gameController.SetUp(gameMode, CreateBadgePlayAnswers());
             }
+
+            PopupMgr.Instance.StateMachine.OnStateEntered += OnPopupEntered;
+            PopupMgr.Instance.StateMachine.OnStateExited += OnPopupExited;
         }
 
+        public override void Exit(params object[] args)
+        {
+            base.Exit(args);
+
+            PopupMgr.Instance.StateMachine.OnStateEntered -= OnPopupEntered;
+            PopupMgr.Instance.StateMachine.OnStateExited -= OnPopupExited;
+        }
         // 뱃지문제에 사용되는 문제들을 만듭니다.
         // 해당 레벨에서 문제들이 출제됩니다.
         private List<WordDataForGame> CreateBadgePlayAnswers()
@@ -161,46 +171,31 @@ namespace HealingJam.Crossword.UI
             OnBackButtonClick();
         }
 
-        public void OnCoinButtonClick()
-        {
-            if (gameController.State == WordMatchingGameController.GameState.Play)
-            {
-                gameController.State = WordMatchingGameController.GameState.Pause;
-
-                PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Shop, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
-                    new PopupClosedDelegate(OnPopupClosed));
-            }
-        }
-
-        public void OnOptionButtonClick()
-        {
-            if (gameController.State == WordMatchingGameController.GameState.Play)
-            {
-                gameController.State = WordMatchingGameController.GameState.Pause;
-
-                PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Option, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
-                    new PopupClosedDelegate(OnPopupClosed));
-            }
-        }
-
         public void OnBackButtonClick()
         {
+            string message = "나가시겠습니까?\n 나가게 되면 보상을 받을 수 없습니다.";
+
+            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.PlayExit, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
+                new PopupClosedDelegate(OnPlayExitPopupClosed), message);
+        }
+
+
+        public void OnPopupEntered(object sender, StateMachine.StateEventArgs<Popup> stateEventArgs)
+        {
             if (gameController.State == WordMatchingGameController.GameState.Play)
             {
                 gameController.State = WordMatchingGameController.GameState.Pause;
-
-                string message = "나가시겠습니까?\n 나가게 되면 보상을 받을 수 없습니다.";
-
-                PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.PlayExit, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
-                    new PopupClosedDelegate(OnPlayExitPopupClosed), message);
             }
         }
 
-        private void OnPopupClosed(string message)
+        public void OnPopupExited(object sender, StateMachine.StateEventArgs<Popup> stateEventArgs)
         {
-            if (gameController.State == WordMatchingGameController.GameState.Pause)
+            if (PopupMgr.Instance.StateMachine.CurrentState() == null)
             {
-                gameController.State = WordMatchingGameController.GameState.Play;
+                if (gameController.State == WordMatchingGameController.GameState.Pause)
+                {
+                    gameController.State = WordMatchingGameController.GameState.Play;
+                }
             }
         }
 

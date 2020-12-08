@@ -8,6 +8,22 @@ namespace HealingJam.Crossword.UI
     {
         [SerializeField] private GameController gameController = null;
 
+        public override void Enter(params object[] args)
+        {
+            base.Enter(args);
+
+            PopupMgr.Instance.StateMachine.OnStateEntered += OnPopupEntered;
+            PopupMgr.Instance.StateMachine.OnStateExited += OnPopupExited;
+        }
+
+        public override void Exit(params object[] args)
+        {
+            base.Exit(args);
+
+            PopupMgr.Instance.StateMachine.OnStateEntered -= OnPopupEntered;
+            PopupMgr.Instance.StateMachine.OnStateExited -= OnPopupExited;
+        }
+
         protected override void OnExitFadeComplete(params object[] args)
         {
             ScreenMgr.Instance.UnRegisterState(this);
@@ -18,45 +34,29 @@ namespace HealingJam.Crossword.UI
             OnBackButtonClick();
         }
 
-        public void OnCoinButtonClick()
+        public void OnPopupEntered(object sender, StateMachine.StateEventArgs<Popup> stateEventArgs)
         {
             if (gameController.State == GameController.GameState.Play)
             {
                 gameController.State = GameController.GameState.Pause;
-
-                PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Shop, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
-                    new PopupClosedDelegate(OnPopupClosed));
             }
         }
 
-        public void OnOptionButtonClick()
+        public void OnPopupExited(object sender, StateMachine.StateEventArgs<Popup> stateEventArgs)
         {
-            if (gameController.State == GameController.GameState.Play)
+            if (PopupMgr.Instance.StateMachine.CurrentState() == null)
             {
-                gameController.State = GameController.GameState.Pause;
-
-                PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Option, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
-                    new PopupClosedDelegate(OnPopupClosed));
+                if (gameController.State == GameController.GameState.Pause)
+                {
+                    gameController.State = GameController.GameState.Play;
+                }
             }
         }
 
         public void OnBackButtonClick()
         {
-            if (gameController.State == GameController.GameState.Play)
-            {
-                gameController.State = GameController.GameState.Pause;
-
-                PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.PlayExit, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
-                    new PopupClosedDelegate(OnPlayExitPopupClosed), "나가시겠습니까?\n진행한 내용은 저장됩니다.");
-            }
-        }
-
-        private void OnPopupClosed(string message)
-        {
-            if (gameController.State == GameController.GameState.Pause)
-            {
-                gameController.State = GameController.GameState.Play;
-            }
+            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.PlayExit, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
+                new PopupClosedDelegate(OnPlayExitPopupClosed), "나가시겠습니까?\n진행한 내용은 저장됩니다.");
         }
 
         private void OnPlayExitPopupClosed(string message)

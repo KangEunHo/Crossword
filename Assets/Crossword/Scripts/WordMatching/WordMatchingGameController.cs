@@ -169,7 +169,6 @@ namespace HealingJam.Crossword
             {
                 answerOXResult.ShowXResult(() => { wrongWordAnimator.PlayAnimation(SetHighlightUnMatchedWord, wordDataForGame.word); });
             }
-            //answerOXResult.ShowXResult(SetHighlightUnMatchedWord);// OnWrongAnimationEnd);
         }
 
         private void OnClear()

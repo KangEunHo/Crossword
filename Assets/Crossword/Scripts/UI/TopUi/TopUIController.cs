@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using HealingJam.Crossword.Save;
 using DG.Tweening;
 using HealingJam.GameScreens;
+using HealingJam.Popups;
 
 namespace HealingJam.Crossword.UI
 {
@@ -67,6 +67,16 @@ namespace HealingJam.Crossword.UI
         public void OnBackButtonClick()
         {
             ScreenMgr.Instance.GetCurrentScreen().Escape();
+        }
+
+        public void OnCoinButtonClick()
+        {
+            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Shop, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
+        }
+
+        public void OnOptionButtonClick()
+        {
+            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Option, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
         }
     }
 }
