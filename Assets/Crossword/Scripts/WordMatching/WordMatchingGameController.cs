@@ -29,6 +29,7 @@ namespace HealingJam.Crossword
         [SerializeField] private GameObject timeObject = null;
         [SerializeField] private RectTransform answerRateGauge = null;
         [SerializeField] private Text percentText = null;
+        [SerializeField] private WrongWordAnimator wrongWordAnimator = null;
 
         private AnswerChecker answerChecker = null;
         public GameState State { get; set; }
@@ -162,14 +163,13 @@ namespace HealingJam.Crossword
             {
                 State = GameState.Clear;
 
-                answerOXResult.ShowXResult(OnClear);
+                answerOXResult.ShowXResult(()=> { wrongWordAnimator.PlayAnimation(OnClear, wordDataForGame.word); });
             }
             else
             {
-                answerOXResult.ShowXResult(SetHighlightUnMatchedWord);
+                answerOXResult.ShowXResult(() => { wrongWordAnimator.PlayAnimation(SetHighlightUnMatchedWord, wordDataForGame.word); });
             }
             //answerOXResult.ShowXResult(SetHighlightUnMatchedWord);// OnWrongAnimationEnd);
-
         }
 
         private void OnClear()
