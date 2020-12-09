@@ -343,8 +343,8 @@ MonoBehaviour:
   mRuntimeAutoInitialization: 1
   mIsAdModuleEnable: 1
   mIsIAPModuleEnable: 0
-  mIsGameServiceModuleEnable: 0
+  mIsGameServiceModuleEnable: 1
   mIsNotificationModuleEnable: 0
   mIsSharingModuleEnable: 0
-  mActiveModuleIndex: 0
-  mIsSelectingModule: 1
+  mActiveModuleIndex: 1
+  mIsSelectingModule: 0
