@@ -34,7 +34,7 @@ namespace HealingJam.Crossword.UI
             {
                 if (SaveMgr.Instance.TryGetProgressData(packIndex, out ProgressData progressData))
                 {
-                    progressCircle.fillAmount = progressData.machedWords.Count / (float)CrosswordMapManager.Instance.GetCrosswordMap(packIndex).wordDatas.Count;
+                    progressCircle.fillAmount = progressData.matchedWords.Count / (float)CrosswordMapManager.Instance.GetCrosswordMap(packIndex).wordDatas.Count;
                 }
                 else
                 {

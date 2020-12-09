@@ -107,7 +107,7 @@ namespace HealingJam.Crossword
 
             BoardCell clickBoardCell = boardCells[clickIndex.y, clickIndex.x];
             // 
-            if (clickBoardCell.State == BoardCell.CellState.None)
+            if (clickBoardCell.State != BoardCell.CellState.Unuse)
             {
                 selectedWordDataDirection = DirectionCalculation(clickBoardCell, selectedWordDataDirection);
                 boardClickEventHandler?.Invoke(this, new BoardClickEvent(clickBoardCell, selectedWordDataDirection));

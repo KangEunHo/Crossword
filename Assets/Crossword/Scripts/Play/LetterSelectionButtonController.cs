@@ -8,6 +8,7 @@ namespace HealingJam.Crossword
     {
         public const int BUTTON_COUNT = 12;
         [SerializeField] private LetterSelectionButton[] letterSelectionButtons = null;
+        [SerializeField] private CanvasGroup buttonCanvasGroup = null;
 
         public event EventHandler<LetterSelectionButtonClickEventArgs> letterSelectionButtonClickHandler = null;
 
@@ -111,6 +112,11 @@ namespace HealingJam.Crossword
                     }
                 }
             }
+        }
+
+        public void SetButtonBlocksRaycasts(bool active)
+        {
+            buttonCanvasGroup.blocksRaycasts = active;
         }
     }
 }

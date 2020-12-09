@@ -11,7 +11,7 @@ namespace HealingJam.Crossword.Save
 
     public class ProgressData
     {
-        public List<string> machedWords = new List<string>();
+        public List<string> matchedWords = new List<string>();
     }
 
     public class LevelData

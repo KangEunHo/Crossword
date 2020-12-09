@@ -38,7 +38,7 @@ namespace HealingJam.Crossword
             // 저장된 정보가 있다면.
             if (SaveMgr.Instance.TryGetProgressData(CrosswordMapManager.Instance.ActivePackIndex, out progressData) && progressData != null)
             {
-                foreach(var word in progressData.machedWords)
+                foreach(var word in progressData.matchedWords)
                 {
                     boardController.SetCompleteWord(crosswordMap.GetWordData(word));
                 }
@@ -101,15 +101,42 @@ namespace HealingJam.Crossword
             }
             else if (direction == WordDataForGame.Direction.Horizontal)
             {
-                wordMeaningController.SetText(boardCell.HorizontalWordData);
-                bigWordMeaningController.SetText(boardCell.HorizontalWordData);
-                SetHighlightCellsAndLetterButtons(boardCell.HorizontalWordData);
+                WordDataForGame wordDataForGame = boardCell.HorizontalWordData;
+                if (answerChecker.IsMatchedWord(wordDataForGame))
+                {
+                    letterSelectionButtonController.SetButtonBlocksRaycasts(false);
+                    boardHighlightController.SetHighlightMatchedWord(wordDataForGame);
+                    letterSelectionButtonController.SetButtonsLetter(wordDataForGame);
+                    SetCompletedLetterSelectionButton(wordDataForGame);
+
+                }
+                else
+                {
+                    letterSelectionButtonController.SetButtonBlocksRaycasts(true);
+                    SetHighlightCellsAndLetterButtons(wordDataForGame);
+                }
+
+                wordMeaningController.SetText(wordDataForGame);
+                bigWordMeaningController.SetText(wordDataForGame);
             }
             else if (direction == WordDataForGame.Direction.Vertical)
             {
-                wordMeaningController.SetText(boardCell.VerticalWordData);
-                bigWordMeaningController.SetText(boardCell.VerticalWordData);
-                SetHighlightCellsAndLetterButtons(boardCell.VerticalWordData);
+                WordDataForGame wordDataForGame = boardCell.VerticalWordData;
+                if (answerChecker.IsMatchedWord(wordDataForGame))
+                {
+                    letterSelectionButtonController.SetButtonBlocksRaycasts(false);
+                    boardHighlightController.SetHighlightMatchedWord(wordDataForGame);
+                    letterSelectionButtonController.SetButtonsLetter(wordDataForGame);
+                    SetCompletedLetterSelectionButton(wordDataForGame);
+                }
+                else
+                {
+                    letterSelectionButtonController.SetButtonBlocksRaycasts(true);
+                    SetHighlightCellsAndLetterButtons(wordDataForGame);
+
+                }
+                wordMeaningController.SetText(wordDataForGame);
+                bigWordMeaningController.SetText(wordDataForGame);
             }
         }
 
@@ -148,7 +175,8 @@ namespace HealingJam.Crossword
             else
             {
                 // 진행상황에 단어 추가.
-                progressData.machedWords.Add(wordDataForGame.word);
+                if (progressData.matchedWords.Contains(wordDataForGame.word) == false)
+                    progressData.matchedWords.Add(wordDataForGame.word);
 
                 answerOXResult.ShowOResult(SetHighlightUnMatchedWord);
             }
@@ -203,7 +231,10 @@ namespace HealingJam.Crossword
 
         public void OnResetButtonClick()
         {
-            SetHighlightCellsAndLetterButtons(boardHighlightController.SelectedWordData);
+            if (answerChecker.IsMatchedWord(boardHighlightController.SelectedWordData) == false)
+            {
+                SetHighlightCellsAndLetterButtons(boardHighlightController.SelectedWordData);
+            }
         }
 
         private void SetCompletedLetterSelectionButton(WordDataForGame wordDataForGame)

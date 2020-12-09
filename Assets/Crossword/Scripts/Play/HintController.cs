@@ -34,6 +34,10 @@ namespace HealingJam.Crossword
                         letterSelectionButtonController.LetterSelectionButtonChangeChangeAlreadySelectedStateSameLetter(letter);
                         boardHighlightController.SetCompleteHighlightCell();
                     }
+                    else
+                    {
+                        ToastPlugin.ToastHelper.ShowToast("코인이 부족합니다");
+                    }
 
                 }
             }

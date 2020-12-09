@@ -25,7 +25,6 @@ namespace HealingJam.Crossword
         public void Init(BoardController boardController)
         {
             this.boardController = boardController;
-            boardController.boardClickEventHandler += OnCellBoardClick;
         }
 
         public void OnCellBoardClick(object sender, BoardClickEvent boardClickEvent)
@@ -54,6 +53,20 @@ namespace HealingJam.Crossword
             {
                 AddHighlightCells();
                 SetNextSelectedBoardCell();
+            }
+        }
+
+        public void SetHighlightMatchedWord(WordDataForGame wordDataForGame)
+        {
+            SelectedWordData = wordDataForGame;
+            SelectedLetterIndex = -1;
+            ClearHighlightCellsLetter();
+            OffHighlightCellsSprite();
+            OffCellGradation();
+            if (wordDataForGame != null)
+            {
+                AddHighlightCells();
+                OnHighlightCellsSprite();
             }
         }
 

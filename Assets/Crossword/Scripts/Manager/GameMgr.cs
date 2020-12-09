@@ -59,6 +59,10 @@ namespace HealingJam.Crossword
             {
                 DarkMode.UseDarkMode = false;
             }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                SaveMgr.Instance.AddCoin(100);
+            }
         }
 #endif
 

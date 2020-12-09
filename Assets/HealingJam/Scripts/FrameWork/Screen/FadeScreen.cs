@@ -31,9 +31,6 @@ namespace HealingJam.GameScreens
             });
 
             canvasGroupTween.PlayForward();
-            //canvasGroup.DOFade(1f, fadeDuration).OnComplete(() => { canvasGroup.blocksRaycasts = true;
-            //    OnEnterFadeComplete(args);
-            //});
         }
 
         public override void Exit(params object[] args)
@@ -41,16 +38,13 @@ namespace HealingJam.GameScreens
             canvasGroup.alpha = 1f;
             canvasGroup.blocksRaycasts = false;
 
-            canvasGroupTween.OnComplete(() =>
+            canvasGroupTween.OnRewind(() =>
             {
                 gameObject.SetActive(false);
                 OnExitFadeComplete(args);
             });
 
             canvasGroupTween.PlayBackwards();
-            //canvasGroup.DOFade(0f, fadeDuration).OnComplete(() => { gameObject.SetActive(false);
-            //    OnExitFadeComplete(args);
-            //});
         }
 
         protected virtual void OnEnterFadeComplete(params object[] args) { }
