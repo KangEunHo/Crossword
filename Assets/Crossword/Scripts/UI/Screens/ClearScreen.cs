@@ -17,14 +17,16 @@ namespace HealingJam.Crossword.UI
             clearUIController.SetUp(alreadyCompleted, addCoinAmount);
 
             GoogleMobileAdsMgr.Instance.ShowDelayInterstitial();
-            GameMgr.Instance.topUIController.gameObject.SetActive(false);
+            GameMgr.Instance.topUIController.SetActiveBackButton(false);
+            GameMgr.Instance.topUIController.SetActiveOptionButton(false);
         }
 
         public override void Exit(params object[] args)
         {
             base.Exit(args);
 
-            GameMgr.Instance.topUIController.gameObject.SetActive(true);
+            GameMgr.Instance.topUIController.SetActiveBackButton(true);
+            GameMgr.Instance.topUIController.SetActiveOptionButton(true);
         }
 
         public override void Escape()

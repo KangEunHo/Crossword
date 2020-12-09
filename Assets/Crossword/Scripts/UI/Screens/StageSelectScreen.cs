@@ -46,8 +46,7 @@ namespace HealingJam.Crossword.UI
             }
             else
             {
-                Debug.Log("이전 레벨을 먼저 클리어하세요");
-                // 할것. Toast 이전 레벨을 클리어하세요.
+                ToastPlugin.ToastHelper.ShowToast("먼저 이전 뱃지테스트를 통과해야 해요");
             }
         }
 

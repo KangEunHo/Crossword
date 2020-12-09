@@ -13,6 +13,10 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private Text coinText = null;
         [SerializeField] private Text coinAddText = null;
 
+        [SerializeField] private GameObject coinObject = null;
+        [SerializeField] private GameObject backButton = null;
+        [SerializeField] private GameObject optionButton = null;
+
         private Tween coinAmountTween = null;
 
         private void OnEnable()
@@ -40,7 +44,10 @@ namespace HealingJam.Crossword.UI
             if (coinAddText == null)
                 return;
 
-            coinAddText.text = (amount > 0 ? "+" : "-") + amount.ToString();
+            if (amount >= 0)
+                coinAddText.text = "+" + amount.ToString();
+            else
+                coinAddText.text = amount.ToString();
 
             if (coinAmountTween != null)
                 coinAmountTween.Kill(true);
@@ -77,6 +84,21 @@ namespace HealingJam.Crossword.UI
         public void OnOptionButtonClick()
         {
             PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Option, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
+        }
+
+        public void SetActiveCoinButton(bool active)
+        {
+            coinObject.SetActive(active);
+        }
+
+        public void SetActiveBackButton(bool active)
+        {
+            backButton.SetActive(active);
+        }
+
+        public void SetActiveOptionButton(bool active)
+        {
+            optionButton.SetActive(active);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace HealingJam.Crossword.UI
     {
         [SerializeField] private StatisticsController statisticsController = null;
         [SerializeField] private StatisticsBadgeButtonController statisticsBadgeButtonController = null;
+        [SerializeField] private GameObject titleText = null;
 
         private bool isInited = false;
 
@@ -22,6 +23,17 @@ namespace HealingJam.Crossword.UI
             }
             statisticsBadgeButtonController.SetUp();
             statisticsController.PlayAnimation(0);
+
+            GameMgr.Instance.topUIController.SetActiveCoinButton(false);
+            titleText.SetActive(true);
+        }
+
+        public override void Exit(params object[] args)
+        {
+            base.Exit(args);
+
+            GameMgr.Instance.topUIController.SetActiveCoinButton(true);
+            titleText.SetActive(false);
         }
 
         public override void Escape()

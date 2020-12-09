@@ -14,6 +14,7 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private GameObject badgeGaugeObject = null;
         [SerializeField] private Image badgeGaugeImage = null;
         [SerializeField] private Text pageText = null;
+        [SerializeField] private Swiper pageSwiper = null;
 
         public Action<int> onClickAction = null;
 
@@ -37,6 +38,8 @@ namespace HealingJam.Crossword.UI
                 v.onClickAction = OnStageSelectButtonClick;
             }
 
+            pageSwiper.leftSwipeAction = SetNextPage;
+            pageSwiper.rightSwipeAction = SetPrevPage;
         }
 
         private void OnEnable()

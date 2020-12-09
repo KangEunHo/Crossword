@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: healingjam
-  productName: Everybody's Crossword
+  productName: "\uAC00\uB85C\uC138\uB85C \uB0B1\uB9D0\uD034\uC9882"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -740,10 +740,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 6c67abdd-0d7f-4aac-9a7e-5f4b3cc1f0a6
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: "\uAC00\uB85C\uC138\uB85C \uB0B1\uB9D0\uD034\uC9882"
+  organizationId: healingjjam
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
