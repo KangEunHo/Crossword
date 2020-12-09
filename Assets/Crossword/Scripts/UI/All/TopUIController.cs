@@ -73,6 +73,7 @@ namespace HealingJam.Crossword.UI
 
         public void OnBackButtonClick()
         {
+            if (backButton.activeSelf)
             ScreenMgr.Instance.GetCurrentScreen().Escape();
         }
 

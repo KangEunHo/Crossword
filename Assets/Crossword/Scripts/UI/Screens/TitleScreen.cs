@@ -98,6 +98,11 @@ namespace HealingJam.Crossword.UI
             dailyCommonsenseLoader.Show();
         }
 
+        public override void Escape()
+        {
+            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.MainBack, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
+        }
+
         public void OnGameStartButtonClick()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);

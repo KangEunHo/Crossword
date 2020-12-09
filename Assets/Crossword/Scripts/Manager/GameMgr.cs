@@ -39,8 +39,18 @@ namespace HealingJam.Crossword
             GoogleMobileAdsMgr.Instance.ShowBannerAD();
         }
 
+#if UNITY_ANDROID
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (PopupMgr.Instance.CloseOpenedPopup() == false)
+                {
+                    topUIController.OnBackButtonClick();
+                }
+
+            }
+
             if (Input.GetKeyDown(KeyCode.A))
             {
                 DarkMode.UseDarkMode = true;
@@ -50,6 +60,7 @@ namespace HealingJam.Crossword
                 DarkMode.UseDarkMode = false;
             }
         }
+#endif
 
         private void OnApplicationPause(bool pause)
         {

@@ -1,5 +1,3 @@
-#if EM_ADMOB
-
 using System;
 using UnityEngine;
 using EasyMobile;
@@ -142,4 +140,3 @@ namespace HealingJam
     }
 
 }
-#endif

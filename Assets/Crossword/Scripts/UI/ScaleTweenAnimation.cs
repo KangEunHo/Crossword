@@ -17,6 +17,11 @@ namespace HealingJam.Crossword.UI
         {
             if (scaleTween == null)
                 CreateTween();
+            else
+            {
+                scaleTween.Pause();
+                scaleTween.Rewind();
+            }
 
             transform.localScale = Vector3.one * 0.5f;
             scaleTween.PlayForward();
@@ -26,6 +31,11 @@ namespace HealingJam.Crossword.UI
         {
             if (scaleTween == null)
                 CreateTween();
+            else
+            {
+                scaleTween.Pause();
+                scaleTween.Complete();
+            }
 
             transform.localScale = Vector3.one;
             scaleTween.PlayBackwards();

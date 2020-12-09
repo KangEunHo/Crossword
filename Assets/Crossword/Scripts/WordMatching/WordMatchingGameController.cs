@@ -65,11 +65,19 @@ namespace HealingJam.Crossword
 
             State = GameState.Pause;
 
+            GameMgr.Instance.topUIController.SetActiveBackButton(false);
+            GameMgr.Instance.topUIController.SetActiveCoinButton(false);
+            GameMgr.Instance.topUIController.SetActiveOptionButton(false);
+
             readyAnimator.PlayAnimation(() =>
             {
                 answerChecker = new AnswerChecker(answers, null);
                 SetHighlightUnMatchedWord();
                 State = GameState.Play;
+
+                GameMgr.Instance.topUIController.SetActiveBackButton(true);
+                GameMgr.Instance.topUIController.SetActiveCoinButton(true);
+                GameMgr.Instance.topUIController.SetActiveOptionButton(true);
             });
             // 첫번째 맞출 단어 설정.
 
