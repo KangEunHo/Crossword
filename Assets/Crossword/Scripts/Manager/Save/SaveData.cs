@@ -31,6 +31,7 @@ namespace HealingJam.Crossword.Save
         public List<bool> completeDatas = new List<bool>();
         public List<LevelData> levelDatas = new List<LevelData>();
         public int coin = 0;
+        public bool isAdRemoved = false;
 
         public LoginType loginType = LoginType.None;
     }

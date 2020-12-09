@@ -213,8 +213,8 @@ namespace HealingJam.Crossword
             questionMarkObject.SetActive(false);
 
             READY_TO_DAY_COMMONSENSE_AND_NOT_GET_TODAY_REWARD = false;
-            // 할것.
-            // 코인추가
+
+            Save.SaveMgr.Instance.AddCoin(20);
         }
     }
 }

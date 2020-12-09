@@ -174,5 +174,19 @@ namespace HealingJam.Crossword.Save
                 return  SaveData.LoginType.None;
             return saveData.loginType;
         }
+
+        public void SetAdRemove(bool value)
+        {
+            if (saveData == null)
+                return;
+            saveData.isAdRemoved = value;
+        }
+
+        public bool GetIsAdRemoved()
+        {
+            if (saveData == null)
+                return false;
+            return saveData.isAdRemoved;
+        }
     }
 }

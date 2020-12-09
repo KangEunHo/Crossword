@@ -5,6 +5,7 @@ namespace HealingJam.Crossword
 {
     public class HintController : MonoBehaviour
     {
+        private const int HINT_PRICE = 10;
         private BoardHighlightController boardHighlightController = null;
         private LetterSelectionButtonController letterSelectionButtonController = null;
 
@@ -26,11 +27,13 @@ namespace HealingJam.Crossword
                 BoardCell boardCell = boardHighlightController.GetHighlightCell();
                 if (boardCell != null)
                 {
-                    //할것.
-                    //if (coin >)
-                    char letter = boardHighlightController.SelectedWordData.word[boardHighlightController.SelectedLetterIndex];
-                    letterSelectionButtonController.LetterSelectionButtonChangeChangeAlreadySelectedStateSameLetter(letter);
-                    boardHighlightController.SetCompleteHighlightCell();
+                    if (Save.SaveMgr.Instance.GetCoin() >= HINT_PRICE)
+                    {
+                        Save.SaveMgr.Instance.AddCoin(-10);
+                        char letter = boardHighlightController.SelectedWordData.word[boardHighlightController.SelectedLetterIndex];
+                        letterSelectionButtonController.LetterSelectionButtonChangeChangeAlreadySelectedStateSameLetter(letter);
+                        boardHighlightController.SetCompleteHighlightCell();
+                    }
 
                 }
             }
