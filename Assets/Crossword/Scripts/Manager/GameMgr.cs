@@ -15,6 +15,10 @@ namespace HealingJam.Crossword
         protected override void Awake()
         {
             base.Awake();
+#if UNITY_IOS
+        string path = Application.persistentDataPath;
+        UnityEngine.iOS.Device.SetNoBackupFlag(path);
+#endif
 
             DG.Tweening.DOTween.SetTweensCapacity(tweenersCapacity: 150, sequencesCapacity: 100);
             DG.Tweening.DOTween.defaultAutoKill = true;
