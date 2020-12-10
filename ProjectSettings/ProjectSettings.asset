@@ -165,7 +165,7 @@ PlayerSettings:
     Android: com.healingjam.crossword
     Standalone: com.Company.ProductName
   buildNumber: {}
-  AndroidBundleVersionCode: 140
+  AndroidBundleVersionCode: 146
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1

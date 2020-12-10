@@ -30,7 +30,7 @@ namespace HealingJam.Crossword
                 {
                     if (Save.SaveMgr.Instance.GetCoin() >= HINT_PRICE)
                     {
-                        Save.SaveMgr.Instance.AddCoin(-10);
+                        Save.SaveMgr.Instance.AddCoin(-HINT_PRICE);
                         char letter = boardHighlightController.SelectedWordData.word[boardHighlightController.SelectedLetterIndex];
                         letterSelectionButtonController.LetterSelectionButtonChangeChangeAlreadySelectedStateSameLetter(letter);
                         boardHighlightController.SetCompleteHighlightCell();

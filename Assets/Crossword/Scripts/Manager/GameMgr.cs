@@ -37,8 +37,6 @@ namespace HealingJam.Crossword
         private void Start()
         {
             ScreenMgr.Instance.Enter(GameScreen.ScreenID.Loading);
-
-            GoogleMobileAdsMgr.Instance.ShowBannerAD();
         }
 
 #if UNITY_ANDROID

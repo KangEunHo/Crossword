@@ -30,7 +30,9 @@ namespace HealingJam.Crossword.UI
         public void Rewind()
         {
             if (scaleTween == null)
+            {
                 CreateTween();
+            }
             else
             {
                 scaleTween.Pause();

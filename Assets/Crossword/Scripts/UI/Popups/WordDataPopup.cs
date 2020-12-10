@@ -49,8 +49,12 @@ namespace HealingJam.Crossword
 
             ContentSizeUpdated();
 
-            nextButton.interactable = curPage + 1 < MaxPage;
-            prevButton.interactable = curPage - 1 >= 0;
+            bool nextButtonInteractable = curPage + 1 < MaxPage;
+            bool prevButtonInteractable = curPage - 1 >= 0;
+            nextButton.interactable = nextButtonInteractable;
+            nextButton.image.SetAlpha(nextButtonInteractable ? 1f : 0.5f);
+            prevButton.interactable = prevButtonInteractable;
+            prevButton.image.SetAlpha(prevButtonInteractable ? 1f : 0.5f);
 
         }
 

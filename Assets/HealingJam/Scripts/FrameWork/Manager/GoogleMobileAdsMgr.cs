@@ -36,7 +36,7 @@ namespace HealingJam
 
         public void ShowBannerAD()
         {
-            Advertising.ShowBannerAd(BannerAdPosition.Bottom);
+            Advertising.ShowBannerAd(BannerAdPosition.Bottom, BannerAdSize.Banner);
         }
 
         public void HideBannerAD()
@@ -102,7 +102,7 @@ namespace HealingJam
             }
             else
             {
-                ToastHelper.ShowToast(Localization.LocalizationMgr.Instance.GetString("ad_loading"));
+                ToastHelper.ShowToast("광고를 준비중입니다. 잠시후 다시 시도하세요", true);
             }
         }
 

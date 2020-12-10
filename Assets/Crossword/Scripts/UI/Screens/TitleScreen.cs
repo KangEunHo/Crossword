@@ -20,8 +20,12 @@ namespace HealingJam.Crossword.UI
         {
             base.Enter(args);
 
+            // 첫번째 Enter.
             if (showedDailyCommonsense == false)
+            {
+                GoogleMobileAdsMgr.Instance.ShowBannerAD();
                 title.AddComponent(typeof(ScaleTweenAnimation));
+            }
 
             OnEnterContent();
 
