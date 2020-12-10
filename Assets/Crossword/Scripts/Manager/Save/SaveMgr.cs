@@ -174,7 +174,7 @@ namespace HealingJam.Crossword.Save
                 if (saveData.levelDatas[i].completed == false)
                     return i;
             }
-            return 0;
+            return saveData.levelDatas.Count;
         }
 
         public void SetCoin(int coin)

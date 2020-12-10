@@ -34,6 +34,14 @@ namespace HealingJam.Crossword
         public override void Init()
         {
             listOfCrosswordMap = new List<TextAsset>(crosswordTextAssets);
+
+            for (int i = 0; i < listOfCrosswordMap.Count; ++i)
+            {
+                if (listOfCrosswordMap[i].text.Contains("히틀러"))
+                {
+                    Debug.Log(i);
+                }
+            }
         }
 
         public void SetUpDatabase()

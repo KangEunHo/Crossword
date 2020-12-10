@@ -87,6 +87,8 @@ namespace HealingJam.Crossword.UI
         public void SetActiveCoinButton(bool active)
         {
             coinObject.SetActive(active);
+            if (active)
+                OnCoinChanged(SaveMgr.Instance.GetCoin());
         }
 
         public void SetActiveBackButton(bool active)

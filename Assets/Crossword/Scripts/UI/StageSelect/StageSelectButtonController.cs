@@ -83,6 +83,8 @@ namespace HealingJam.Crossword.UI
             }
 
             pageText.text = (page + 1).ToString() + "/" + MaxPage;
+
+            CrosswordMapManager.Instance.ActiveLevelIndex = page;
         }
 
         private bool IsValidPage(int page)

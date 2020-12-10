@@ -11,6 +11,7 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private Image gaugeImage = null;
         [SerializeField] private Text levelText = null;
         [SerializeField] private CoinFlyAnimation coinFlyAnimation = null;
+        [SerializeField] private Text coinText = null;
 
         private int addCoinAmount = 0;
         private int remainingAdditionalCoin;
@@ -42,6 +43,7 @@ namespace HealingJam.Crossword.UI
             if (alreadyCompleted)
             {
                 gaugeImage.fillAmount = 0.1f + pageProgress;
+                coinText.text = "0";
             }
             else
             {
@@ -49,6 +51,8 @@ namespace HealingJam.Crossword.UI
 
                 gaugeImage.DOFillAmount(0.1f + pageProgress, 0.5f)
                     .OnComplete(()=> { coinFlyAnimation.PlayAnimation(GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, CoinFlyAnimation.DivisionCoinAmounts(addCoinAmount, 5)); });
+
+                coinText.text = "30";
             }
         }
 
@@ -58,13 +62,13 @@ namespace HealingJam.Crossword.UI
             SaveMgr.Instance.AddCoin(coin);
         }
 
-        private void OnDisable()
-        {
-            if (remainingAdditionalCoin > 0)
-            {
-                SaveMgr.Instance.AddCoin(remainingAdditionalCoin);
-                remainingAdditionalCoin = 0;
-            }
-        }
+        //private void OnDisable()
+        //{
+        //    if (remainingAdditionalCoin > 0)
+        //    {
+        //        SaveMgr.Instance.AddCoin(remainingAdditionalCoin);
+        //        remainingAdditionalCoin = 0;
+        //    }
+        //}
     }
 }

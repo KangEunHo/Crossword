@@ -154,6 +154,11 @@ namespace HealingJam.Crossword
             }
         }
 
+        public void OnDebugButtonClick()
+        {
+            OnClear();
+        }
+
         public void OnCorrectAnswer(WordDataForGame wordDataForGame)
         {
             rightAnswerCountDatas[(int)wordDataForGame.wordType].rightAnswerCount++;

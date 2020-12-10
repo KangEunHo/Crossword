@@ -46,6 +46,7 @@ namespace HealingJam.Crossword.UI
             answerItemDatas = args[2] as List<AnswerItem.AnswerItemData>;
             rightAnswerCountDatas = args[3] as List<RightAnswerCountData>;
 
+            coinFlyAnimation.gameObject.SetActive(true);
             answerItemController.gameObject.SetActive(false);
             answerItemController.SetUp(answerItemDatas);
 
@@ -77,7 +78,7 @@ namespace HealingJam.Crossword.UI
                 if (alreadyCompleted)
                 {
                     addCoinAmount = 0;
-                    SetRemaingingCoinAndText(addCoinAmount);
+;                    SetRemaingingCoinAndText(addCoinAmount);
 
                     ShowAnswerItems();
                 }
@@ -91,7 +92,7 @@ namespace HealingJam.Crossword.UI
                     if (badgeChange)
                     {
                         badgeImage.transform.DOScale(1.2f, 0.2f).OnComplete(()=> { badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(CrosswordMapManager.Instance.ActiveLevelIndex + 1); });
-                        badgeImage.transform.DOScale(11f, 0.3f).SetDelay(0.2f);
+                        badgeImage.transform.DOScale(1f, 0.3f).SetDelay(0.2f);
                     }
 
                     // 할것.
@@ -130,14 +131,14 @@ namespace HealingJam.Crossword.UI
             ScreenMgr.Instance.ChangeState(ScreenID.Title);
         }
 
-        private void OnDisable()
-        {
-            if (remainingAdditionalCoin > 0)
-            {
-                SaveMgr.Instance.AddCoin(remainingAdditionalCoin);
-                remainingAdditionalCoin = 0;
-            }
-        }
+        //private void OnDisable()
+        //{
+        //    if (remainingAdditionalCoin > 0)
+        //    {
+        //        SaveMgr.Instance.AddCoin(remainingAdditionalCoin);
+        //        remainingAdditionalCoin = 0;
+        //    }
+        //}
 
         private void SetRemaingingCoinAndText(int coin)
         {

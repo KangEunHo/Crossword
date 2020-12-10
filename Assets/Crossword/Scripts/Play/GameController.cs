@@ -89,6 +89,11 @@ namespace HealingJam.Crossword
         }
 #endif
 
+        public void OnDebugButtonClick()
+        {
+            OnClear();
+        }
+
         public void OnCellBoardClick(object sender, BoardClickEvent boardClickEvent)
         {
             BoardCell boardCell = boardClickEvent.boardCell;
