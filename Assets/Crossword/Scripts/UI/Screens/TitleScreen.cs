@@ -3,78 +3,31 @@ using UnityEngine.UI;
 using HealingJam.GameScreens;
 using HealingJam.Popups;
 using HealingJam.Crossword.Save;
-using System.Collections;
-using System;
 
 namespace HealingJam.Crossword.UI
 {
     public class TitleScreen : FadeAndScaleTweenScreen
     {
         [SerializeField] private DailyCommonsenseLoader dailyCommonsenseLoader = null;
+        [SerializeField] private GameObject title = null;
         [SerializeField] private Image badgeImage = null;
         [SerializeField] private Text badgeLevelText = null;
+        [SerializeField] private GameObject commonSenseTestADImage = null;
 
-        [SerializeField] private GameObject loadingContent = null;
-        [SerializeField] private ScaleTweenAnimation buttonContent = null;
-
-        public bool LoadedServerContents { get; private set; } = false;
         private bool showedDailyCommonsense = false;
 
         public override void Enter(params object[] args)
         {
             base.Enter(args);
 
-            if (SaveMgr.Instance.GetLoginType() == SaveData.LoginType.None)
-            {
-                PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Login, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
-                    new PopupClosedDelegate((str)=> {
-                        if (LoadedServerContents)
-                        {
-                            OnEnterContent();
-                        }
-                        else
-                        {
-                            StartCoroutine(LoadServerContents(OnEnterContent));
-                        }
-                    }));
-            }
-            else
-            {
-                if (LoadedServerContents)
-                {
-                    OnEnterContent();
-                }
-                else
-                {
-                    StartCoroutine(LoadServerContents(OnEnterContent));
+            if (showedDailyCommonsense == false)
+                title.AddComponent(typeof(ScaleTweenAnimation));
 
-                    // 할것.
-                    // 구글 로그인 시도.
+            OnEnterContent();
 
-                }
-            }
+            commonSenseTestADImage.SetActive(SaveMgr.Instance.GetPlayedCommonSenseTest());
         }
 
-        private IEnumerator LoadServerContents(Action loadAction)
-        {
-            loadingContent.SetActive(true);
-            buttonContent.gameObject.SetActive(false);
-
-            yield return StartCoroutine(CrosswordMapManager.Instance.LoadCrosswordMapAtAssetBundle());
-
-            CrosswordMapManager.Instance.SetUpDatabase();
-
-            DailyCommonsensePopup dailyCommonsensePopup = PopupMgr.Instance.GetPopupById(Popup.PopupID.DailyCommonSense) as DailyCommonsensePopup;
-
-            yield return StartCoroutine(dailyCommonsensePopup.LoadCommonSenseAsync());
-            loadingContent.SetActive(false);
-
-            LoadedServerContents = true;
-            buttonContent.gameObject.SetActive(true);
-            buttonContent.Play();
-
-            loadAction?.Invoke();
-        }
 
         private void OnEnterContent()
         {
@@ -118,17 +71,29 @@ namespace HealingJam.Crossword.UI
             ShowDailyCommonsense();
         }
 
-        public void OnWordMatchingGameStart()
+        public void OnWordMatchingGameButtonClick()
         {
-            GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Word Matching Play Canvas", ScreenMgr.Instance.transform);
-            ScreenMgr.Instance.RegisterState(playScreen);
-            ScreenMgr.Instance.ChangeState(ScreenID.WordMatchingPlay, WordMatchingPlayScreen.GameMode.AbilityTest);
+            if (SaveMgr.Instance.GetPlayedCommonSenseTest())
+            {
+                GoogleMobileAdsMgr.Instance.ShowRewardedAd(ChangeWordMatchingGameScreen);
+            }
+            else
+            {
+                ChangeWordMatchingGameScreen();
+                SaveMgr.Instance.SetPlayedCommonSenseTest(true);
+            }
         }
 
         public void OnOptionButtonClick()
         {
-            if (LoadedServerContents)
             PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Option, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
+        }
+
+        private void ChangeWordMatchingGameScreen()
+        {
+            GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Word Matching Play Canvas", ScreenMgr.Instance.transform);
+            ScreenMgr.Instance.RegisterState(playScreen);
+            ScreenMgr.Instance.ChangeState(ScreenID.WordMatchingPlay, WordMatchingPlayScreen.GameMode.AbilityTest);
         }
     }
 }

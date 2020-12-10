@@ -25,8 +25,6 @@ namespace HealingJam.Crossword
 
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-            SaveMgr.Instance.Load();
-
             OnDarkModeChanged(SettingMgr.UseDarkMode);
             OnVibrationChanged(SettingMgr.UseVibration);
 
@@ -38,7 +36,7 @@ namespace HealingJam.Crossword
 
         private void Start()
         {
-            ScreenMgr.Instance.Enter(GameScreen.ScreenID.Title);
+            ScreenMgr.Instance.Enter(GameScreen.ScreenID.Loading);
 
             GoogleMobileAdsMgr.Instance.ShowBannerAD();
         }

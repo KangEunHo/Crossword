@@ -22,7 +22,7 @@ namespace HealingJam.Crossword.UI
 
             bool packLastStage = ((CrosswordMapManager.Instance.ActivePackIndex + 1) % CrosswordMapManager.LEVEL_IN_PACK_COUNT) == 0;
             nextStageButton.SetActive(packLastStage == false);
-            levelText.text = SaveMgr.Instance.GetUnlockLevel().ToString();
+            levelText.text = (CrosswordMapManager.Instance.ActiveLevelIndex +1).ToString();
 
             int completeCount = 0;
             int page = CrosswordMapManager.Instance.ActivePackIndex / 8;

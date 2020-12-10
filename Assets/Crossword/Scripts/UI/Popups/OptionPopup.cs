@@ -57,9 +57,13 @@ namespace HealingJam.Crossword
             SettingMgr.SetUseDarkMode(isOn);
         }
 
-        public void OnGoogleLoginButtonClikck()
+        public void OnGoogleLoginButtonClick()
         {
             SaveMgr.Instance.SetLoginType(SaveData.LoginType.Google);
+            Escape();
+            GameScreens.ScreenMgr.Instance.ChangeState(GameScreens.GameScreen.ScreenID.Loading);
+
+            ToastPlugin.ToastHelper.ShowToast("데이터를 불러오기위해 게임을 재시작합니다", true);
         }
     }
 }

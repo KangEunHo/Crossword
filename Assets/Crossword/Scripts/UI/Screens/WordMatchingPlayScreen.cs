@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using HealingJam.GameScreens;
 using HealingJam.Popups;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace HealingJam.Crossword.UI
         }
 
         [SerializeField] private WordMatchingGameController gameController = null;
+        [SerializeField] private Text infoText = null;
         private GameMode gameMode;
 
         public override void Enter(params object[] args)
@@ -22,10 +24,13 @@ namespace HealingJam.Crossword.UI
 
             if (gameMode == GameMode.AbilityTest)
             {
+                infoText.text = "10가지 상식 분야 중\n 랜덤으로 20문제가 출제됩니다.\n테스트를 통해 부족한 분야를 확인해보세요.\n(제한 시간: 5분)";
                 gameController.SetUp(gameMode, CreateAbilityTestAnswers());
             }
             else
             {
+                infoText.text = string.Format("({0}) 레벨에 대한 테스트를 시작합니다.\n레벨 테스트를 완료하면\n다음 레벨의 문제를 풀 수 있습니다.", 
+                    (CrosswordMapManager.Instance.ActiveLevelIndex +1));
                 gameController.SetUp(gameMode, CreateBadgePlayAnswers());
             }
 

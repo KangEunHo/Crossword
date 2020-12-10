@@ -17,10 +17,11 @@ namespace HealingJam.Crossword.Save
 
         public bool Loaded { get; private set; } = false;
 
-        public void Load()
+        public void Load(bool loadGoogle, bool loadGoogleAndSaveLocal, Action<bool> saveCallBack)
         {
             if (Loaded)
                 return;
+            Loaded = true;
 
             if (File.Exists(FilePath))
             {
@@ -31,16 +32,59 @@ namespace HealingJam.Crossword.Save
             {
                 saveData = new SaveData();
             }
-            Loaded = true;
+
+            if (loadGoogle)
+            {
+                LoadGoogleGameService(loadGoogleAndSaveLocal, saveCallBack);
+            }
         }
 
-        public void Save()
+        public void LoadGoogleGameService(bool saveLocal, Action<bool> saveCallBack)
+        {
+            GPGSMgr.Instance.ReadSavedGame((success, data) => {
+                if (success)
+                {
+                    if (data != null && data.Length > 0)
+                    {
+                        string decryptData = Convert.ToBase64String(data);
+                        string serializeData = EncryptUtils.Decrypt(decryptData);
+                        saveData = JsonConvert.DeserializeObject<SaveData>(serializeData);
+
+                        if (saveLocal)
+                            Save(false);
+                    }
+                }
+                saveCallBack?.Invoke(success);
+            });
+        }
+
+        public void Save(bool saveGoogle)
         {
             if (saveData == null)
                 return;
 
             string serializeData = JsonConvert.SerializeObject(saveData);
-            File.WriteAllText(FilePath, EncryptUtils.Encrypt(serializeData));
+            string encryptData = EncryptUtils.Encrypt(serializeData);
+            File.WriteAllText(FilePath, encryptData);
+
+            if (saveGoogle)
+                SaveGoogleService();
+        }
+
+        public void Save()
+        {
+            bool saveGoogle = GetLoginType() == SaveData.LoginType.Google;
+            Save(saveGoogle);
+        }
+
+        public void SaveGoogleService()
+        {
+            if (saveData == null)
+                return;
+
+            string serializeData = JsonConvert.SerializeObject(saveData);
+            string encryptData = EncryptUtils.Encrypt(serializeData);
+            GPGSMgr.Instance.WriteSavedGame(Convert.FromBase64String(encryptData), null);
         }
 
         public bool GetCompleteData(int index)
@@ -187,6 +231,20 @@ namespace HealingJam.Crossword.Save
             if (saveData == null)
                 return false;
             return saveData.isAdRemoved;
+        }
+
+        public bool GetPlayedCommonSenseTest()
+        {
+            if (saveData == null)
+                return false;
+            return saveData.playedCommonSenseTest;
+        }
+
+        public void SetPlayedCommonSenseTest(bool value)
+        {
+            if (saveData == null)
+                return;
+            saveData.playedCommonSenseTest = value;
         }
     }
 }

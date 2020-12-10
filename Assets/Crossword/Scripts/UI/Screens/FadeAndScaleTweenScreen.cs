@@ -11,10 +11,11 @@ namespace HealingJam.GameScreens
         {
             base.Enter(args);
 
-            foreach(var v in GetComponentsInChildren<ScaleTweenAnimation>())
+            foreach (var v in GetComponentsInChildren<ScaleTweenAnimation>())
             {
                 v.Play();
             }
+            
         }
 
         public override void Exit(params object[] args)
@@ -25,6 +26,7 @@ namespace HealingJam.GameScreens
             {
                 v.Rewind();
             }
+            
         }
     }
 }

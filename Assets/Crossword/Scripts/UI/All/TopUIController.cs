@@ -21,9 +21,6 @@ namespace HealingJam.Crossword.UI
 
         private void OnEnable()
         {
-            if (SaveMgr.Instance.Loaded == false)
-                SaveMgr.Instance.Load();
-
             SaveMgr.Instance.CoinAddAction += OnCoinAdded;
             SaveMgr.Instance.CoinChangeAction += OnCoinChanged;
 

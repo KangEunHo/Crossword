@@ -160,6 +160,7 @@ namespace HealingJam.Crossword
             if (progressData != null)
             {
                 SaveMgr.Instance.SetProgressData(CrosswordMapManager.Instance.ActivePackIndex, progressData);
+
                 SaveMgr.Instance.Save();
             }
         }
@@ -196,6 +197,7 @@ namespace HealingJam.Crossword
             SaveMgr.Instance.SetCompleteData(CrosswordMapManager.Instance.ActivePackIndex, true);
             // 클리어시에 진행상황 삭제.
             SaveMgr.Instance.DeleteProgressData(CrosswordMapManager.Instance.ActivePackIndex);
+
             SaveMgr.Instance.Save();
             ScreenMgr.Instance.ChangeState(GameScreen.ScreenID.Clear, alreadyCompleted);
         }
