@@ -27085,6 +27085,9 @@ MonoBehaviour:
   playSuccess:
     clip: {fileID: 8300000, guid: 4178adb3918ef7a46ae4a7228fa2b24b, type: 3}
     simultaneousPlayCount: 1
+  button:
+    clip: {fileID: 8300000, guid: a44d52361cac92a4285717dbba99b8bb, type: 3}
+    simultaneousPlayCount: 1
 --- !u!4 &1776644462
 Transform:
   m_ObjectHideFlags: 0

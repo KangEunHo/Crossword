@@ -259,6 +259,9 @@ namespace HealingJam.Crossword
         {
             boardHighlightController.SetUpHighlightCells(boardHighlightController.SelectedWordData);
             letterSelectionButtonController.SetButtonsLetter(boardHighlightController.SelectedWordData);
+            SetCompletedLetterSelectionButton(boardHighlightController.SelectedWordData);
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         private void ProgressTextUpdate()
@@ -282,6 +285,24 @@ namespace HealingJam.Crossword
             float x = ANSWER_RATE_GAUGE_WIDTH * answerRate;
             float y = answerRateGauge.sizeDelta.y;
             answerRateGaugeTween = answerRateGauge.DOSizeDelta(new Vector2(x, y), 0.5f);
+        }
+
+        private void SetCompletedLetterSelectionButton(WordDataForGame wordDataForGame)
+        {
+            for (int i = 0; i < wordDataForGame.word.Length; ++i)
+            {
+                int x = wordDataForGame.x;
+                int y = wordDataForGame.y;
+                if (wordDataForGame.direction == WordDataForGame.Direction.Horizontal)
+                    x += i;
+                else y += i;
+
+                if (boardController.GetBoardCell(new Vector2Int(x, y)).State == BoardCell.CellState.Completed)
+                {
+                    char completedCharacter = wordDataForGame.word[i];
+                    letterSelectionButtonController.LetterSelectionButtonStateChangeSameLetter(completedCharacter);
+                }
+            }
         }
     }
 }

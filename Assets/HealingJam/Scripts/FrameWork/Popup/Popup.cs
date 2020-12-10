@@ -47,6 +47,7 @@ namespace HealingJam.Popups
         public virtual void Escape()
         {
             PopupMgr.Instance.ExitWithAnimation(popupID);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public string Name()

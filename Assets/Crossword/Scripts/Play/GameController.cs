@@ -123,6 +123,8 @@ namespace HealingJam.Crossword
 
                 wordMeaningController.SetText(wordDataForGame);
                 bigWordMeaningController.SetText(wordDataForGame);
+
+                SoundMgr.Instance.PlayOneShotButtonSound();
             }
             else if (direction == WordDataForGame.Direction.Vertical)
             {
@@ -142,6 +144,8 @@ namespace HealingJam.Crossword
                 }
                 wordMeaningController.SetText(wordDataForGame);
                 bigWordMeaningController.SetText(wordDataForGame);
+
+                SoundMgr.Instance.PlayOneShotButtonSound();
             }
         }
 
@@ -246,6 +250,8 @@ namespace HealingJam.Crossword
             {
                 SetHighlightCellsAndLetterButtons(boardHighlightController.SelectedWordData);
             }
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         private void SetCompletedLetterSelectionButton(WordDataForGame wordDataForGame)

@@ -100,6 +100,8 @@ namespace HealingJam.Crossword
 
             SelectedLetterIndex++;
             SetNextSelectedBoardCell();
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         private void SetNextSelectedBoardCell()

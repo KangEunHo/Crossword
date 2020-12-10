@@ -22,25 +22,6 @@ namespace HealingJam.Crossword
             }
         }
 
-        public void OnCellBoardClick(object sender, BoardClickEvent boardClickEvent)
-        {
-            BoardCell boardCell = boardClickEvent.boardCell;
-            WordDataForGame.Direction direction = boardClickEvent.direction;
-
-            if (direction == WordDataForGame.Direction.None)
-            {
-                return;
-            }
-            else if (direction == WordDataForGame.Direction.Horizontal)
-            {
-                SetButtonsLetter(boardCell.HorizontalWordData);
-            }
-            else if (direction == WordDataForGame.Direction.Vertical)
-            {
-                SetButtonsLetter(boardCell.VerticalWordData);
-            }
-        }
-
         /// <summary>
         /// 버튼들에 글자를 설정합니다.
         /// 들어가는 단어의 글자들을 집어 넣고 나머지 글자를 채웁니다.

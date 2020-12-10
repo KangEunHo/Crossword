@@ -18,6 +18,7 @@ namespace HealingJam.Crossword
         public void OnHintButtonClick()
         {
             UseHint();
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         private void UseHint()

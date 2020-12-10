@@ -77,11 +77,13 @@ namespace HealingJam.Crossword.UI
         public void OnCoinButtonClick()
         {
             PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Shop, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnOptionButtonClick()
         {
             PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Option, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void SetActiveCoinButton(bool active)
