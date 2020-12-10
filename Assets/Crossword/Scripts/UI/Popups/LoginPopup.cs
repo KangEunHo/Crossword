@@ -19,6 +19,7 @@ namespace HealingJam.Crossword
             SaveMgr.Instance.SetLoginType(SaveData.LoginType.Google);
 
             PopupMgr.Instance.ExitWithAnimation(popupID, GOOGLE_CALL_BACK_KEY);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnGuestLoginButtonClick()
@@ -26,6 +27,7 @@ namespace HealingJam.Crossword
             SaveMgr.Instance.SetLoginType(SaveData.LoginType.Guest);
 
             PopupMgr.Instance.ExitWithAnimation(popupID, GUEST_CALL_BACK_KEY);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }

@@ -182,6 +182,8 @@ namespace HealingJam.Crossword.UI
 
             PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.PlayExit, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
                 new PopupClosedDelegate(OnPlayExitPopupClosed), message);
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
 
@@ -227,6 +229,8 @@ namespace HealingJam.Crossword.UI
         {
             PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.ModifyReview, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
                 null, (CrosswordMapManager.Instance.ActivePackIndex));
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }

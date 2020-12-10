@@ -28,6 +28,7 @@ namespace HealingJam.Crossword.UI
                 coinPool = new GameObjPool(new InstantiateObjectFactory<GameObject>(coinPrefab, transform), new ObjPoolData(transform, 5));
             }
             CoroutineHelper.StartStaticCoroutine(PlayAnimationCoroutine(target, coinAnimationEndAction, coinAmounts));
+            SoundMgr.Instance.PlayOneShot(SoundMgr.Instance.success);
         }
 
         private IEnumerator PlayAnimationCoroutine(RectTransform target, Action<int> coinAnimationEndAction, int[] coinAmounts)

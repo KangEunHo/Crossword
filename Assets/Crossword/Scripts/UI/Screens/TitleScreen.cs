@@ -54,21 +54,25 @@ namespace HealingJam.Crossword.UI
         public override void Escape()
         {
             PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.MainBack, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnGameStartButtonClick()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnStatisticsButtonClick()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.Statistics);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnDailyCommonsenseButtonClick()
         {
             ShowDailyCommonsense();
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnWordMatchingGameButtonClick()
@@ -82,11 +86,7 @@ namespace HealingJam.Crossword.UI
                 ChangeWordMatchingGameScreen();
                 SaveMgr.Instance.SetPlayedCommonSenseTest(true);
             }
-        }
-
-        public void OnOptionButtonClick()
-        {
-            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Option, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         private void ChangeWordMatchingGameScreen()

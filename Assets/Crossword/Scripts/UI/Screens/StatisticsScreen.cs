@@ -39,6 +39,7 @@ namespace HealingJam.Crossword.UI
         public override void Escape()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.Title);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }

@@ -9,6 +9,8 @@ namespace HealingJam.Crossword
         {
             this.animationEndAction = animationEndAction;
             gameObject.SetActive(true);
+
+            SoundMgr.Instance.PlayOneShot(SoundMgr.Instance.countDown);
         }
 
         private Action animationEndAction = null;

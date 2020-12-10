@@ -37,6 +37,7 @@ namespace HealingJam.Crossword.UI
         public void OnBadgeButtonClick(int index)
         {
             statisticsController.PlayAnimation(index);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }

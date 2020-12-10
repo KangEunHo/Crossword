@@ -49,7 +49,13 @@ namespace HealingJam
         [Header("BGM list")]
 
         [Header("Sound list")]
-        public Sound efx;
+        public Sound rightAnswer;
+        public Sound wrongAnswer;
+        public Sound success;
+        public Sound countDown;
+        public Sound playSuccess;
+        public Sound button;
+
 
         //
         public event MusicStatusChangedHandler MusicStatusChanged;
@@ -100,14 +106,21 @@ namespace HealingJam
 
         #region Public Methods
 
+        public void PlayOneShotButtonSound()
+        {
+            if (IsSoundOn())
+                sfxSource.PlayOneShot(button.clip, efxVolum);
+        }
+
         public void PlayOneShot(Sound sound)
         {
-            sfxSource.PlayOneShot(sound.clip, efxVolum);
+            if (IsSoundOn())
+                sfxSource.PlayOneShot(sound.clip, efxVolum);
         }
 
         public void PlayOneShot(AudioSource source, Sound sound)
         {
-            if (IsMusicON())
+            if (IsSoundOn())
                 source.PlayOneShot(sound.clip, efxVolum);
         }
         /// <summary>

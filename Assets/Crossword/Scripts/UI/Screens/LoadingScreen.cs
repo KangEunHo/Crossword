@@ -86,19 +86,27 @@ namespace HealingJam.Crossword.UI
                 return;
 #endif
                 GPGSMgr.Instance.Initialized((success) => {
-                    loginStep = LoginStep.LoadGoogleData;
-                    GPGSMgr.Instance.OpenSavedGame((openSuccess) => {
-                        if (openSuccess)
+                    if (success)
+                    {
+                        loginStep = LoginStep.LoadGoogleData;
+                        GPGSMgr.Instance.OpenSavedGame((openSuccess) =>
                         {
-                            SaveMgr.Instance.LoadGoogleGameService(true,
-                                (loadSuccess) => { loginStep = LoginStep.End; }
-                                );
-                        }
-                        else
-                        {
-                            loginStep = LoginStep.End;
-                        }
-                    });
+                            if (openSuccess)
+                            {
+                                SaveMgr.Instance.LoadGoogleGameService(true,
+                                    (loadSuccess) => { loginStep = LoginStep.End; }
+                                    );
+                            }
+                            else
+                            {
+                                loginStep = LoginStep.End;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        loginStep = LoginStep.End;
+                    }
                 });
             }
             else

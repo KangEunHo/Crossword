@@ -41,6 +41,8 @@ namespace HealingJam.Crossword.UI
         {
             PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.WordData, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
                 index, answerItemDatas);
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }

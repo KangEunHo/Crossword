@@ -33,6 +33,7 @@ namespace HealingJam.Crossword
         public void OnRewardButtonClick()
         {
             GoogleMobileAdsMgr.Instance.ShowRewardedAd(Reward);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         private void Reward()

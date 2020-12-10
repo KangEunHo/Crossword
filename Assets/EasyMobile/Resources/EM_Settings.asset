@@ -225,7 +225,7 @@ MonoBehaviour:
         values: []
       mEnableTestMode: 0
   mGameServiceSettings:
-    mAutoInit: 1
+    mAutoInit: 0
     mAutoInitDelay: 0
     mAndroidMaxLoginRequests: 0
     mGpgsDebugLogEnabled: 0

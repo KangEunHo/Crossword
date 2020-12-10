@@ -95,6 +95,7 @@ namespace HealingJam.Crossword.UI
         private void OnStageSelectButtonClick(int stageIndex)
         {
             onClickAction?.Invoke(stageIndex);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void SetNextPage()
@@ -102,6 +103,7 @@ namespace HealingJam.Crossword.UI
             if (IsValidPage(page +1))
             {
                 SetPage(++page);
+                SoundMgr.Instance.PlayOneShotButtonSound();
             }
         }
 
@@ -110,6 +112,7 @@ namespace HealingJam.Crossword.UI
             if (IsValidPage(page - 1))
             {
                 SetPage(--page);
+                SoundMgr.Instance.PlayOneShotButtonSound();
             }
         }
 

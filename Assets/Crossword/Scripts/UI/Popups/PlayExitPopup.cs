@@ -22,11 +22,13 @@ namespace HealingJam.Crossword
         public void OnExitButtonClick()
         {
             PopupMgr.Instance.ExitWithAnimation(popupID, "exit");
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnContinueButtonClick()
         {
             PopupMgr.Instance.ExitWithAnimation(popupID, "continue");
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }

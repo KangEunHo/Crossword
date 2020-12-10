@@ -35,26 +35,31 @@ namespace HealingJam.Crossword
         public void OnBgm1ValueChanged(bool isOn)
         {
             SettingMgr.SetUseBgm1(isOn);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnBgm2ValueChanged(bool isOn)
         {
             SettingMgr.SetUseBgm2(isOn);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnSoundToggle(bool isOn)
         {
             SoundMgr.Instance.SetSoundOn(isOn);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnVibrationToggle(bool isOn)
         {
             SettingMgr.SetUseVibration(isOn);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnDarkModeToggle(bool isOn)
         {
             SettingMgr.SetUseDarkMode(isOn);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnGoogleLoginButtonClick()
@@ -64,6 +69,8 @@ namespace HealingJam.Crossword
             GameScreens.ScreenMgr.Instance.ChangeState(GameScreens.GameScreen.ScreenID.Loading);
 
             ToastPlugin.ToastHelper.ShowToast("데이터를 불러오기위해 게임을 재시작합니다", true);
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }

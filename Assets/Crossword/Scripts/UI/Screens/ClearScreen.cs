@@ -19,6 +19,8 @@ namespace HealingJam.Crossword.UI
             GoogleMobileAdsMgr.Instance.ShowDelayInterstitial();
             GameMgr.Instance.topUIController.SetActiveBackButton(false);
             GameMgr.Instance.topUIController.SetActiveOptionButton(false);
+
+            SoundMgr.Instance.PlayOneShot(SoundMgr.Instance.playSuccess);
         }
 
         public override void Exit(params object[] args)
@@ -31,17 +33,13 @@ namespace HealingJam.Crossword.UI
 
         public override void Escape()
         {
-            //ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);
-        }
-
-        public void OnCoinButtonClick()
-        {
-            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Shop, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
+            OnExitButtonClick();
         }
 
         public void OnExitButtonClick()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnNextLevelButtonClick()
@@ -51,6 +49,7 @@ namespace HealingJam.Crossword.UI
             GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Play Screen", ScreenMgr.Instance.transform);
             ScreenMgr.Instance.RegisterState(playScreen);
             ScreenMgr.Instance.ChangeState(ScreenID.Play);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }

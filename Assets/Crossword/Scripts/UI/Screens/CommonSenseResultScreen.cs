@@ -104,6 +104,7 @@ namespace HealingJam.Crossword.UI
                 }
             }
 
+            SoundMgr.Instance.PlayOneShot(SoundMgr.Instance.playSuccess);
             GoogleMobileAdsMgr.Instance.ShowDelayInterstitial();
         }
 
@@ -129,6 +130,7 @@ namespace HealingJam.Crossword.UI
         public override void Escape()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.Title);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         //private void OnDisable()

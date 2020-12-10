@@ -57,6 +57,8 @@ namespace HealingJam.Crossword.UI
         {
             PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.PlayExit, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
                 new PopupClosedDelegate(OnPlayExitPopupClosed), "나가시겠습니까?\n진행한 내용은 저장됩니다.");
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         private void OnPlayExitPopupClosed(string message)
@@ -83,6 +85,8 @@ namespace HealingJam.Crossword.UI
         {
             PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.ModifyReview, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
                 null, (CrosswordMapManager.Instance.ActivePackIndex));
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
     }

@@ -186,6 +186,8 @@ namespace HealingJam.Crossword
 
                 answerOXResult.ShowOResult(SetHighlightUnMatchedWord);
             }
+
+            SoundMgr.Instance.PlayOneShot(SoundMgr.Instance.rightAnswer);
         }
 
         public void OnWrongAnswer(WordDataForGame wordDataForGame)
@@ -194,6 +196,8 @@ namespace HealingJam.Crossword
             if (SettingMgr.UseVibration)
                 Vibration.Vibrate();
             answerOXResult.ShowXResult(OnWrongAnimationEnd);
+
+            SoundMgr.Instance.PlayOneShot(SoundMgr.Instance.wrongAnswer);
         }
 
         private void OnClear()

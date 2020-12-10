@@ -57,11 +57,13 @@ namespace HealingJam.Crossword
         public void OnNextButtonClick()
         {
             SetPage(curPage + 1);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnPrevButtonClick()
         {
             SetPage(curPage - 1);
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnZoomButtonClick()
@@ -72,6 +74,8 @@ namespace HealingJam.Crossword
                 OnZoomText();
             else
                 OffZoomText();
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         private void ContentSizeUpdated()

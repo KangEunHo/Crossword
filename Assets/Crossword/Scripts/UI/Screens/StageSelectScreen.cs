@@ -48,6 +48,8 @@ namespace HealingJam.Crossword.UI
             {
                 ToastPlugin.ToastHelper.ShowToast("먼저 이전 뱃지테스트를 통과해야 해요");
             }
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnBadgeButtonClick()
@@ -55,26 +57,28 @@ namespace HealingJam.Crossword.UI
             GameScreen playScreen = ResourceLoader.LoadAndInstaniate<GameScreen>("Prefabs/Word Matching Play Canvas", ScreenMgr.Instance.transform);
             ScreenMgr.Instance.RegisterState(playScreen);
             ScreenMgr.Instance.ChangeState(ScreenID.WordMatchingPlay, WordMatchingPlayScreen.GameMode.BadgePlay);
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnNextButtonClick()
         {
             stageSelectButtonController.SetNextPage();
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public void OnPrevButtonClick()
         {
             stageSelectButtonController.SetPrevPage();
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
         public override void Escape()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.Title);
-        }
-
-        public void OnOptionButtonClick()
-        {
-            PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Option, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f));
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }

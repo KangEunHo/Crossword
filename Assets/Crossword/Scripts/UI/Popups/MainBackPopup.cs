@@ -20,6 +20,7 @@ namespace HealingJam.Crossword
         public void OnReviewButtonClick()
         {
             InAppReviewMgr.Instance.LunchReview();
+            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }
