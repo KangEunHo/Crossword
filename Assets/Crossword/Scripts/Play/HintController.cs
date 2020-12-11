@@ -5,7 +5,8 @@ namespace HealingJam.Crossword
 {
     public class HintController : MonoBehaviour
     {
-        private const int HINT_PRICE = 10;
+        // 수정.
+        private const int HINT_PRICE = 0;
         private BoardHighlightController boardHighlightController = null;
         private LetterSelectionButtonController letterSelectionButtonController = null;
 

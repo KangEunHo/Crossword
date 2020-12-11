@@ -21,17 +21,17 @@ namespace HealingJam.Crossword.UI
         private Tween targetTween = null;
         private GameObjPool coinPool = null;
 
-        public void PlayAnimation(RectTransform target, Action<int> coinAnimationEndAction, int[] coinAmounts)
+        public void PlayAnimation(Vector3 startPos, RectTransform target, Action<int> coinAnimationEndAction, int[] coinAmounts)
         {
             if (coinPool == null)
             {
                 coinPool = new GameObjPool(new InstantiateObjectFactory<GameObject>(coinPrefab, transform), new ObjPoolData(transform, 5));
             }
-            CoroutineHelper.StartStaticCoroutine(PlayAnimationCoroutine(target, coinAnimationEndAction, coinAmounts));
+            CoroutineHelper.StartStaticCoroutine(PlayAnimationCoroutine(startPos, target, coinAnimationEndAction, coinAmounts));
             SoundMgr.Instance.PlayOneShot(SoundMgr.Instance.success);
         }
 
-        private IEnumerator PlayAnimationCoroutine(RectTransform target, Action<int> coinAnimationEndAction, int[] coinAmounts)
+        private IEnumerator PlayAnimationCoroutine(Vector3 startPos, RectTransform target, Action<int> coinAnimationEndAction, int[] coinAmounts)
         {
             var interval = new WaitForSeconds(COIN_FLY_INTERVAL);
             for (int i = 0; i < coinAmounts.Length; ++i)
@@ -39,6 +39,7 @@ namespace HealingJam.Crossword.UI
                 GameObject coin = coinPool.Pop();
                 coin.transform.position = transform.position;
                 coin.GetComponent<Image>().SetAlpha(0f);
+                coin.transform.position = startPos;
 
                 int index = i;
                 Vector3[] wayPoints = new Vector3[2];
@@ -47,7 +48,7 @@ namespace HealingJam.Crossword.UI
                     wayPoint0_x *= -1f;
 
                 float wayPoint0_y = -Random.Range(COIN_FIRST_PATH_MIN_DISTANCE, COIN_FIRST_PATH_MAX_DISTANCE) * 2f;
-                wayPoints[0] = transform.position + (new Vector3(wayPoint0_x, wayPoint0_y));
+                wayPoints[0] = startPos + (new Vector3(wayPoint0_x, wayPoint0_y));
                 wayPoints[1] = target.position;
                 coin.transform.DOMove(wayPoints[0], COIN_FLY_DURATION * 0.5f).SetEase(Ease.InOutQuad);
                 coin.transform.DOMove(wayPoints[1], COIN_FLY_DURATION * 0.5f).SetEase(Ease.InOutQuad).SetDelay(COIN_FLY_DURATION * 0.5f)

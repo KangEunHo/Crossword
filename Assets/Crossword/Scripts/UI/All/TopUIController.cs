@@ -17,6 +17,7 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private GameObject backButton = null;
         [SerializeField] private GameObject optionButton = null;
 
+        public CoinFlyAnimation coinFlyAnimation = null;
         private Tween coinAmountTween = null;
 
         private void OnEnable()
@@ -53,6 +54,7 @@ namespace HealingJam.Crossword.UI
             coinAmountTween = DOTween.Sequence()
                 .Append(coinAddText.transform.DOScaleY(1.2f, 0.1f))
                 .Append(coinAddText.transform.DOScaleY(1f, 0.2f))
+                .AppendInterval(0.2f)
                 .OnComplete(() => { coinAddText.gameObject.SetActive(false); })
                 .SetLink(coinAddText.gameObject);
 

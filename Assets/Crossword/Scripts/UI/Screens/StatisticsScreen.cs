@@ -22,8 +22,11 @@ namespace HealingJam.Crossword.UI
                 statisticsBadgeButtonController.Init();
             }
             statisticsBadgeButtonController.SetUp();
-            statisticsController.PlayAnimation(0);
 
+            int badgeIndex = Mathf.FloorToInt(Save.SaveMgr.Instance.GetUnlockLevel() / (float)CrosswordMapManager.BADGE_IN_LEVEL_COUNT);
+            statisticsController.PlayAnimation(badgeIndex);
+            statisticsBadgeButtonController.SetPositionButtonEffect(badgeIndex);
+            statisticsBadgeButtonController.SetContentPositionToChild(badgeIndex);
             GameMgr.Instance.topUIController.SetActiveCoinButton(false);
             titleText.SetActive(true);
         }

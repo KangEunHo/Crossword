@@ -10,7 +10,8 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private GameObject nextStageButton = null;
         [SerializeField] private Image gaugeImage = null;
         [SerializeField] private Text levelText = null;
-        [SerializeField] private CoinFlyAnimation coinFlyAnimation = null;
+
+        [SerializeField] private Transform coinIconTf = null;
         [SerializeField] private Text coinText = null;
 
         private int addCoinAmount = 0;
@@ -49,10 +50,10 @@ namespace HealingJam.Crossword.UI
             {
                 gaugeImage.fillAmount = 0.1f + prePageProgress;
 
+                coinText.text = addCoinAmount.ToString();
                 gaugeImage.DOFillAmount(0.1f + pageProgress, 0.5f)
-                    .OnComplete(()=> { coinFlyAnimation.PlayAnimation(GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, CoinFlyAnimation.DivisionCoinAmounts(addCoinAmount, 5)); });
+                    .OnComplete(()=> { GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coinIconTf.position, GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, CoinFlyAnimation.DivisionCoinAmounts(addCoinAmount, 5)); });
 
-                coinText.text = "30";
             }
         }
 

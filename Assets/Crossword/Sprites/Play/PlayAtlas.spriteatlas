@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PlayAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: iPhone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 33
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 05cad23586b177e43adb40c6fc7dba4c, type: 3}
+    - {fileID: 2800000, guid: 51fc55d23e61ff34c9c546d59dfc2488, type: 3}
+    - {fileID: 2800000, guid: d4deab5431e319f44b26efa5c4d46e1c, type: 3}
+    - {fileID: 2800000, guid: 1a56ba87a32d74b438329faba34c44d2, type: 3}
+    - {fileID: 2800000, guid: d31c8f74e1ad1ee418a0953abcf644d0, type: 3}
+    - {fileID: 2800000, guid: 46d70dfd4080a704487132d1596c779c, type: 3}
+    - {fileID: 2800000, guid: fd146853cdadef74eb2b0c7228dbb35e, type: 3}
+    - {fileID: 2800000, guid: c181cd53f93916941b3b726209b91de3, type: 3}
+    - {fileID: 2800000, guid: ba67a5a42c2f62b4fa952e1cc41f0e6e, type: 3}
+    - {fileID: 2800000, guid: 8282337ca25938e43b2e5f65b07a1cf7, type: 3}
+    - {fileID: 2800000, guid: a4793b9dc458a0f4f9d5d41eb027926a, type: 3}
+    - {fileID: 2800000, guid: 485ed2434d9cc01409251835614bccf6, type: 3}
+    - {fileID: 2800000, guid: 6a5ddc447c7351e44ada9e2e89ab5f02, type: 3}
+    - {fileID: 2800000, guid: ec148e714990172409d7cc97d2211ef5, type: 3}
+    - {fileID: 2800000, guid: 1b7621fccb6e42c42a9cd155cdb1e4b0, type: 3}
+    - {fileID: 2800000, guid: 0ace9ec157d02de4fadd5937d411bc7b, type: 3}
+    - {fileID: 2800000, guid: 44ade763f623cba4fbddf9f4b880c0d4, type: 3}
+    - {fileID: 2800000, guid: 1031876242b75ca45a5df9ee70d2ca83, type: 3}
+    - {fileID: 2800000, guid: caef89b4189e90748994fa3915acaab1, type: 3}
+    - {fileID: 2800000, guid: 46520b070cb40194d9193023486dc002, type: 3}
+    - {fileID: 2800000, guid: 30a7ba31389d55e43b7f93e72d88d4cf, type: 3}
+    - {fileID: 2800000, guid: ebb356b80d85e33499ecf2452454bd5d, type: 3}
+    - {fileID: 2800000, guid: 2100154c7da74364ca424bdf0fb59d02, type: 3}
+    - {fileID: 2800000, guid: 5707c7bc68325e44b8aa1911badec36c, type: 3}
+    - {fileID: 2800000, guid: 5c15efa6e9df3524b92c218461e44fcc, type: 3}
+    - {fileID: 2800000, guid: 6712b3ee12d9dac48a48f6b5769d164b, type: 3}
+    - {fileID: 2800000, guid: be0fcd17904d3244dba70c6188f4ea86, type: 3}
+    - {fileID: 2800000, guid: e5c6d442aaa327942851939bd2c91f2e, type: 3}
+    - {fileID: 2800000, guid: beb9a9fa1e155b041907e99411509798, type: 3}
+    - {fileID: 2800000, guid: ad633f4585aa6484cbd9b8f08e644bd0, type: 3}
+    - {fileID: 2800000, guid: 4ebb12e18c14cc54fb840724115bb5f8, type: 3}
+    - {fileID: 2800000, guid: 172d716b03e001948bb05762f16994eb, type: 3}
+    totalSpriteSurfaceArea: 505264
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 30a7ba31389d55e43b7f93e72d88d4cf, type: 3}
+  - {fileID: 21300000, guid: ec148e714990172409d7cc97d2211ef5, type: 3}
+  - {fileID: 21300000, guid: 0ace9ec157d02de4fadd5937d411bc7b, type: 3}
+  - {fileID: 21300000, guid: 4ebb12e18c14cc54fb840724115bb5f8, type: 3}
+  - {fileID: 21300000, guid: e5c6d442aaa327942851939bd2c91f2e, type: 3}
+  - {fileID: 21300000, guid: 1031876242b75ca45a5df9ee70d2ca83, type: 3}
+  - {fileID: 21300000, guid: 51fc55d23e61ff34c9c546d59dfc2488, type: 3}
+  - {fileID: 21300000, guid: 485ed2434d9cc01409251835614bccf6, type: 3}
+  - {fileID: 21300000, guid: fd146853cdadef74eb2b0c7228dbb35e, type: 3}
+  - {fileID: 21300000, guid: c181cd53f93916941b3b726209b91de3, type: 3}
+  - {fileID: 21300000, guid: 44ade763f623cba4fbddf9f4b880c0d4, type: 3}
+  - {fileID: 21300000, guid: 6a5ddc447c7351e44ada9e2e89ab5f02, type: 3}
+  - {fileID: 21300000, guid: d4deab5431e319f44b26efa5c4d46e1c, type: 3}
+  - {fileID: 21300000, guid: d31c8f74e1ad1ee418a0953abcf644d0, type: 3}
+  - {fileID: 21300000, guid: ba67a5a42c2f62b4fa952e1cc41f0e6e, type: 3}
+  - {fileID: 21300000, guid: caef89b4189e90748994fa3915acaab1, type: 3}
+  - {fileID: 21300000, guid: 05cad23586b177e43adb40c6fc7dba4c, type: 3}
+  - {fileID: 21300000, guid: ad633f4585aa6484cbd9b8f08e644bd0, type: 3}
+  - {fileID: 21300000, guid: 5c15efa6e9df3524b92c218461e44fcc, type: 3}
+  - {fileID: 21300000, guid: 46520b070cb40194d9193023486dc002, type: 3}
+  - {fileID: 21300000, guid: be0fcd17904d3244dba70c6188f4ea86, type: 3}
+  - {fileID: 21300000, guid: 1a56ba87a32d74b438329faba34c44d2, type: 3}
+  - {fileID: 21300000, guid: ebb356b80d85e33499ecf2452454bd5d, type: 3}
+  - {fileID: 21300000, guid: beb9a9fa1e155b041907e99411509798, type: 3}
+  - {fileID: 21300000, guid: 172d716b03e001948bb05762f16994eb, type: 3}
+  - {fileID: 21300000, guid: 2100154c7da74364ca424bdf0fb59d02, type: 3}
+  - {fileID: 21300000, guid: 8282337ca25938e43b2e5f65b07a1cf7, type: 3}
+  - {fileID: 21300000, guid: 5707c7bc68325e44b8aa1911badec36c, type: 3}
+  - {fileID: 21300000, guid: 1b7621fccb6e42c42a9cd155cdb1e4b0, type: 3}
+  - {fileID: 21300000, guid: a4793b9dc458a0f4f9d5d41eb027926a, type: 3}
+  - {fileID: 21300000, guid: 46d70dfd4080a704487132d1596c779c, type: 3}
+  - {fileID: 21300000, guid: 6712b3ee12d9dac48a48f6b5769d164b, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - scroll_bar_black
+  - icon_modi
+  - icon_zoom_in
+  - x_black
+  - top_line_dark
+  - o_black
+  - block_black_ontext
+  - blockbutton_white
+  - block_white
+  - block_white_ontext
+  - icon_zoom_out
+  - icon_hint
+  - block_select_black1
+  - block_select_white1
+  - blockbutton_black
+  - o_white
+  - block_black
+  - txt_window_white
+  - test_guage_black
+  - scroll_bar
+  - top_line
+  - block_select_black2
+  - scroll_win
+  - txt_window_black
+  - x_white
+  - scroll_win_black
+  - blockbutton_select_black
+  - test_guage
+  - icon_refresh
+  - blockbutton_select_white
+  - block_select_white2
+  - test_guage_white
+  m_Tag: PlayAtlas
+  m_IsVariant: 0

@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ResultAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: d67e058f7fe1cdf489c960567b3d4e02, type: 3}
+    - {fileID: 2800000, guid: efb32e3d58822394d93ad92212b26c9e, type: 3}
+    - {fileID: 2800000, guid: c6f64d81da066b4498234eb9746157d0, type: 3}
+    - {fileID: 2800000, guid: b143d591748c58040bb62e14eecd652e, type: 3}
+    - {fileID: 2800000, guid: fbc797054dcc5dd4ba5e661c1f4d2829, type: 3}
+    - {fileID: 2800000, guid: 73c91ee08213e9c409a9950c7ae9622f, type: 3}
+    - {fileID: 2800000, guid: a47874cb2d10c854b83302ab0736d6de, type: 3}
+    - {fileID: 2800000, guid: 4e9839b830f866d48bd8497ce1a4f6c6, type: 3}
+    - {fileID: 2800000, guid: 8ea22449e3563034f9154bce29586e7c, type: 3}
+    - {fileID: 2800000, guid: 241bf5e8b6754a34a8691eaa66dbac05, type: 3}
+    totalSpriteSurfaceArea: 43780
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 73c91ee08213e9c409a9950c7ae9622f, type: 3}
+  - {fileID: 21300000, guid: c6f64d81da066b4498234eb9746157d0, type: 3}
+  - {fileID: 21300000, guid: b143d591748c58040bb62e14eecd652e, type: 3}
+  - {fileID: 21300000, guid: fbc797054dcc5dd4ba5e661c1f4d2829, type: 3}
+  - {fileID: 21300000, guid: 4e9839b830f866d48bd8497ce1a4f6c6, type: 3}
+  - {fileID: 21300000, guid: 241bf5e8b6754a34a8691eaa66dbac05, type: 3}
+  - {fileID: 21300000, guid: 8ea22449e3563034f9154bce29586e7c, type: 3}
+  - {fileID: 21300000, guid: a47874cb2d10c854b83302ab0736d6de, type: 3}
+  - {fileID: 21300000, guid: efb32e3d58822394d93ad92212b26c9e, type: 3}
+  - {fileID: 21300000, guid: d67e058f7fe1cdf489c960567b3d4e02, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - test_statistic_txt_white
+  - result_o
+  - result_x
+  - test_statistic_guage
+  - test_statistic_win2
+  - test_statistic_win_black2
+  - test_statistic_win_black
+  - test_statistic_win
+  - result_button_plus_black
+  - result_button_plus
+  m_Tag: ResultAtlas
+  m_IsVariant: 0

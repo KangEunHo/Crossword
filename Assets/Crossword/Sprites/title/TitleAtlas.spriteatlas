@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TitleAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 0123ab6d6df8d7a4a8018a5764a5ed9e, type: 3}
+    - {fileID: 2800000, guid: fbc91eaf2458aaa48b4bac8d3dd0b4ab, type: 3}
+    - {fileID: 2800000, guid: c2047393cc4b47b468c31094636c3bfd, type: 3}
+    - {fileID: 2800000, guid: 42216db48acdf0b4c90b549c31194e30, type: 3}
+    - {fileID: 2800000, guid: 52080c7d6e054ad4f97351066ac25e7f, type: 3}
+    - {fileID: 2800000, guid: 3c7bfb49f35c1c54082499c8b2a78663, type: 3}
+    - {fileID: 2800000, guid: 36e7c7779fb399b46bafd9c992ddd744, type: 3}
+    - {fileID: 2800000, guid: 58dc12b34562dd7428fcef6762e3fe55, type: 3}
+    - {fileID: 2800000, guid: 3232046ea34c736408c8885f99c45d9a, type: 3}
+    - {fileID: 2800000, guid: f1a35ff5f10f69646a4dd4c2dcaf4381, type: 3}
+    - {fileID: 2800000, guid: 756328c4cdf760a478594765dc27f38e, type: 3}
+    - {fileID: 2800000, guid: 0b2e50a798624f040b0b579c6c7d12ff, type: 3}
+    - {fileID: 2800000, guid: db4c9f2c499db3a4183af8aa98b68957, type: 3}
+    - {fileID: 2800000, guid: c07cc46a54a21464993c2fe49a5bcf5e, type: 3}
+    - {fileID: 2800000, guid: ede711c416427454088115f37604da9b, type: 3}
+    - {fileID: 2800000, guid: 560ce9149ac060c4f834c866897dfcf3, type: 3}
+    - {fileID: 2800000, guid: 255be4be6b958654db5da03816d82e37, type: 3}
+    - {fileID: 2800000, guid: c5424ffe01b5a494280c6d56f76baf17, type: 3}
+    - {fileID: 2800000, guid: 0bbd3500cc7deef44b1a72f258a5aa33, type: 3}
+    - {fileID: 2800000, guid: b701b4ccd2118f248add3a0886ccf016, type: 3}
+    - {fileID: 2800000, guid: 195815cbb2a33764f93231a36acc2466, type: 3}
+    totalSpriteSurfaceArea: 520472
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 0bbd3500cc7deef44b1a72f258a5aa33, type: 3}
+  - {fileID: 21300000, guid: c2047393cc4b47b468c31094636c3bfd, type: 3}
+  - {fileID: 21300000, guid: 58dc12b34562dd7428fcef6762e3fe55, type: 3}
+  - {fileID: 21300000, guid: 560ce9149ac060c4f834c866897dfcf3, type: 3}
+  - {fileID: 21300000, guid: 42216db48acdf0b4c90b549c31194e30, type: 3}
+  - {fileID: 21300000, guid: ede711c416427454088115f37604da9b, type: 3}
+  - {fileID: 21300000, guid: 756328c4cdf760a478594765dc27f38e, type: 3}
+  - {fileID: 21300000, guid: f1a35ff5f10f69646a4dd4c2dcaf4381, type: 3}
+  - {fileID: 21300000, guid: 36e7c7779fb399b46bafd9c992ddd744, type: 3}
+  - {fileID: 21300000, guid: 0b2e50a798624f040b0b579c6c7d12ff, type: 3}
+  - {fileID: 21300000, guid: 3c7bfb49f35c1c54082499c8b2a78663, type: 3}
+  - {fileID: 21300000, guid: c07cc46a54a21464993c2fe49a5bcf5e, type: 3}
+  - {fileID: 21300000, guid: 195815cbb2a33764f93231a36acc2466, type: 3}
+  - {fileID: 21300000, guid: db4c9f2c499db3a4183af8aa98b68957, type: 3}
+  - {fileID: 21300000, guid: b701b4ccd2118f248add3a0886ccf016, type: 3}
+  - {fileID: 21300000, guid: 0123ab6d6df8d7a4a8018a5764a5ed9e, type: 3}
+  - {fileID: 21300000, guid: 52080c7d6e054ad4f97351066ac25e7f, type: 3}
+  - {fileID: 21300000, guid: 3232046ea34c736408c8885f99c45d9a, type: 3}
+  - {fileID: 21300000, guid: 255be4be6b958654db5da03816d82e37, type: 3}
+  - {fileID: 21300000, guid: c5424ffe01b5a494280c6d56f76baf17, type: 3}
+  - {fileID: 21300000, guid: fbc91eaf2458aaa48b4bac8d3dd0b4ab, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - title_button_white
+  - button_start
+  - statistics_button
+  - title_button_blue
+  - button_start_black
+  - title_button_black
+  - test_button_ad
+  - test_button
+  - level_window_white
+  - test_button_ad_dark
+  - level_window_black
+  - title_black
+  - title_white
+  - test_button_dark
+  - title_button_yellow
+  - ads_black
+  - icon_today
+  - statistics_button_dark
+  - title_button_purple
+  - title_button_red
+  - ads_white
+  m_Tag: TitleAtlas
+  m_IsVariant: 0

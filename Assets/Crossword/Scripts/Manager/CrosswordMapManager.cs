@@ -14,6 +14,7 @@ namespace HealingJam.Crossword
 
         [SerializeField] private TextAsset[] crosswordTextAssets = null;
         [SerializeField] private Sprite[] badgeSprites = null;
+        public Sprite ZeroLevelBadgeSprite = null;
 
         public int BadgeSpriteLength => badgeSprites.Length;
 
@@ -101,6 +102,9 @@ namespace HealingJam.Crossword
 
         public Sprite GetBadgeSpriteToLevelIndex(int levelIndex)
         {
+            if (levelIndex < 0)
+                return ZeroLevelBadgeSprite;
+
             int badgeSpriteIndex = Mathf.FloorToInt(levelIndex / BADGE_IN_LEVEL_COUNT);
             badgeSpriteIndex = Mathf.Clamp(badgeSpriteIndex, 0, badgeSprites.Length - 1);
 

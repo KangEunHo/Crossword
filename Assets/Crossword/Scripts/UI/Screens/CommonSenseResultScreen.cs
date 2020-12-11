@@ -19,8 +19,9 @@ namespace HealingJam.Crossword.UI
         [SerializeField] ResultGaugeController resultGaugeController = null;
 
         [SerializeField] AnswerItemController answerItemController = null;
-        [SerializeField] CoinFlyAnimation coinFlyAnimation = null;
+
         [SerializeField] private CanvasGroup answerItemCanvasGroup = null;
+        [SerializeField] private GameObject coinIcon = null;
         [SerializeField] private Text coinText = null;
 
         private List<RightAnswerCountData> rightAnswerCountDatas = null;
@@ -28,6 +29,7 @@ namespace HealingJam.Crossword.UI
 
         private int addCoinAmount = 0;
         private int remainingAdditionalCoin;
+        private WordMatchingPlayScreen.GameMode gameMode;
 
         public override void Init(object stateMachine)
         {
@@ -40,18 +42,19 @@ namespace HealingJam.Crossword.UI
         {
             base.Enter(args);
 
-            WordMatchingPlayScreen.GameMode gameMode = (WordMatchingPlayScreen.GameMode)args[0];
+            gameMode = (WordMatchingPlayScreen.GameMode)args[0];
 
             bool alreadyCompleted = (bool)args[1];
             answerItemDatas = args[2] as List<AnswerItem.AnswerItemData>;
             rightAnswerCountDatas = args[3] as List<RightAnswerCountData>;
 
-            coinFlyAnimation.gameObject.SetActive(true);
             answerItemController.gameObject.SetActive(false);
             answerItemController.SetUp(answerItemDatas);
 
             addCoinAmount = 0;
             remainingAdditionalCoin = 0;
+
+            coinIcon.gameObject.SetActive(true);
 
             if (gameMode == WordMatchingPlayScreen.GameMode.AbilityTest)
             {
@@ -62,8 +65,7 @@ namespace HealingJam.Crossword.UI
                 }
 
                 SetRemaingingCoinAndText(addCoinAmount);
-                coinFlyAnimation.gameObject.SetActive(true);
-                coinFlyAnimation.PlayAnimation(GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, CoinFlyAnimation.DivisionCoinAmounts(addCoinAmount, 5));
+                GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coinIcon.transform.position, GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, CoinFlyAnimation.DivisionCoinAmounts(addCoinAmount, 5));
 
                 resultGaugeController.gameObject.SetActive(true);
                 Invoke(nameof(PlayGaugeAnimation), 1f);
@@ -73,39 +75,42 @@ namespace HealingJam.Crossword.UI
             {
                 badgeObject.gameObject.SetActive(true);
                 resultGaugeController.gameObject.SetActive(false);
-                badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(CrosswordMapManager.Instance.ActiveLevelIndex);
-                badgeLevelText.text = (CrosswordMapManager.Instance.ActiveLevelIndex + 1).ToString();
                 if (alreadyCompleted)
                 {
                     addCoinAmount = 0;
 ;                    SetRemaingingCoinAndText(addCoinAmount);
-
+                    badgeLevelText.text = (CrosswordMapManager.Instance.ActiveLevelIndex + 1).ToString();
                     ShowAnswerItems();
+
+                    badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(CrosswordMapManager.Instance.ActiveLevelIndex);
                 }
                 else
                 {
                     addCoinAmount = 20;
                     SetRemaingingCoinAndText(addCoinAmount);
-                    bool badgeChange = (CrosswordMapManager.Instance.ActiveLevelIndex + 1) % CrosswordMapManager.BADGE_IN_LEVEL_COUNT == 0;
-                    badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(CrosswordMapManager.Instance.ActiveLevelIndex);
+                    bool badgeChange = (CrosswordMapManager.Instance.ActiveLevelIndex) % CrosswordMapManager.BADGE_IN_LEVEL_COUNT == 0;
+                    badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(CrosswordMapManager.Instance.ActiveLevelIndex -1);
 
                     if (badgeChange)
                     {
-                        badgeImage.transform.DOScale(1.2f, 0.2f).OnComplete(()=> { badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(CrosswordMapManager.Instance.ActiveLevelIndex + 1); });
-                        badgeImage.transform.DOScale(1f, 0.3f).SetDelay(0.2f);
+                        badgeImage.transform.DOScale(1.5f, 0.2f).SetDelay(1f).OnStart(()=> { badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(CrosswordMapManager.Instance.ActiveLevelIndex); });
+                        badgeImage.transform.DOScale(1f, 0.3f).SetDelay(1.2f);
                     }
 
+                    badgeLevelText.text = (CrosswordMapManager.Instance.ActiveLevelIndex).ToString();
                     // 할것.
                     // 마지막 레벨을 깼을시 제한을 둬야되나.?
-                    badgeLevelText.transform.DOScale(1.2f, 0.2f).OnComplete(() => { badgeLevelText.text = (CrosswordMapManager.Instance.ActiveLevelIndex + 2).ToString(); });
-                    badgeLevelText.transform.DOScale(1f, 0.3f).SetDelay(0.2f).OnComplete(()=>{ coinFlyAnimation.PlayAnimation(GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, CoinFlyAnimation.DivisionCoinAmounts(addCoinAmount, 5)); });
+                    badgeLevelText.transform.DOScale(1.5f, 0.2f).SetDelay(1f).OnStart(() => { badgeLevelText.text = (CrosswordMapManager.Instance.ActiveLevelIndex + 1).ToString(); });
+                    badgeLevelText.transform.DOScale(1f, 0.3f).SetDelay(1.2f);
 
-                    Invoke(nameof(ShowAnswerItems), 3f);
+                    Invoke(nameof(ShowAnswerItems), 2f);
+
+                    CoroutineHelper.RunAfterDelay(1.5f, () => { GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coinIcon.transform.position, GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, CoinFlyAnimation.DivisionCoinAmounts(addCoinAmount, 5)); });
                 }
             }
 
             SoundMgr.Instance.PlayOneShot(SoundMgr.Instance.playSuccess);
-            GoogleMobileAdsMgr.Instance.ShowDelayInterstitial();
+            CoroutineHelper.RunAfterDelay(3f, () => { GoogleMobileAdsMgr.Instance.ShowDelayInterstitial(); });
         }
 
         private void PlayGaugeAnimation()
@@ -115,7 +120,7 @@ namespace HealingJam.Crossword.UI
 
         private void ShowAnswerItems()
         {
-            coinFlyAnimation.gameObject.SetActive(false);
+            coinIcon.gameObject.SetActive(false);
             answerItemController.gameObject.SetActive(true);
             answerItemCanvasGroup.alpha = 0f;
             answerItemCanvasGroup.DOFade(1f, 0.5f);
@@ -129,7 +134,10 @@ namespace HealingJam.Crossword.UI
 
         public override void Escape()
         {
-            ScreenMgr.Instance.ChangeState(ScreenID.Title);
+            if (gameMode == WordMatchingPlayScreen.GameMode.AbilityTest)
+                ScreenMgr.Instance.ChangeState(ScreenID.Title);
+            else
+                ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);
             SoundMgr.Instance.PlayOneShotButtonSound();
         }
 

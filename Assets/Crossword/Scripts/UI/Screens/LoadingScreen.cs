@@ -18,6 +18,8 @@ namespace HealingJam.Crossword.UI
 
         private LoginStep loginStep = LoginStep.None;
 
+        private bool isFirstEnter = true;
+
         public override void Enter(params object[] args)
         {
             base.Enter(args);
@@ -28,7 +30,10 @@ namespace HealingJam.Crossword.UI
             GameMgr.Instance.topUIController.SetActiveCoinButton(false);
             GameMgr.Instance.topUIController.SetActiveOptionButton(false);
 
-            titleAnimation.Play();
+            if (isFirstEnter)
+                titleAnimation.Play();
+
+            isFirstEnter = false;
         }
 
         public override void Exit(params object[] args)

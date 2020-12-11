@@ -30,7 +30,7 @@ namespace HealingJam.Crossword.Save
         public Dictionary<int, ProgressData> progressDatas = new Dictionary<int, ProgressData>();
         public List<bool> completeDatas = new List<bool>();
         public List<LevelData> levelDatas = new List<LevelData>();
-        public int coin = 0;
+        public int coin = 200;
         public bool isAdRemoved = false;
         public bool playedCommonSenseTest = false;
 

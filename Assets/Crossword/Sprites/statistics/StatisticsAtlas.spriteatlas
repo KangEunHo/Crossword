@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: StatisticsAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 5d187af798cf5f3438bdf4232f719bd4, type: 3}
+    - {fileID: 2800000, guid: 95c19f89a18d7724881e0d53999fbb07, type: 3}
+    - {fileID: 2800000, guid: efbe6985cf43a3e4ca2bfab6adc47ff1, type: 3}
+    - {fileID: 21300000, guid: efbe6985cf43a3e4ca2bfab6adc47ff1, type: 3}
+    - {fileID: 2800000, guid: a691adebdd593314a94d09b89c5ed9ea, type: 3}
+    - {fileID: 2800000, guid: 8e25f8d2a619a3347bfaecb5da328564, type: 3}
+    - {fileID: 2800000, guid: a5a0336de7c6d064d9d6f3b36a1db4e0, type: 3}
+    - {fileID: 2800000, guid: 266c988ab5a0e964fb9d54fca9f55547, type: 3}
+    - {fileID: 2800000, guid: d57b02c826acba149b33e43b620bbb34, type: 3}
+    - {fileID: 2800000, guid: 011d0cbe3a349f54f90d64e5e992dcf0, type: 3}
+    - {fileID: 2800000, guid: 7332b7259afc97c41856cc1e1692bd4d, type: 3}
+    totalSpriteSurfaceArea: 524816
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 8e25f8d2a619a3347bfaecb5da328564, type: 3}
+  - {fileID: 21300000, guid: 7332b7259afc97c41856cc1e1692bd4d, type: 3}
+  - {fileID: 21300000, guid: efbe6985cf43a3e4ca2bfab6adc47ff1, type: 3}
+  - {fileID: 21300000, guid: 5d187af798cf5f3438bdf4232f719bd4, type: 3}
+  - {fileID: 21300000, guid: d57b02c826acba149b33e43b620bbb34, type: 3}
+  - {fileID: 21300000, guid: 95c19f89a18d7724881e0d53999fbb07, type: 3}
+  - {fileID: 21300000, guid: 266c988ab5a0e964fb9d54fca9f55547, type: 3}
+  - {fileID: 21300000, guid: a691adebdd593314a94d09b89c5ed9ea, type: 3}
+  - {fileID: 21300000, guid: a5a0336de7c6d064d9d6f3b36a1db4e0, type: 3}
+  - {fileID: 21300000, guid: 011d0cbe3a349f54f90d64e5e992dcf0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - statistics_guage1
+  - statistics_win_dark
+  - statistic_badge
+  - effect1
+  - statistics_shadow_dark
+  - effect2
+  - statistics_shadow
+  - statistic_badge_black
+  - statistics_guage2
+  - statistics_win
+  m_Tag: StatisticsAtlas
+  m_IsVariant: 0
