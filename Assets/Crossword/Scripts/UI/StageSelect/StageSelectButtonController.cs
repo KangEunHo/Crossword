@@ -15,6 +15,7 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private Image badgeGaugeImage = null;
         [SerializeField] private Text pageText = null;
         [SerializeField] private Swiper pageSwiper = null;
+        [SerializeField] private GameObject badgeEffect = null;
 
         public Action<int> onClickAction = null;
 
@@ -38,8 +39,8 @@ namespace HealingJam.Crossword.UI
                 v.onClickAction = OnStageSelectButtonClick;
             }
 
-            pageSwiper.leftSwipeAction = SetNextPage;
-            pageSwiper.rightSwipeAction = SetPrevPage;
+            pageSwiper.leftSwipeAction = SetPrevPage;
+            pageSwiper.rightSwipeAction = SetNextPage;
         }
 
         private void OnEnable()
@@ -80,6 +81,8 @@ namespace HealingJam.Crossword.UI
             {
                 badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(page);
                 badgeLevelText.text = (page +1).ToString();
+
+                badgeEffect.SetActive(SaveMgr.Instance.GetUnlockLevel() == page);
             }
 
             pageText.text = (page + 1).ToString() + "/" + MaxPage;

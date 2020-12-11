@@ -48,6 +48,7 @@ namespace HealingJam.Crossword
         private bool isZoomed = false;
         public int MaxPage => dailyCommonsenses.Count;
         public bool IsLoaded => dailyCommonsenses.Count > 0;
+        public bool isProgressing { get; private set; }
 
         public DateTime TodayKoreaDateTime;
         public string TodayKoreaDateToString => TodayKoreaDateTime.ToString("yyyyMMdd");
@@ -68,10 +69,14 @@ namespace HealingJam.Crossword
         // 가져오기전에 날짜를 먼저 가져오고, 날짜를 가져오기 실패할 시 단어들을 가져오지 않습니다.
         public IEnumerator LoadCommonSenseAsync()
         {
+            isProgressing = true;
             yield return CoroutineHelper.StartStaticCoroutine(LoadTodayDate());
 
             if (IsLoadTodayDate == false)
+            {
+                isProgressing = false;
                 yield break;
+            }
 
             dailyCommonsenses.Clear();
 
@@ -111,6 +116,8 @@ namespace HealingJam.Crossword
                     }
                 }
             }
+
+            isProgressing = false;
         }
 
         // 현재 날짜를 서버에서 가져옵니다.
@@ -221,9 +228,14 @@ namespace HealingJam.Crossword
 
             READY_TO_DAY_COMMONSENSE_AND_NOT_GET_TODAY_REWARD = false;
 
-            Save.SaveMgr.Instance.AddCoin(20);
+            GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(questionMarkObject.transform.position, GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(20, 4));
 
             SoundMgr.Instance.PlayOneShotButtonSound();
+        }
+
+        private void OnCoinAnimationEnd(int coin)
+        {
+            Save.SaveMgr.Instance.AddCoin(coin);
         }
     }
 }

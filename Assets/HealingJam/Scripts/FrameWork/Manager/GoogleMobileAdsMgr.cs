@@ -34,6 +34,21 @@ namespace HealingJam
             Advertising.InterstitialAdCompleted -= HandleInterstitialClosed;
         }
 
+
+        public static float DPToPixel(float fFixedResoulutionHeight, float fdpHeight)
+        {
+            Debug.Log("Dpi : " + Screen.dpi);
+            float fNowDpi = (Screen.dpi * fFixedResoulutionHeight) / Screen.height;
+            float scale = fNowDpi / 160;
+            float pixel = fdpHeight * scale;
+            return pixel;
+        }
+
+        public static float GetBannerHeight(RectTransform rt)
+        {
+            return DPToPixel(rt.rect.size.y, BannerAdSize.Banner.Height);
+        }
+
         public void ShowBannerAD()
         {
             Advertising.ShowBannerAd(BannerAdPosition.Bottom, BannerAdSize.Banner);
@@ -102,7 +117,14 @@ namespace HealingJam
             }
             else
             {
-                ToastHelper.ShowToast("광고를 준비중입니다. 잠시후 다시 시도하세요", true);
+                if (Application.internetReachability == NetworkReachability.NotReachable)
+                {
+                    ToastHelper.ShowToast("인터넷 연결을 확인해주세요", true);
+                }
+                else
+                {
+                    ToastHelper.ShowToast("광고를 준비중입니다. 잠시후 다시 시도하세요", true);
+                }
             }
         }
 

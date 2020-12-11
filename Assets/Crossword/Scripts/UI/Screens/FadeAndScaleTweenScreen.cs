@@ -7,11 +7,16 @@ namespace HealingJam.GameScreens
 {
     public class FadeAndScaleTweenScreen : FadeScreen
     {
+        private ScaleTweenAnimation[] scaleTweenAnimations = null;
+
         public override void Enter(params object[] args)
         {
             base.Enter(args);
 
-            foreach (var v in GetComponentsInChildren<ScaleTweenAnimation>())
+            if (scaleTweenAnimations == null)
+                scaleTweenAnimations = GetComponentsInChildren<ScaleTweenAnimation>();
+
+            foreach (var v in scaleTweenAnimations)
             {
                 v.Play();
             }
@@ -22,7 +27,10 @@ namespace HealingJam.GameScreens
         {
             base.Exit(args);
 
-            foreach (var v in GetComponentsInChildren<ScaleTweenAnimation>())
+            if (scaleTweenAnimations == null)
+                scaleTweenAnimations = GetComponentsInChildren<ScaleTweenAnimation>();
+
+            foreach (var v in scaleTweenAnimations)
             {
                 v.Rewind();
             }

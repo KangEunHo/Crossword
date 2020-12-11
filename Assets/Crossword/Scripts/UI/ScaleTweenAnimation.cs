@@ -5,12 +5,13 @@ namespace HealingJam.Crossword.UI
 {
     public class ScaleTweenAnimation : MonoBehaviour
     {
+        private const float DURATION = 0.25f;
         private Tween scaleTween = null;
 
         private void CreateTween()
         {
-            scaleTween = transform.DOScale(Vector3.one, 0.25f)
-                .SetAutoKill(false).Pause().SetLink(gameObject);
+            scaleTween = transform.DOScale(Vector3.one, DURATION)
+                .SetAutoKill(false).Pause().SetLink(gameObject).SetEase(Ease.InOutQuad);
         }
 
         public void Play()

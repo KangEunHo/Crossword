@@ -23,6 +23,10 @@ namespace HealingJam.Crossword
                     PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.DailyCommonSense,
                     new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.5f));
                 }
+                else
+                {
+                    CoroutineHelper.StartStaticCoroutine(dailyCommonsensePopup.LoadCommonSenseAsync());
+                }
             }
         }
     }

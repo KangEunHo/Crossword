@@ -10,6 +10,7 @@ namespace HealingJam.Crossword.UI
     {
         [SerializeField] private DailyCommonsenseLoader dailyCommonsenseLoader = null;
         [SerializeField] private GameObject title = null;
+
         [SerializeField] private Image badgeImage = null;
         [SerializeField] private Text badgeLevelText = null;
         [SerializeField] private GameObject commonSenseTestADImage = null;
@@ -24,14 +25,12 @@ namespace HealingJam.Crossword.UI
             if (showedDailyCommonsense == false)
             {
                 GoogleMobileAdsMgr.Instance.ShowBannerAD();
-                title.AddComponent(typeof(ScaleTweenAnimation));
             }
 
             OnEnterContent();
 
             commonSenseTestADImage.SetActive(SaveMgr.Instance.GetPlayedCommonSenseTest());
         }
-
 
         private void OnEnterContent()
         {
@@ -45,8 +44,8 @@ namespace HealingJam.Crossword.UI
             }
 
             int unlockLevel = SaveMgr.Instance.GetUnlockLevel();
-            badgeImage.gameObject.SetActive(unlockLevel > 0);
-            badgeImage.sprite = unlockLevel == 0 ? null : CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(unlockLevel - 1);
+
+            badgeImage.sprite = CrosswordMapManager.Instance.GetBadgeSpriteToLevelIndex(unlockLevel -1);
             badgeLevelText.text = unlockLevel.ToString();
         }
 

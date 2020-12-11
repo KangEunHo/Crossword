@@ -15,7 +15,7 @@ namespace HealingJam.GameScreens
             if (canvasGroup == null)
                 canvasGroup = GetComponent<CanvasGroup>();
 
-            canvasGroupTween = canvasGroup.DOFade(1f, fadeDuration).SetAutoKill(false).SetLink(gameObject).Pause();
+            canvasGroupTween = canvasGroup.DOFade(1f, fadeDuration).SetAutoKill(false).SetLink(gameObject).Pause().SetEase(Ease.InOutQuad);
         }
 
         public override void Enter(params object[] args)
