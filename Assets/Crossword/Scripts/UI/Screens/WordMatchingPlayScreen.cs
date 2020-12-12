@@ -113,30 +113,38 @@ namespace HealingJam.Crossword.UI
             }
             crosswordMapIndexes.Shuffle();
 
-            int levelIndex = CrosswordMapManager.Instance.ActiveLevelIndex;
-            for (int i = 0; i < maxStage; ++i)
+            HashSet<int> hashSetOfmapIndex = new HashSet<int>();
+
+            while(true)
             {
-                CrosswordMap crosswordMap = CrosswordMapManager.Instance.GetCrosswordMap(i);
+                int index = Random.Range(0, maxStage);
+                if (hashSetOfmapIndex.Contains(index))
+                {
+                    continue;
+                }
+                else
+                {
+                    hashSetOfmapIndex.Add(index);
+                }
+
+                CrosswordMap crosswordMap = CrosswordMapManager.Instance.GetCrosswordMap(index);
 
                 foreach (var wordData in crosswordMap.wordDatas)
                 {
                     allAnswers[wordData.wordType].Add(wordData);
                 }
 
-                if (i > 10)
+                bool complete = true;
+                foreach (var v in allAnswers.Values)
                 {
-                    bool complete = true;
-                    foreach(var v in allAnswers.Values)
+                    if (v.Count < 2)
                     {
-                        if (v.Count < 2)
-                        {
-                            complete = false;
-                            break;
-                        }
-                    }
-                    if (complete)
+                        complete = false;
                         break;
+                    }
                 }
+                if (complete)
+                    break;
             }
 
             for (int i = 1; i < (int)WordData.WordType.Max; ++i)

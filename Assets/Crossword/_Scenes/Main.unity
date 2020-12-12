@@ -6798,6 +6798,7 @@ GameObject:
   - component: {fileID: 408899423}
   - component: {fileID: 408899422}
   - component: {fileID: 408899421}
+  - component: {fileID: 408899424}
   m_Layer: 5
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
@@ -6909,6 +6910,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408899419}
   m_CullTransparentMesh: 0
+--- !u!114 &408899424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408899419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7657e121266b9748a201386f1706fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightModeSprite: {fileID: 21300000, guid: ebb356b80d85e33499ecf2452454bd5d, type: 3}
+  darkModeSprite: {fileID: 21300000, guid: 2100154c7da74364ca424bdf0fb59d02, type: 3}
+  image: {fileID: 408899422}
 --- !u!1 &415258571
 GameObject:
   m_ObjectHideFlags: 0
@@ -25047,6 +25063,7 @@ GameObject:
   - component: {fileID: 1581980181}
   - component: {fileID: 1581980183}
   - component: {fileID: 1581980182}
+  - component: {fileID: 1581980184}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -25109,6 +25126,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1581980180}
   m_CullTransparentMesh: 0
+--- !u!114 &1581980184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581980180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7657e121266b9748a201386f1706fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightModeSprite: {fileID: 21300000, guid: 46520b070cb40194d9193023486dc002, type: 3}
+  darkModeSprite: {fileID: 21300000, guid: 30a7ba31389d55e43b7f93e72d88d4cf, type: 3}
+  image: {fileID: 1581980182}
 --- !u!1 &1582704740
 GameObject:
   m_ObjectHideFlags: 0
