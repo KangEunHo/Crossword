@@ -23419,7 +23419,6 @@ MonoBehaviour:
   id: 1
   canvasGroup: {fileID: 304618409}
   dailyCommonsenseLoader: {fileID: 1436298668}
-  title: {fileID: 644568659}
   badgeImage: {fileID: 1809980072}
   badgeLevelText: {fileID: 12211413}
   commonSenseTestADImage: {fileID: 650310277}
@@ -26648,8 +26647,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 40
-    m_Right: 40
+    m_Left: 20
+    m_Right: 20
     m_Top: 15
     m_Bottom: 0
   m_ChildAlignment: 0

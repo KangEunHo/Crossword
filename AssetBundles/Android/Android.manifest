@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 488271433
+CRC: 4276172048
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: mapdata
+      Name: newbundle
       Dependencies: {}
