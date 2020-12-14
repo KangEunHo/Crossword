@@ -9,7 +9,6 @@ namespace HealingJam.Crossword.UI
     public class TitleScreen : FadeAndScaleTweenScreen
     {
         [SerializeField] private DailyCommonsenseLoader dailyCommonsenseLoader = null;
-        [SerializeField] private GameObject title = null;
 
         [SerializeField] private Image badgeImage = null;
         [SerializeField] private Text badgeLevelText = null;

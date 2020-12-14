@@ -96,6 +96,8 @@ namespace AssetBundles
 
         public static bool AllowOnlyOneCache { get; set; } = true;
 
+        public static bool IsInitialized { get; private set; } = false;
+
 
 #if UNITY_EDITOR
         // Flag to indicate if we want to simulate assetBundles in Editor without building them actually.
@@ -200,8 +202,12 @@ namespace AssetBundles
 		// Load AssetBundleManifest.
 		static public AssetBundleLoadManifestOperation Initialize (string manifestAssetBundleName)
 		{
-			var go = new GameObject("AssetBundleManager", typeof(AssetBundleManager));
-			DontDestroyOnLoad(go);
+            if (IsInitialized == false)
+            {
+                var go = new GameObject("AssetBundleManager", typeof(AssetBundleManager));
+                DontDestroyOnLoad(go);
+                IsInitialized = true;
+            }
 		
 #if UNITY_EDITOR
             Log(LogType.Info, "Simulation Mode: " + (SimulateAssetBundleInEditor ? "Enabled" : "Disabled"));
@@ -214,7 +220,8 @@ namespace AssetBundles
 			LoadAssetBundle(manifestAssetBundleName, true);
 			var operation = new AssetBundleLoadManifestOperation (manifestAssetBundleName, "AssetBundleManifest", typeof(AssetBundleManifest));
 			s_InProgressOperations.Add (operation);
-			return operation;
+
+            return operation;
 		}
 
 		// Load AssetBundle and its dependencies.
@@ -440,15 +447,21 @@ namespace AssetBundles
 
                     if (download == null)
                     {
-                        s_DownloadingErrors.Add(keyValue.Key, string.Format("null downloading bundle {0}", keyValue.Key));
-                        keysToRemove.Add(keyValue.Key);
+                        if (s_DownloadingErrors.ContainsKey(keyValue.Key) == false)
+                        {
+                            s_DownloadingErrors.Add(keyValue.Key, string.Format("null downloading bundle {0}", keyValue.Key));
+                            keysToRemove.Add(keyValue.Key);
+                        }
                         continue;
                     }
 					// If downloading fails.
 					if (!string.IsNullOrEmpty(download.error))
 					{
-						s_DownloadingErrors.Add(keyValue.Key, string.Format("Failed downloading bundle {0} from {1}: {2}", keyValue.Key, download.url, download.error));
-						keysToRemove.Add(keyValue.Key);
+                        if (s_DownloadingErrors.ContainsKey(keyValue.Key) == false)
+                        {
+                            s_DownloadingErrors.Add(keyValue.Key, string.Format("Failed downloading bundle {0} from {1}: {2}", keyValue.Key, download.url, download.error));
+                            keysToRemove.Add(keyValue.Key);
+                        }
 						continue;
 					}
 
@@ -458,8 +471,11 @@ namespace AssetBundles
                         AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(download);
                         if (bundle == null)
                         {
-                            s_DownloadingErrors.Add(keyValue.Key, string.Format("{0} is not a valid asset bundle.", keyValue.Key));
-                            keysToRemove.Add(keyValue.Key);
+                            if (s_DownloadingErrors.ContainsKey(keyValue.Key) == false)
+                            {
+                                s_DownloadingErrors.Add(keyValue.Key, string.Format("{0} is not a valid asset bundle.", keyValue.Key));
+                                keysToRemove.Add(keyValue.Key);
+                            }
                             continue;
                         }
 
