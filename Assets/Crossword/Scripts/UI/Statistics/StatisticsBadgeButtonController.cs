@@ -38,8 +38,10 @@ namespace HealingJam.Crossword.UI
             }
 
             int unlockLevel = Save.SaveMgr.Instance.GetUnlockLevel();
-            int unlockBadgeIndex = Mathf.FloorToInt(unlockLevel / CrosswordMapManager.BADGE_IN_LEVEL_COUNT) * CrosswordMapManager.BADGE_IN_LEVEL_COUNT + CrosswordMapManager.BADGE_IN_LEVEL_COUNT;
-            allBadgeText.text = string.Format("1~{0}", unlockBadgeIndex);
+            //int unlockBadgeIndex = Mathf.FloorToInt(unlockLevel / CrosswordMapManager.BADGE_IN_LEVEL_COUNT) * CrosswordMapManager.BADGE_IN_LEVEL_COUNT + CrosswordMapManager.BADGE_IN_LEVEL_COUNT;
+
+            allBadgeText.gameObject.SetActive(unlockLevel > 0);
+            allBadgeText.text = string.Format("1~{0}", unlockLevel);
         }
 
         public void OnBadgeButtonClick(int index)
@@ -71,6 +73,7 @@ namespace HealingJam.Crossword.UI
         public void SetPositionButtonEffectAtAllButton()
         {
             badgeEffect.SetParent(allBadgeText.transform.parent.transform, false);
+            badgeEffect.SetAsFirstSibling();
         }
     }
 }

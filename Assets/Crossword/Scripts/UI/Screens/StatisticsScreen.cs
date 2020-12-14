@@ -6,9 +6,12 @@ namespace HealingJam.Crossword.UI
 {
     public class StatisticsScreen : FadeAndScaleTweenScreen
     {
+        private const string STATISTICS_FIST_VISIT_KEY = "statisticsFisrtVisit";
+
         [SerializeField] private StatisticsController statisticsController = null;
         [SerializeField] private StatisticsBadgeButtonController statisticsBadgeButtonController = null;
         [SerializeField] private GameObject titleText = null;
+        [SerializeField] private GameObject howto = null;
 
         private bool isInited = false;
 
@@ -39,6 +42,21 @@ namespace HealingJam.Crossword.UI
             }
             GameMgr.Instance.topUIController.SetActiveCoinButton(false);
             titleText.SetActive(true);
+
+            if (PlayerPrefsDatas.GetBoolData(STATISTICS_FIST_VISIT_KEY, 1))
+            {
+                howto.SetActive(true);
+                PlayerPrefsDatas.SetBoolData(STATISTICS_FIST_VISIT_KEY, false);
+            }
+            else
+            {
+                howto.SetActive(false);
+            }
+        }
+
+        public void HideHowTo()
+        {
+            howto.SetActive(false);
         }
 
         public override void Exit(params object[] args)
@@ -52,6 +70,13 @@ namespace HealingJam.Crossword.UI
         public override void Escape()
         {
             ScreenMgr.Instance.ChangeState(ScreenID.Title);
+            SoundMgr.Instance.PlayOneShotButtonSound();
+        }
+
+        public void OnHowToButtonClick()
+        {
+            howto.SetActive(true);
+
             SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }

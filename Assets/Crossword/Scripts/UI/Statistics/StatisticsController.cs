@@ -31,7 +31,13 @@ namespace HealingJam.Crossword.UI
                 int levelIndex = badgeIndex * CrosswordMapManager.BADGE_IN_LEVEL_COUNT + i;
                 LevelData levelData = SaveMgr.Instance.GetLevelData(levelIndex);
                 if (levelData.completed == false || levelData.rightAnswerCountDatas.Count == 0)
+                {
+                    for (int j = 1; j < (int)WordData.WordType.Max; ++j)
+                    {
+                        rightAnswerCountData[j].answerCount += 2;
+                    }
                     continue;
+                }
 
                 for (int j = 1; j < (int)WordData.WordType.Max; ++j)
                 {
@@ -58,20 +64,17 @@ namespace HealingJam.Crossword.UI
             }
 
             int unlockLevel = SaveMgr.Instance.GetUnlockLevel();
-            for (int badgeIndex = 0; badgeIndex < unlockLevel; ++badgeIndex)
+            for (int i = 0; i< unlockLevel; ++i)
             {
-                for (int i = 0; i < CrosswordMapManager.BADGE_IN_LEVEL_COUNT; ++i)
-                {
-                    int levelIndex = badgeIndex * CrosswordMapManager.BADGE_IN_LEVEL_COUNT + i;
-                    LevelData levelData = SaveMgr.Instance.GetLevelData(levelIndex);
-                    if (levelData.completed == false || levelData.rightAnswerCountDatas.Count == 0)
-                        continue;
+                int levelIndex = i;
+                LevelData levelData = SaveMgr.Instance.GetLevelData(levelIndex);
+                if (levelData.completed == false || levelData.rightAnswerCountDatas.Count == 0)
+                    continue;
 
-                    for (int j = 1; j < (int)WordData.WordType.Max; ++j)
-                    {
-                        rightAnswerCountData[j].answerCount += levelData.rightAnswerCountDatas[j].answerCount;
-                        rightAnswerCountData[j].rightAnswerCount += levelData.rightAnswerCountDatas[j].rightAnswerCount;
-                    }
+                for (int j = 1; j < (int)WordData.WordType.Max; ++j)
+                {
+                    rightAnswerCountData[j].answerCount += levelData.rightAnswerCountDatas[j].answerCount;
+                    rightAnswerCountData[j].rightAnswerCount += levelData.rightAnswerCountDatas[j].rightAnswerCount;
                 }
             }
 

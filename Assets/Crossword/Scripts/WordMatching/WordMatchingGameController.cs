@@ -14,7 +14,7 @@ namespace HealingJam.Crossword
         private const float ANSWER_RATE_GAUGE_WIDTH = 380f;
         public enum GameState
         {
-            Pause, Play, Fail, Clear
+            Ready, Pause, Play, Fail, Clear
         }
 
         [SerializeField] private BoardController boardController = null;
@@ -63,7 +63,7 @@ namespace HealingJam.Crossword
             boardHighlightController.onWrongAnswer += OnWrongAnswer;
             //
 
-            State = GameState.Pause;
+            State = GameState.Ready;
 
             GameMgr.Instance.topUIController.SetActiveBackButton(false);
             GameMgr.Instance.topUIController.SetActiveCoinButton(false);

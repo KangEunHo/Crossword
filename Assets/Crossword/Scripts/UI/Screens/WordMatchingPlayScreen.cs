@@ -8,6 +8,8 @@ namespace HealingJam.Crossword.UI
 {
     public class WordMatchingPlayScreen : FadeAndScaleTweenScreen
     {
+        private const string ABILITY_FIST_VISIT_KEY = "abilityFisrtVisit";
+        private const string BADGE_TEST_FIST_VISIT_KEY = "badgeTestFisrtVisit";
         public enum GameMode
         {
             BadgePlay, AbilityTest
@@ -24,14 +26,29 @@ namespace HealingJam.Crossword.UI
 
             if (gameMode == GameMode.AbilityTest)
             {
-                infoText.text = "10가지 상식 분야 중\n 랜덤으로 20문제가 출제됩니다.\n테스트를 통해 부족한 분야를 확인해보세요.\n(제한 시간: 5분)";
-                gameController.SetUp(gameMode, CreateAbilityTestAnswers());
+                string message = "10가지 상식 분야 중\n 랜덤으로 20문제가 출제됩니다.\n테스트를 통해 부족한 분야를 확인해보세요.\n(제한 시간: 5분)";
+                infoText.text = message;
+                if (PlayerPrefsDatas.GetBoolData(ABILITY_FIST_VISIT_KEY, 1))
+                {
+                    PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Message, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
+                                                new PopupClosedDelegate((msg) => { gameController.SetUp(gameMode, CreateAbilityTestAnswers()); }), message);
+                    PlayerPrefsDatas.SetBoolData(ABILITY_FIST_VISIT_KEY, false);
+                }
+                else 
+                    gameController.SetUp(gameMode, CreateAbilityTestAnswers());
             }
             else
             {
-                infoText.text = string.Format("({0}) 레벨에 대한 테스트를 시작합니다.\n레벨 테스트를 완료하면\n다음 레벨의 문제를 풀 수 있습니다.", 
-                    (CrosswordMapManager.Instance.ActiveLevelIndex +1));
-                gameController.SetUp(gameMode, CreateBadgePlayAnswers());
+                string message = string.Format("({0}) 레벨에 대한 테스트를 시작합니다.\n레벨 테스트를 완료하면\n다음 레벨의 문제를 풀 수 있습니다.", (CrosswordMapManager.Instance.ActiveLevelIndex + 1));
+                infoText.text = message;
+                if (PlayerPrefsDatas.GetBoolData(BADGE_TEST_FIST_VISIT_KEY, 1))
+                {
+                    PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Message, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
+                        new PopupClosedDelegate((msg)=> { gameController.SetUp(gameMode, CreateBadgePlayAnswers()); }), message);
+                    PlayerPrefsDatas.SetBoolData(BADGE_TEST_FIST_VISIT_KEY, false);
+                }
+                else
+                    gameController.SetUp(gameMode, CreateBadgePlayAnswers());
             }
 
             PopupMgr.Instance.StateMachine.OnStateEntered += OnPopupEntered;
@@ -44,6 +61,11 @@ namespace HealingJam.Crossword.UI
 
             PopupMgr.Instance.StateMachine.OnStateEntered -= OnPopupEntered;
             PopupMgr.Instance.StateMachine.OnStateExited -= OnPopupExited;
+        }
+
+        private void OnMessagePopupClosed(string message)
+        {
+
         }
         // 뱃지문제에 사용되는 문제들을 만듭니다.
         // 해당 레벨에서 문제들이 출제됩니다.
