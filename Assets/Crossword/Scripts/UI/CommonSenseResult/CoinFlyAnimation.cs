@@ -50,8 +50,8 @@ namespace HealingJam.Crossword.UI
                 float wayPoint0_y = -Random.Range(COIN_FIRST_PATH_MIN_DISTANCE, COIN_FIRST_PATH_MAX_DISTANCE) * 2f;
                 wayPoints[0] = startPos + (new Vector3(wayPoint0_x, wayPoint0_y));
                 wayPoints[1] = target.position;
-                coin.transform.DOMove(wayPoints[0], COIN_FLY_DURATION * 0.5f).SetEase(Ease.InOutQuad);
-                coin.transform.DOMove(wayPoints[1], COIN_FLY_DURATION * 0.5f).SetEase(Ease.InOutQuad).SetDelay(COIN_FLY_DURATION * 0.5f)
+                coin.transform.DOMove(wayPoints[0], 0.35f).SetEase(Ease.InOutQuad);
+                coin.transform.DOMove(wayPoints[1], COIN_FLY_DURATION).SetEase(Ease.InOutQuad).SetDelay(0.35f)
                     .OnComplete(() =>
                     {
 
@@ -63,7 +63,7 @@ namespace HealingJam.Crossword.UI
                         coinAnimationEndAction?.Invoke(coinAmounts[index]);
                     });
 
-                coin.GetComponent<Image>().DOFade(1f, COIN_FLY_DURATION).SetEase(coinFadeCurve);
+                coin.GetComponent<Image>().DOFade(1f, COIN_FLY_DURATION + 0.35f).SetEase(coinFadeCurve);
                 yield return interval;
             }
         }

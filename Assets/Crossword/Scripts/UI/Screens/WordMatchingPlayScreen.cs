@@ -228,7 +228,14 @@ namespace HealingJam.Crossword.UI
                 }
                 else if (message == "exit")
                 {
-                    ScreenMgr.Instance.ChangeState(ScreenID.Title);
+                    if (gameMode == GameMode.AbilityTest)
+                    {
+                        ScreenMgr.Instance.ChangeState(ScreenID.Title);
+                    }
+                    else
+                    {
+                        ScreenMgr.Instance.ChangeState(ScreenID.StageSelect);
+                    }
                 }
             }
         }

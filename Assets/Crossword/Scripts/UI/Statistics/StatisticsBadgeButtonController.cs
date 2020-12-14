@@ -12,6 +12,7 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private StatisticsController statisticsController = null;
         [SerializeField] private ScrollRect scrollRect = null;
 
+        [SerializeField] private Text allBadgeText = null;
         private List<StatisticsBadgeButton> statisticsBadgeButtons = new List<StatisticsBadgeButton>();
 
         public void Init()
@@ -35,6 +36,10 @@ namespace HealingJam.Crossword.UI
             {
                 statisticsBadgeButtons[i].SetUp(i);
             }
+
+            int unlockLevel = Save.SaveMgr.Instance.GetUnlockLevel();
+            int unlockBadgeIndex = Mathf.FloorToInt(unlockLevel / CrosswordMapManager.BADGE_IN_LEVEL_COUNT) * CrosswordMapManager.BADGE_IN_LEVEL_COUNT + CrosswordMapManager.BADGE_IN_LEVEL_COUNT;
+            allBadgeText.text = string.Format("1~{0}", unlockBadgeIndex);
         }
 
         public void OnBadgeButtonClick(int index)
@@ -53,6 +58,19 @@ namespace HealingJam.Crossword.UI
         public void SetContentPositionToChild(int index)
         {
             scrollRect.SnapTo(statisticsBadgeButtons[index].transform as RectTransform);
+        }
+
+        public void OnAllLevelBadgeButtonClick()
+        {
+            statisticsController.PlayAnimationAll();
+            SetPositionButtonEffectAtAllButton();
+
+            SoundMgr.Instance.PlayOneShotButtonSound();
+        }
+
+        public void SetPositionButtonEffectAtAllButton()
+        {
+            badgeEffect.SetParent(allBadgeText.transform.parent.transform, false);
         }
     }
 }

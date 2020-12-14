@@ -69,7 +69,7 @@ namespace HealingJam.Crossword.UI
 
                 resultGaugeController.gameObject.SetActive(true);
                 Invoke(nameof(PlayGaugeAnimation), 1f);
-                Invoke(nameof(ShowAnswerItems), 2f);
+                Invoke(nameof(ShowAnswerItems), 2.5f);
             }
             else
             {
@@ -103,7 +103,7 @@ namespace HealingJam.Crossword.UI
                     badgeLevelText.transform.DOScale(1.5f, 0.2f).SetDelay(1f).OnStart(() => { badgeLevelText.text = (CrosswordMapManager.Instance.ActiveLevelIndex + 1).ToString(); });
                     badgeLevelText.transform.DOScale(1f, 0.3f).SetDelay(1.2f);
 
-                    Invoke(nameof(ShowAnswerItems), 2f);
+                    Invoke(nameof(ShowAnswerItems), 2.5f);
 
                     CoroutineHelper.RunAfterDelay(1.5f, () => { GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coinIcon.transform.position, GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, CoinFlyAnimation.DivisionCoinAmounts(addCoinAmount, 5)); });
                 }
@@ -111,6 +111,17 @@ namespace HealingJam.Crossword.UI
 
             SoundMgr.Instance.PlayOneShot(SoundMgr.Instance.playSuccess);
             CoroutineHelper.RunAfterDelay(3f, () => { GoogleMobileAdsMgr.Instance.ShowDelayInterstitial(); });
+
+            GameMgr.Instance.topUIController.SetActiveBackButton(false);
+            GameMgr.Instance.topUIController.SetActiveOptionButton(false);
+        }
+
+        public override void Exit(params object[] args)
+        {
+            base.Exit(args);
+
+            GameMgr.Instance.topUIController.SetActiveBackButton(true);
+            GameMgr.Instance.topUIController.SetActiveOptionButton(true);
         }
 
         private void PlayGaugeAnimation()

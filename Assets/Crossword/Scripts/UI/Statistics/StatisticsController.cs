@@ -35,14 +35,50 @@ namespace HealingJam.Crossword.UI
 
                 for (int j = 1; j < (int)WordData.WordType.Max; ++j)
                 {
+                    rightAnswerCountData[j].answerCount += levelData.rightAnswerCountDatas[j].answerCount;
                     rightAnswerCountData[j].rightAnswerCount += levelData.rightAnswerCountDatas[j].rightAnswerCount;
                 }
             }
 
-            for (int j = 1; j < (int)WordData.WordType.Max; ++j)
+            //for (int j = 1; j < (int)WordData.WordType.Max; ++j)
+            //{
+            //    rightAnswerCountData[j].answerCount += 2 * CrosswordMapManager.BADGE_IN_LEVEL_COUNT;
+            //}
+
+            PlayAnimation(rightAnswerCountData);
+        }
+
+        public void PlayAnimationAll()
+        {
+            List<RightAnswerCountData> rightAnswerCountData = new List<RightAnswerCountData>();
+
+            for (int i = 0; i < (int)WordData.WordType.Max; ++i)
             {
-                rightAnswerCountData[j].answerCount += 2 * CrosswordMapManager.BADGE_IN_LEVEL_COUNT;
+                rightAnswerCountData.Add(new RightAnswerCountData());
             }
+
+            int unlockLevel = SaveMgr.Instance.GetUnlockLevel();
+            for (int badgeIndex = 0; badgeIndex < unlockLevel; ++badgeIndex)
+            {
+                for (int i = 0; i < CrosswordMapManager.BADGE_IN_LEVEL_COUNT; ++i)
+                {
+                    int levelIndex = badgeIndex * CrosswordMapManager.BADGE_IN_LEVEL_COUNT + i;
+                    LevelData levelData = SaveMgr.Instance.GetLevelData(levelIndex);
+                    if (levelData.completed == false || levelData.rightAnswerCountDatas.Count == 0)
+                        continue;
+
+                    for (int j = 1; j < (int)WordData.WordType.Max; ++j)
+                    {
+                        rightAnswerCountData[j].answerCount += levelData.rightAnswerCountDatas[j].answerCount;
+                        rightAnswerCountData[j].rightAnswerCount += levelData.rightAnswerCountDatas[j].rightAnswerCount;
+                    }
+                }
+            }
+
+            //for (int j = 1; j < (int)WordData.WordType.Max; ++j)
+            //{
+            //    rightAnswerCountData[j].answerCount += 2 * CrosswordMapManager.BADGE_IN_LEVEL_COUNT;
+            //}
 
             PlayAnimation(rightAnswerCountData);
         }
