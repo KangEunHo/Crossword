@@ -26,16 +26,16 @@ namespace HealingJam.Crossword.UI
             }
             statisticsBadgeButtonController.SetUp();
 
-            int badgeIndex = Mathf.FloorToInt(Save.SaveMgr.Instance.GetUnlockLevel() / (float)CrosswordMapManager.BADGE_IN_LEVEL_COUNT);
-            int unlockCompleteLeve = Save.SaveMgr.Instance.GetUnlockLevel();
+            int unlockCompleteLevel = Save.SaveMgr.Instance.GetUnlockLevel();
 
-            if (unlockCompleteLeve == 0)
+            if (unlockCompleteLevel == 0)
             {
                 statisticsController.PlayAnimationAll();
                 statisticsBadgeButtonController.SetPositionButtonEffectAtAllButton();
             }
             else
             {
+                int badgeIndex = Mathf.FloorToInt((Save.SaveMgr.Instance.GetUnlockLevel() -1) / (float)CrosswordMapManager.BADGE_IN_LEVEL_COUNT);
                 statisticsController.PlayAnimation(badgeIndex);
                 statisticsBadgeButtonController.SetPositionButtonEffect(badgeIndex);
                 statisticsBadgeButtonController.SetContentPositionToChild(badgeIndex);

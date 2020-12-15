@@ -118,7 +118,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1.5
+  bundleVersion: 0.1.0
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -162,10 +162,10 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.healingjam.crossword
+    Android: com.healingjam.crossword2
     Standalone: com.Company.ProductName
   buildNumber: {}
-  AndroidBundleVersionCode: 152
+  AndroidBundleVersionCode: 100
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -258,8 +258,8 @@ PlayerSettings:
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{inproject}: Keystore/crossword.keystore'
-  AndroidKeyaliasName: healingjam
+  AndroidKeystoreName: '{inproject}: Keystore/crossword2.keystore'
+  AndroidKeyaliasName: crossword2
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1

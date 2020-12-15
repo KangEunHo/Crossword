@@ -15,7 +15,7 @@ namespace HealingJam.Crossword
             if (args != null && args.Length > 1)
             {
                 int packIndex = (int)args[1] + 1;
-                reviewText.text = string.Format("현재 <color=red>{0}번</color> 가로세로를 풀고 있습니다.\n<color=red>오타 및 수정사항</color>이 있으신가요?", packIndex);
+                reviewText.text = string.Format("현재 <color=#BA2828ff>{0}번</color> 가로세로를 풀고 있습니다.\n<color=#BA2828ff>오타 및 수정사항</color>이 있으신가요?", packIndex);
             }
         }
 

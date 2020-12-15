@@ -14,7 +14,7 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private GameObject badgeGaugeObject = null;
         [SerializeField] private Image badgeGaugeImage = null;
         [SerializeField] private Text pageText = null;
-        [SerializeField] private Swiper pageSwiper = null;
+        [SerializeField] private UpdateSwiper pageSwiper = null;
         [SerializeField] private GameObject badgeEffect = null;
 
         public Action<int> onClickAction = null;
@@ -73,8 +73,8 @@ namespace HealingJam.Crossword.UI
             badgeGaugeObject.SetActive(pageCompleted == false);
             if (pageCompleted == false)
             {
-                float pageProgress = completeCount / (float)CrosswordMapManager.LEVEL_IN_PACK_COUNT * 0.8f;
-                badgeGaugeImage.fillAmount = 0.1f + pageProgress;
+                float pageProgress = completeCount / (float)CrosswordMapManager.LEVEL_IN_PACK_COUNT * 0.84f;
+                badgeGaugeImage.fillAmount = 0.08f + pageProgress;
                 guegeLevelText.text = (page +1).ToString();
             }
             else

@@ -38,6 +38,7 @@ namespace HealingJam.Crossword.UI
             Sprite badgeSprite = CrosswordMapManager.Instance.GetBadgeSpriteToBadgeIndex(badgeIndex);
             badgeOriginImage.sprite = badgeSprite;
 
+            badgeOriginImage.gameObject.SetActive(completedLevelCount > 0);
             badgeGrayscaleImage.gameObject.SetActive(badgeCompleted == false);
 
             if (badgeCompleted == false)

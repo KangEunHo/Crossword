@@ -46,7 +46,7 @@ namespace HealingJam.Crossword.UI
             }
             else
             {
-                ToastPlugin.ToastHelper.ShowToast("먼저 이전 뱃지테스트를 통과해야 해요");
+                ToastPlugin.ToastHelper.ShowToast("먼저 이전 레벨 테스트를 통과해야 해요");
             }
 
             SoundMgr.Instance.PlayOneShotButtonSound();
