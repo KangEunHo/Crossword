@@ -19,6 +19,7 @@ namespace HealingJam.Crossword.UI
 
         public CoinFlyAnimation coinFlyAnimation = null;
         private Tween coinAmountTween = null;
+        private int prevAddAmount = 0;
 
         private void OnEnable()
         {
@@ -42,20 +43,26 @@ namespace HealingJam.Crossword.UI
             if (coinAddText == null)
                 return;
 
+            if (coinAmountTween != null)
+            {
+                if (amount > 0)
+                    amount += prevAddAmount;
+                coinAmountTween.Kill(true);
+            }
+
             if (amount >= 0)
                 coinAddText.text = "+" + amount.ToString();
             else
                 coinAddText.text = amount.ToString();
 
-            if (coinAmountTween != null)
-                coinAmountTween.Kill(true);
+            prevAddAmount = amount;
 
             coinAddText.gameObject.SetActive(true);
             coinAmountTween = DOTween.Sequence()
                 .Append(coinAddText.transform.DOScaleY(1.2f, 0.1f))
                 .Append(coinAddText.transform.DOScaleY(1f, 0.2f))
                 .AppendInterval(0.2f)
-                .OnComplete(() => { coinAddText.gameObject.SetActive(false); })
+                .OnComplete(() => { coinAddText.gameObject.SetActive(false); coinAmountTween = null; })
                 .SetLink(coinAddText.gameObject);
 
         }

@@ -595,6 +595,46 @@ MonoBehaviour:
   Persistent: 1
   LazyInit: 0
   crosswordTextAssets:
+  - {fileID: 4900000, guid: e0d20c9f7b6b3624f8cd3276f8f4090a, type: 3}
+  - {fileID: 4900000, guid: 594a877a38c814948b6927072f8eee00, type: 3}
+  - {fileID: 4900000, guid: 4a1f020ca9665cb4a966642d90c0729c, type: 3}
+  - {fileID: 4900000, guid: fcd1b9a4a40a15441bd091372177ac67, type: 3}
+  - {fileID: 4900000, guid: ffe5116b941bf7c44a5097f67b3cf75e, type: 3}
+  - {fileID: 4900000, guid: 6be322887c093f94c9816100a7b42f17, type: 3}
+  - {fileID: 4900000, guid: b6355572783c1ee45ac979a08bf36def, type: 3}
+  - {fileID: 4900000, guid: 4747fdc79631ef94ab6ccdfa4f13a815, type: 3}
+  - {fileID: 4900000, guid: 2df4e54f5ad6f944f98f514c49730af8, type: 3}
+  - {fileID: 4900000, guid: 592417374f7f9424389d4f1968f4f553, type: 3}
+  - {fileID: 4900000, guid: 608d6573910ae0a4691d624f5f119a9e, type: 3}
+  - {fileID: 4900000, guid: 37bc1be7a889f6f47a0520625cfb34d3, type: 3}
+  - {fileID: 4900000, guid: 6165baf962492b84aa8ca2d44036bc09, type: 3}
+  - {fileID: 4900000, guid: 14c202d4137810a40ae8566c73668e19, type: 3}
+  - {fileID: 4900000, guid: 60f8e41b115d1bc4ebd652fce34bb082, type: 3}
+  - {fileID: 4900000, guid: 242c278e458f41e48bd5f402781e24e0, type: 3}
+  - {fileID: 4900000, guid: 760927dd456fbf54888c05cb443f723a, type: 3}
+  - {fileID: 4900000, guid: 4e8e5c68dd7a8d641a6e85d6aa933db7, type: 3}
+  - {fileID: 4900000, guid: 0aee2742f452c3c40bd6bd18e422a62a, type: 3}
+  - {fileID: 4900000, guid: 66220456055898144b8b6748929c0682, type: 3}
+  - {fileID: 4900000, guid: 6554e0da842647442b58ee566f26cdb0, type: 3}
+  - {fileID: 4900000, guid: 23e02ca8efe16e94e8df2ca95936ae60, type: 3}
+  - {fileID: 4900000, guid: 9219e0c0faea33048818766456c17a7c, type: 3}
+  - {fileID: 4900000, guid: 14f06e3c8f9a0714ba8d061c495ff558, type: 3}
+  - {fileID: 4900000, guid: 5f56d7d1661d554489423f42b6105099, type: 3}
+  - {fileID: 4900000, guid: 87b1396071172834ca5050e947f6e187, type: 3}
+  - {fileID: 4900000, guid: 6e5ac350f04bd1744891fb8d1c011492, type: 3}
+  - {fileID: 4900000, guid: c825f6183c578834985c1a6a475a5b5b, type: 3}
+  - {fileID: 4900000, guid: 951a5751ea6251444a174936435f27ff, type: 3}
+  - {fileID: 4900000, guid: 9467233b001f9ff4bad6b4147f18e435, type: 3}
+  - {fileID: 4900000, guid: 562fa17ff26aabd439a49aaeb9d920f6, type: 3}
+  - {fileID: 4900000, guid: 112df1ff8dee45e40b9807f40e040588, type: 3}
+  - {fileID: 4900000, guid: c42a942af9d85aa4b928785136878ac4, type: 3}
+  - {fileID: 4900000, guid: 9930f496a9996b64ea11697eb6778dec, type: 3}
+  - {fileID: 4900000, guid: 6af5cd88c910b8945acd13c9dd65950b, type: 3}
+  - {fileID: 4900000, guid: 4afd06a612063db47a1bd6299493a94e, type: 3}
+  - {fileID: 4900000, guid: 2ccb178759688a047b3452e390fa672e, type: 3}
+  - {fileID: 4900000, guid: 9f44269c09ed6eb45abd5698da985f1e, type: 3}
+  - {fileID: 4900000, guid: dd716eb4c7d3e4b49aaa77f6dcf65bef, type: 3}
+  - {fileID: 4900000, guid: fc73c80ce45b5564982b9895d8c78ef5, type: 3}
   - {fileID: 4900000, guid: 79d5cef0b1ede1d44878e23956072ebf, type: 3}
   - {fileID: 4900000, guid: 8d525a2b541df6a4b9387921be0298ce, type: 3}
   - {fileID: 4900000, guid: e8a085955ef84b1498a8e96e03d42502, type: 3}
@@ -749,6 +789,12 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 821fb5196f45d7d4088195ea194a5abc, type: 3}
   - {fileID: 4900000, guid: a7e8d6cfca27e1b4ea7a8e589b1ceaaa, type: 3}
   - {fileID: 4900000, guid: f08a6b4d5a2caa84fbec0420bb2c3066, type: 3}
+  - {fileID: 4900000, guid: 2e05b3a0ab11520488cfac10c78b31d3, type: 3}
+  - {fileID: 4900000, guid: 1ed954bd8867e154e8b23afe974ae28e, type: 3}
+  - {fileID: 4900000, guid: 3b506b0512f5bf6479c47f440b54cffa, type: 3}
+  - {fileID: 4900000, guid: 565dfa87e18be9049961d02165493d68, type: 3}
+  - {fileID: 4900000, guid: edad32df30420e240abcd73dce1c9635, type: 3}
+  - {fileID: 4900000, guid: aeaccac0f53c61a429d25a8ace491d45, type: 3}
   badgeSprites:
   - {fileID: 21300000, guid: 6a8c6affe7dcafb41924fecd6abcf478, type: 3}
   - {fileID: 21300000, guid: e430167b87ad7f846a37d1785eede4f3, type: 3}
@@ -1455,7 +1501,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "750<b><size=24><color=#FDB340>+150</color></size></b> \uCF54\uC778"
+  m_Text: "750<b><size=24><color=#BA2828ff>+150</color></size></b> \uCF54\uC778"
 --- !u!222 &45756924
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1692,7 +1738,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "1500<b><size=24><color=#FDB340>+500</color></size></b> \uCF54\uC778"
+  m_Text: "1500<b><size=24><color=#BA2828ff>+500</color></size></b> \uCF54\uC778"
 --- !u!222 &58691876
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10628,7 +10674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productId: com.healingjam.crossword.coin_900
+  productId: com.healingjam.crossword2.coin_900
   buttonType: 0
   consumePurchase: 1
   onPurchaseComplete:
@@ -12712,10 +12758,10 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -13905,7 +13951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productId: com.healingjam.crossword.coin_2000
+  productId: com.healingjam.crossword2.coin_2000
   buttonType: 0
   consumePurchase: 1
   onPurchaseComplete:
@@ -15521,7 +15567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productId: com.healingjam.crossword.remove_ad
+  productId: com.healingjam.crossword2.remove_ad
   buttonType: 0
   consumePurchase: 0
   onPurchaseComplete:
@@ -18506,7 +18552,7 @@ MonoBehaviour:
   popupID: 1
   window: {fileID: 1274417852}
   restoreButton: {fileID: 402982332}
-  removeAdButton: {fileID: 0}
+  removeAdButton: {fileID: 958639567}
 --- !u!1 &1118495459
 GameObject:
   m_ObjectHideFlags: 0
@@ -23930,7 +23976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productId: com.healingjam.crossword.coin_150
+  productId: com.healingjam.crossword2.coin_150
   buttonType: 0
   consumePurchase: 1
   onPurchaseComplete:
@@ -31537,10 +31583,10 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:

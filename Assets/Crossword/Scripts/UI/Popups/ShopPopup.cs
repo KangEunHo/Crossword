@@ -42,7 +42,7 @@ namespace HealingJam.Crossword
             SaveMgr.Instance.Save();
         }
 
-        public static void GetPurchaseReward(Product product)
+        public void GetPurchaseReward(Product product)
         {
             string id = product.definition.id;
 

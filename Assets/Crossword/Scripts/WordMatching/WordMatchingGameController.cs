@@ -32,6 +32,7 @@ namespace HealingJam.Crossword
         [SerializeField] private Text percentText = null;
         [SerializeField] private WrongWordAnimator wrongWordAnimator = null;
         [SerializeField] private PressChecker zoomPressChecker = null;
+        [SerializeField] private TimeOutAnimator timeOutAnimator = null;
 
         private AnswerChecker answerChecker = null;
         public GameState State { get; set; }
@@ -143,14 +144,21 @@ namespace HealingJam.Crossword
 
                 if (LimitTime <= 0)
                 {
-                    LimitTime = 0f;
-                    State = GameState.Fail;
-                    OnClear();
+                    timeOutAnimator.PlayAnimation(() =>
+                    {
+                        LimitTime = 0f;
+                        State = GameState.Fail;
+                        OnClear();
+                    });
+                    timeText.text = "00:00";
                 }
-                TimeSpan t = TimeSpan.FromSeconds(LimitTime);
-                string str = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
+                else
+                {
+                    TimeSpan t = TimeSpan.FromSeconds(LimitTime);
+                    string str = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
 
-                timeText.text = str;
+                    timeText.text = str;
+                }
             }
         }
 
