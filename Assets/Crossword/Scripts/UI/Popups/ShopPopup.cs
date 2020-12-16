@@ -5,6 +5,7 @@ using HealingJam.Popups;
 using HealingJam.Crossword.Save;
 using UnityEngine.Purchasing;
 using EasyMobile;
+using HealingJam.Crossword.UI;
 
 
 namespace HealingJam.Crossword
@@ -13,6 +14,12 @@ namespace HealingJam.Crossword
     {
         [SerializeField] private GameObject restoreButton = null;
         [SerializeField] private Button removeAdButton = null;
+        [SerializeField] private Transform coin1Transform = null;
+        [SerializeField] private Transform coin2Transform = null;
+        [SerializeField] private Transform coin3Transform = null;
+        [SerializeField] private Transform rewardAdTransform = null;
+        [SerializeField] private TopUIController topUIController = null;
+
 
         private void Start()
         {
@@ -38,8 +45,7 @@ namespace HealingJam.Crossword
 
         private void Reward()
         {
-            SaveMgr.Instance.AddCoin(30);
-            SaveMgr.Instance.Save();
+            GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(rewardAdTransform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(30, 10));
         }
 
         public void GetPurchaseReward(Product product)
@@ -48,24 +54,26 @@ namespace HealingJam.Crossword
 
             if (id == "com.healingjam.crossword.coin_150")
             {
-                SaveMgr.Instance.AddCoin(150);
-                SaveMgr.Instance.Save();
+                GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coin1Transform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(150, 30));
             }
             else if (id == "com.healingjam.crossword.coin_900")
             {
-                SaveMgr.Instance.AddCoin(900);
-                SaveMgr.Instance.Save();
+                GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coin3Transform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(900, 100));
             }
             else if (id == "com.healingjam.crossword.coin_2000")
             {
-                SaveMgr.Instance.AddCoin(2000);
-                SaveMgr.Instance.Save();
+                GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coin2Transform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(2000, 100));
             }
             else if (id == "com.healingjjam.blockmaker.remove_ad")
             {
                 SaveMgr.Instance.SetAdRemove(true);
                 Advertising.RemoveAds();
             }
+        }
+
+        private void OnCoinAnimationEnd(int coin)
+        {
+            Save.SaveMgr.Instance.AddCoin(coin);
         }
 
         public void RestoreProduct(Product product)
