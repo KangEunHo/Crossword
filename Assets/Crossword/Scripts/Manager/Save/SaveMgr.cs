@@ -84,7 +84,22 @@ namespace HealingJam.Crossword.Save
 
             string serializeData = JsonConvert.SerializeObject(saveData);
             string encryptData = EncryptUtils.Encrypt(serializeData);
-            GPGSMgr.Instance.WriteSavedGame(Convert.FromBase64String(encryptData), null);
+            byte[] writeData = Convert.FromBase64String(encryptData);
+
+            //if (GPGSMgr.Instance.IsOpened)
+            //{
+            //    GPGSMgr.Instance.WriteSavedGame(writeData, null);
+            //}
+            //else
+            //{
+                GPGSMgr.Instance.OpenSavedGame((openSuccess) =>
+                {
+                    if (openSuccess)
+                    {
+                        GPGSMgr.Instance.WriteSavedGame(writeData, null);
+                    }
+                });
+            //}
         }
 
         public bool GetCompleteData(int index)

@@ -5,7 +5,7 @@ using UnityEngine.SocialPlatforms;
 
 public class GPGSMgr : Singleton<GPGSMgr>
 {
-    private const string SAVE_KEY = "com.healingjam.crossword_save_game";
+    private const string SAVE_KEY = "com.healingjam.crossword2_save_game";
     public enum LoginState
     {
         None, Failed, Successed
@@ -147,7 +147,7 @@ public class GPGSMgr : Singleton<GPGSMgr>
                     {
                         Debug.Log("Saved game data has been retrieved successfully!");
                         // Here you can process the data as you wish.
-                        if (data.Length > 0)
+                        if (data != null && data.Length > 0)
                         {
                             readCallback?.Invoke(true, data);
                             return;

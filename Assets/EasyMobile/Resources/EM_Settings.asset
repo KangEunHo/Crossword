@@ -57,7 +57,7 @@ MonoBehaviour:
         mExtraOptions:
           keys: []
           values: []
-      mEnableTestMode: 1
+      mEnableTestMode: 0
       mAppId:
         mIosId: 
         mAndroidId: 
@@ -237,7 +237,7 @@ MonoBehaviour:
     mAchievements: []
     mAndroidXmlResources: 
     mEnableMultiplayer: 0
-    mEnableSavedGames: 0
+    mEnableSavedGames: 1
     mAutoConflictResolutionStrategy: 0
     mGpgsDataSource: 0
   mInAppPurchaseSettings:
@@ -346,5 +346,5 @@ MonoBehaviour:
   mIsGameServiceModuleEnable: 1
   mIsNotificationModuleEnable: 0
   mIsSharingModuleEnable: 0
-  mActiveModuleIndex: 0
+  mActiveModuleIndex: 1
   mIsSelectingModule: 0

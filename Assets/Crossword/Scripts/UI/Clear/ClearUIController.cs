@@ -15,12 +15,10 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private Text coinText = null;
 
         private int addCoinAmount = 0;
-        private int remainingAdditionalCoin;
 
         public void SetUp(bool alreadyCompleted, int addCoinAmount)
         {
             this.addCoinAmount = addCoinAmount;
-            remainingAdditionalCoin = addCoinAmount;
 
             bool packLastStage = ((CrosswordMapManager.Instance.ActivePackIndex + 1) % CrosswordMapManager.LEVEL_IN_PACK_COUNT) == 0;
             nextStageButton.SetActive(packLastStage == false);
@@ -59,17 +57,7 @@ namespace HealingJam.Crossword.UI
 
         private void OnCoinAnimationEnd(int coin)
         {
-            remainingAdditionalCoin -= coin;
             SaveMgr.Instance.AddCoin(coin);
         }
-
-        //private void OnDisable()
-        //{
-        //    if (remainingAdditionalCoin > 0)
-        //    {
-        //        SaveMgr.Instance.AddCoin(remainingAdditionalCoin);
-        //        remainingAdditionalCoin = 0;
-        //    }
-        //}
     }
 }

@@ -20,6 +20,7 @@ namespace HealingJam.Crossword
         [SerializeField] private Transform rewardAdTransform = null;
         [SerializeField] private TopUIController topUIController = null;
 
+        private bool saveTrigger = false;
 
         private void Start()
         {
@@ -30,6 +31,16 @@ namespace HealingJam.Crossword
 #endif
 
             Advertising.AdsRemoved += ChangeRemoveAdButtonInteraction;
+        }
+
+       
+        private void OnDisable()
+        {
+            if (saveTrigger)
+            {
+                SaveMgr.Instance.Save();
+                saveTrigger = false;
+            }
         }
 
         private void ChangeRemoveAdButtonInteraction()
@@ -46,29 +57,32 @@ namespace HealingJam.Crossword
         private void Reward()
         {
             GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(rewardAdTransform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(30, 10));
+            saveTrigger = true;
         }
 
         public void GetPurchaseReward(Product product)
         {
             string id = product.definition.id;
 
-            if (id == "com.healingjam.crossword.coin_150")
+            if (id == "com.healingjam.crossword2.coin_150")
             {
                 GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coin1Transform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(150, 30));
             }
-            else if (id == "com.healingjam.crossword.coin_900")
+            else if (id == "com.healingjam.crossword2.coin_900")
             {
                 GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coin3Transform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(900, 100));
             }
-            else if (id == "com.healingjam.crossword.coin_2000")
+            else if (id == "com.healingjam.crossword2.coin_2000")
             {
                 GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coin2Transform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(2000, 100));
             }
-            else if (id == "com.healingjjam.blockmaker.remove_ad")
+            else if (id == "com.healingjam.crossword2.remove_ad")
             {
                 SaveMgr.Instance.SetAdRemove(true);
                 Advertising.RemoveAds();
             }
+
+            saveTrigger = true;
         }
 
         private void OnCoinAnimationEnd(int coin)
@@ -83,10 +97,11 @@ namespace HealingJam.Crossword
             #if UNITY_IOS
             ToastPlugin.ToastHelper.ShowToast("복원에 성공했습니다");
 #endif
-            if (id == "com.healingjjam.blockmaker.remove_ad")
+            if (id == "com.healingjam.crossword2.remove_ad")
             {
                 SaveMgr.Instance.SetAdRemove(true);
                 Advertising.RemoveAds();
+                saveTrigger = true;
             }
         }
 

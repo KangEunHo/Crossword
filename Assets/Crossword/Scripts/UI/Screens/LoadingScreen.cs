@@ -90,29 +90,27 @@ namespace HealingJam.Crossword.UI
                 loginStep = LoginStep.End;
                 return;
 #endif
-                GPGSMgr.Instance.Initialized((success) => {
-                    if (success)
+
+                if (GPGSMgr.Instance.IsInitialized())
+                {
+                    loginStep = LoginStep.LoadGoogleData;
+                    OpenSaveGame();
+                }
+                else
+                {
+                    GPGSMgr.Instance.Initialized((success) =>
                     {
-                        loginStep = LoginStep.LoadGoogleData;
-                        GPGSMgr.Instance.OpenSavedGame((openSuccess) =>
+                        if (success)
                         {
-                            if (openSuccess)
-                            {
-                                SaveMgr.Instance.LoadGoogleGameService(true,
-                                    (loadSuccess) => { loginStep = LoginStep.End; }
-                                    );
-                            }
-                            else
-                            {
-                                loginStep = LoginStep.End;
-                            }
-                        });
-                    }
-                    else
-                    {
-                        loginStep = LoginStep.End;
-                    }
-                });
+                            loginStep = LoginStep.LoadGoogleData;
+                            OpenSaveGame();
+                        }
+                        else
+                        {
+                            loginStep = LoginStep.End;
+                        }
+                    });
+                }
             }
             else
             {
@@ -120,15 +118,40 @@ namespace HealingJam.Crossword.UI
             }
         }
 
+        private void OpenSaveGame()
+        {
+            if (GPGSMgr.Instance.IsOpened)
+            {
+                SaveMgr.Instance.LoadGoogleGameService(true, (loadSuccess) => { loginStep = LoginStep.End; });
+            }
+            else
+            {
+                GPGSMgr.Instance.OpenSavedGame((openSuccess) =>
+                {
+                    if (openSuccess)
+                    {
+                        SaveMgr.Instance.LoadGoogleGameService(true, (loadSuccess) => { loginStep = LoginStep.End; });
+                    }
+                    else
+                    {
+                        loginStep = LoginStep.End;
+                    }
+                });
+            }
+        }
+
         private IEnumerator LoadServerContents()
         {
-            yield return StartCoroutine(CrosswordMapManager.Instance.LoadCrosswordMapAtAssetBundle());
-
-            CrosswordMapManager.Instance.SetUpDatabase();
-
             DailyCommonsensePopup dailyCommonsensePopup = PopupMgr.Instance.GetPopupById(Popup.PopupID.DailyCommonSense) as DailyCommonsensePopup;
 
             yield return StartCoroutine(dailyCommonsensePopup.LoadCommonSenseAsync());
+
+            if (dailyCommonsensePopup.IsLoadTodayDate)
+            {
+                yield return StartCoroutine(CrosswordMapManager.Instance.LoadCrosswordMapAtAssetBundle());
+            }
+
+            CrosswordMapManager.Instance.SetUpDatabase();
 
             LoadedServerContents = true;
         }
