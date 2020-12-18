@@ -15,6 +15,8 @@ public class GPGSMgr : Singleton<GPGSMgr>
 
     public Action<bool> _loginCallBack = null;
     public Action<bool> _openSavedGameCallBack = null;
+    public bool IsOpenProcessing = false;
+    public bool IsWriteProcessing = false;
 
     private GPGSMgr()
     {
@@ -62,6 +64,13 @@ public class GPGSMgr : Singleton<GPGSMgr>
     // Open a saved game with automatic conflict resolution
     public void OpenSavedGame(Action<bool> openSavedGame)
     {
+        if (IsOpenProcessing)
+        {
+            Debug.Log("Already google open processing");
+            openSavedGame?.Invoke(false);
+            return;
+        }
+
         this._openSavedGameCallBack = openSavedGame;
         // Open a saved game named "My_Saved_Game" and resolve conflicts automatically if any.
         GameServices.SavedGames.OpenWithAutomaticConflictResolution(SAVE_KEY, OpenSavedGameCallback);
@@ -70,6 +79,8 @@ public class GPGSMgr : Singleton<GPGSMgr>
     // Open saved game callback
     void OpenSavedGameCallback(SavedGame savedGame, string error)
     {
+        IsOpenProcessing = false;
+
         if (string.IsNullOrEmpty(error))
         {
             Debug.Log("Saved game opened successfully!");
@@ -93,25 +104,34 @@ public class GPGSMgr : Singleton<GPGSMgr>
 
         if (IsOpened)
         {
-            // The saved game is open and ready for writing
-            GameServices.SavedGames.WriteSavedGameData(
-                mySavedGame,
-                data,
-                (SavedGame updatedSavedGame, string error) =>
-                {
-                    if (string.IsNullOrEmpty(error))
+            if (IsWriteProcessing)
+            {
+                Debug.Log("Already google write processing");
+                writeCallback?.Invoke(false);
+            }
+            else
+            {
+                IsWriteProcessing = true;
+                // The saved game is open and ready for writing
+                GameServices.SavedGames.WriteSavedGameData(
+                    mySavedGame,
+                    data,
+                    (SavedGame updatedSavedGame, string error) =>
                     {
-                        writeCallback?.Invoke(true);
-                        Debug.Log("Saved game data has been written successfully!");
+                        IsWriteProcessing = false;
+                        if (string.IsNullOrEmpty(error))
+                        {
+                            writeCallback?.Invoke(true);
+                            Debug.Log("Saved game data has been written successfully!");
+                        }
+                        else
+                        {
+                            writeCallback?.Invoke(false);
+                            Debug.Log("Writing saved game data failed with error: " + error);
+                        }
                     }
-                    else
-                    {
-                        writeCallback?.Invoke(false);
-                        Debug.Log("Writing saved game data failed with error: " + error);
-                    }
-                }
-
-            );
+                );
+            }
         }
         else
         {

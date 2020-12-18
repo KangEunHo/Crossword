@@ -228,14 +228,10 @@ namespace HealingJam.Crossword
 
             READY_TO_DAY_COMMONSENSE_AND_NOT_GET_TODAY_REWARD = false;
 
-            GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(questionMarkObject.transform.position, GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(20, 4));
+            GameMgr.Instance.topUIController.PlayCoinFlyAnimation(questionMarkObject.transform.position, 20, 4);
 
             SoundMgr.Instance.PlayOneShotButtonSound();
         }
 
-        private void OnCoinAnimationEnd(int coin)
-        {
-            Save.SaveMgr.Instance.AddCoin(coin);
-        }
     }
 }

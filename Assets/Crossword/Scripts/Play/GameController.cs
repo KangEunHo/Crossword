@@ -169,9 +169,11 @@ namespace HealingJam.Crossword
             if (progressData != null)
             {
                 if (progressData.matchedWords.Count > 0)
-                SaveMgr.Instance.SetProgressData(CrosswordMapManager.Instance.ActivePackIndex, progressData);
+                {
+                    SaveMgr.Instance.SetProgressData(CrosswordMapManager.Instance.ActivePackIndex, progressData);
 
-                SaveMgr.Instance.Save();
+                    SaveMgr.Instance.SaveProgressData();
+                }
             }
         }
 

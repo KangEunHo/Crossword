@@ -46,18 +46,17 @@ namespace HealingJam.Crossword.UI
             }
             else
             {
+                SaveMgr.Instance.AddCoin(addCoinAmount);
+                SaveMgr.Instance.Save();
+
                 gaugeImage.fillAmount = 0.1f + prePageProgress;
 
                 coinText.text = addCoinAmount.ToString();
                 gaugeImage.DOFillAmount(0.1f + pageProgress, 0.5f)
-                    .OnComplete(()=> { GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coinIconTf.position, GameMgr.Instance.topUIController.GetCoinRT(), OnCoinAnimationEnd, CoinFlyAnimation.DivisionCoinAmounts(addCoinAmount, 5)); });
+                    .OnComplete(()=> { GameMgr.Instance.topUIController.PlayCoinFlyAnimation(coinIconTf.position, addCoinAmount, 5, false); });
 
             }
         }
 
-        private void OnCoinAnimationEnd(int coin)
-        {
-            SaveMgr.Instance.AddCoin(coin);
-        }
     }
 }

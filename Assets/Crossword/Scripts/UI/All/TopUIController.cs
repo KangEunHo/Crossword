@@ -17,25 +17,36 @@ namespace HealingJam.Crossword.UI
         [SerializeField] private GameObject backButton = null;
         [SerializeField] private GameObject optionButton = null;
 
-        public CoinFlyAnimation coinFlyAnimation = null;
+        [SerializeField] private CoinFlyAnimation coinFlyAnimation = null;
         private Tween coinAmountTween = null;
         private int prevAddAmount = 0;
+        private int coinTextCoin = 0;
 
         private void OnEnable()
         {
             SaveMgr.Instance.CoinAddAction += OnCoinAdded;
-            SaveMgr.Instance.CoinChangeAction += OnCoinChanged;
+            //SaveMgr.Instance.CoinChangeAction += OnCoinChanged;
 
-            OnCoinChanged(SaveMgr.Instance.GetCoin());
+            UpdateCoinText(SaveMgr.Instance.GetCoin());
         }
 
         private void OnDisable()
         {
             SaveMgr.Instance.CoinAddAction -= OnCoinAdded;
-            SaveMgr.Instance.CoinChangeAction -= OnCoinChanged;
+           // SaveMgr.Instance.CoinChangeAction -= OnCoinChanged;
         }
 
         private void OnCoinAdded(int amount)
+        {
+            // 힌트 사용시에만 바로 코인텍스트가 적용됨.
+            if (amount < 0)
+            {
+                UpdateCoinText(SaveMgr.Instance.GetCoin());
+                PlayCoinAddAnimation(amount);
+            }
+        }
+
+        private void PlayCoinAddAnimation(int amount)
         {
             if (enabled == false)
                 return;
@@ -67,15 +78,37 @@ namespace HealingJam.Crossword.UI
 
         }
 
-        private void OnCoinChanged(int coin)
+        public void PlayCoinFlyAnimation(Vector3 startPos, int coin, int division, bool save = true)
         {
-            coinText.text = coin.ToString();
+            if (save)
+            {
+                SaveMgr.Instance.AddCoin(coin);
+                SaveMgr.Instance.Save();
+            }
+            coinFlyAnimation.PlayAnimation(startPos, coinRT, OnCoinEndFly, CoinFlyAnimation.DivisionCoinAmounts(coin, division));
         }
 
-        public RectTransform GetCoinRT()
+        private void OnCoinEndFly(int coinAmount)
         {
-            return coinRT;
+            UpdateCoinText(coinAmount + coinTextCoin);
+            PlayCoinAddAnimation(coinAmount);
         }
+
+        public void UpdateCoinText(int coin)
+        {
+            coinText.text = coin.ToString();
+            coinTextCoin = coin;
+        }
+
+        //private void OnCoinChanged(int coin)
+        //{
+        //    coinText.text = coin.ToString();
+        //}
+
+        //public RectTransform GetCoinRT()
+        //{
+        //    return coinRT;
+        //}
 
         public void OnBackButtonClick()
         {
@@ -99,7 +132,7 @@ namespace HealingJam.Crossword.UI
         {
             coinObject.SetActive(active);
             if (active)
-                OnCoinChanged(SaveMgr.Instance.GetCoin());
+                UpdateCoinText(SaveMgr.Instance.GetCoin());
         }
 
         public void SetActiveBackButton(bool active)

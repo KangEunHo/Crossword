@@ -27,7 +27,6 @@ namespace HealingJam.Crossword.Save
             None = 0, Guest =1, Google =2
         }
 
-        public Dictionary<int, ProgressData> progressDatas = new Dictionary<int, ProgressData>();
         public List<bool> completeDatas = new List<bool>();
         public List<LevelData> levelDatas = new List<LevelData>();
         public int coin = 200;
@@ -35,5 +34,25 @@ namespace HealingJam.Crossword.Save
         public bool playedCommonSenseTest = false;
 
         public LoginType loginType = LoginType.None;
+
+        public int LastUnlockPackIndex()
+        {
+            for (int i = 0; i < completeDatas.Count; ++i)
+            {
+                if (completeDatas[i] == false)
+                    return i;
+            }
+            return completeDatas.Count;
+        }
+
+        public int GetUnlockLevel()
+        {
+            for (int i = 0; i < levelDatas.Count; ++i)
+            {
+                if (levelDatas[i].completed == false)
+                    return i;
+            }
+            return levelDatas.Count;
+        }
     }
 }

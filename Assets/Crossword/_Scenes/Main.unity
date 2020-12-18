@@ -14032,7 +14032,7 @@ MonoBehaviour:
   coinObject: {fileID: 841025316}
   backButton: {fileID: 0}
   optionButton: {fileID: 0}
-  coinFlyAnimation: {fileID: 0}
+  coinFlyAnimation: {fileID: 860341111}
 --- !u!224 &841025318
 RectTransform:
   m_ObjectHideFlags: 0

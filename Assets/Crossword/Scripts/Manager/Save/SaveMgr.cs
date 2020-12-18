@@ -2,16 +2,19 @@
 using System;
 using System.IO;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace HealingJam.Crossword.Save
 {
     public class SaveMgr : Singleton<SaveMgr>
     {
         public string FilePath { get { return Path.Combine(Application.persistentDataPath, "save.dat"); } }
+        public string ProgressFilePath { get { return Path.Combine(Application.persistentDataPath, "progress.dat"); } }
         public event Action<int> CoinChangeAction = null;
         public event Action<int> CoinAddAction = null;
 
         private SaveData saveData = null;
+        public Dictionary<int, ProgressData> progressDatas = null;
 
         private SaveMgr() { }
 
@@ -25,12 +28,38 @@ namespace HealingJam.Crossword.Save
 
             if (File.Exists(FilePath))
             {
-                string text = File.ReadAllText(FilePath);
-                saveData = JsonConvert.DeserializeObject<SaveData>(EncryptUtils.Decrypt(text));
+                try
+                {
+                    string text = File.ReadAllText(FilePath);
+                    saveData = JsonConvert.DeserializeObject<SaveData>(EncryptUtils.Decrypt(text));
+                }
+                catch(Exception e)
+                {
+                    Debug.LogWarning(e.Message);
+                    saveData = new SaveData();
+                }
             }
             else
             {
                 saveData = new SaveData();
+            }
+
+            if (File.Exists(ProgressFilePath))
+            {
+                try
+                {
+                    string text = File.ReadAllText(ProgressFilePath);
+                    progressDatas = JsonConvert.DeserializeObject<Dictionary<int, ProgressData>>(EncryptUtils.Decrypt(text));
+                }
+                catch(Exception e)
+                {
+                    Debug.LogWarning(e.Message);
+                    progressDatas = new Dictionary<int, ProgressData>();
+                }
+            }
+            else
+            {
+                progressDatas = new Dictionary<int, ProgressData>();
             }
 
             if (loadGoogle)
@@ -48,17 +77,67 @@ namespace HealingJam.Crossword.Save
                     {
                         string decryptData = Convert.ToBase64String(data);
                         string serializeData = EncryptUtils.Decrypt(decryptData);
-                        saveData = JsonConvert.DeserializeObject<SaveData>(serializeData);
+                        var googleSaveData = JsonConvert.DeserializeObject<SaveData>(serializeData);
 
-                        if (saveLocal)
-                            Save(false);
+                        if (saveData == null)
+                            saveData = googleSaveData;
+                        else
+                        {
+                            bool useGoogleSave = false;
+
+                            int localLastUnlockPackIndex = saveData.LastUnlockPackIndex();
+                            int googleLastUnlockPackIndex = googleSaveData.LastUnlockPackIndex();
+                            if (localLastUnlockPackIndex < googleLastUnlockPackIndex)
+                            {
+                                useGoogleSave = true;
+                            }
+                            else if (localLastUnlockPackIndex == googleLastUnlockPackIndex)
+                            {
+                                int localunlockLevelIndex = saveData.GetUnlockLevel();
+                                int googleunlockLevelIndex = googleSaveData.GetUnlockLevel();
+
+                                if (localunlockLevelIndex < googleunlockLevelIndex)
+                                {
+                                    useGoogleSave = true;
+                                }
+                                else if (localunlockLevelIndex == googleunlockLevelIndex)
+                                {
+                                    if (saveData.coin < googleSaveData.coin)
+                                    {
+                                        useGoogleSave = true;
+                                    }
+                                    else
+                                    {
+                                        useGoogleSave = false;
+                                    }
+                                }
+                                else
+                                {
+                                    useGoogleSave = false;
+                                }
+                            }
+                            else
+                            {
+                                useGoogleSave = false;
+                            }
+
+                            if (useGoogleSave)
+                            {
+                                saveData = googleSaveData;
+                                Save();
+                            }
+                            else
+                            {
+                                SaveGoogleService();
+                            }
+                        }
                     }
                 }
                 saveCallBack?.Invoke(success);
             });
         }
 
-        public void Save(bool saveGoogle)
+        public void Save()
         {
             if (saveData == null)
                 return;
@@ -66,40 +145,45 @@ namespace HealingJam.Crossword.Save
             string serializeData = JsonConvert.SerializeObject(saveData);
             string encryptData = EncryptUtils.Encrypt(serializeData);
             File.WriteAllText(FilePath, encryptData);
-
-            if (saveGoogle)
-                SaveGoogleService();
         }
 
-        public void Save()
+        public void SaveProgressData()
         {
-            bool saveGoogle = GetLoginType() == SaveData.LoginType.Google;
-            Save(saveGoogle);
+            if (progressDatas == null)
+                return;
+
+            string serializeData = JsonConvert.SerializeObject(progressDatas);
+            string encryptData = EncryptUtils.Encrypt(serializeData);
+            File.WriteAllText(ProgressFilePath, encryptData);
         }
 
         public void SaveGoogleService()
         {
             if (saveData == null)
                 return;
+            if (saveData.loginType != SaveData.LoginType.Google)
+                return;
 
-            string serializeData = JsonConvert.SerializeObject(saveData);
-            string encryptData = EncryptUtils.Encrypt(serializeData);
-            byte[] writeData = Convert.FromBase64String(encryptData);
-
-            //if (GPGSMgr.Instance.IsOpened)
-            //{
-            //    GPGSMgr.Instance.WriteSavedGame(writeData, null);
-            //}
-            //else
-            //{
+            if (GPGSMgr.Instance.IsOpened)
+            {
+                string serializeData = JsonConvert.SerializeObject(saveData);
+                string encryptData = EncryptUtils.Encrypt(serializeData);
+                byte[] writeData = Convert.FromBase64String(encryptData);
+                GPGSMgr.Instance.WriteSavedGame(writeData, null);
+            }
+            else
+            {
                 GPGSMgr.Instance.OpenSavedGame((openSuccess) =>
                 {
                     if (openSuccess)
                     {
+                        string serializeData = JsonConvert.SerializeObject(saveData);
+                        string encryptData = EncryptUtils.Encrypt(serializeData);
+                        byte[] writeData = Convert.FromBase64String(encryptData);
                         GPGSMgr.Instance.WriteSavedGame(writeData, null);
                     }
                 });
-            //}
+            }
         }
 
         public bool GetCompleteData(int index)
@@ -132,10 +216,10 @@ namespace HealingJam.Crossword.Save
         {
             progressData = null;
 
-            if (saveData == null)
+            if (progressDatas == null)
                 return false;
 
-            return saveData.progressDatas.TryGetValue(index, out progressData);
+            return progressDatas.TryGetValue(index, out progressData);
         }
 
         public void SetProgressData(int index, ProgressData progressData)
@@ -143,7 +227,7 @@ namespace HealingJam.Crossword.Save
             if (saveData == null)
                 return;
 
-            saveData.progressDatas[index] = progressData;
+            progressDatas[index] = progressData;
         }
 
         public void DeleteProgressData(int index)
@@ -151,7 +235,7 @@ namespace HealingJam.Crossword.Save
             if (saveData == null)
                 return;
 
-            saveData.progressDatas.Remove(index);
+            progressDatas.Remove(index);
         }
 
         public LevelData GetLevelData(int index)
@@ -184,12 +268,8 @@ namespace HealingJam.Crossword.Save
         {
             if (saveData == null)
                 return 0;
-            for (int i = 0; i < saveData.levelDatas.Count; ++i)
-            {
-                if (saveData.levelDatas[i].completed == false)
-                    return i;
-            }
-            return saveData.levelDatas.Count;
+
+            return saveData.GetUnlockLevel();
         }
 
         public void SetCoin(int coin)

@@ -56,7 +56,7 @@ namespace HealingJam.Crossword
 
         private void Reward()
         {
-            GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(rewardAdTransform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(30, 10));
+            GameMgr.Instance.topUIController.PlayCoinFlyAnimation(rewardAdTransform.position, 30, 10);
             saveTrigger = true;
         }
 
@@ -66,15 +66,15 @@ namespace HealingJam.Crossword
 
             if (id == "com.healingjam.crossword2.coin_150")
             {
-                GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coin1Transform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(150, 30));
+                GameMgr.Instance.topUIController.PlayCoinFlyAnimation(coin1Transform.position, 150, 30);
             }
             else if (id == "com.healingjam.crossword2.coin_900")
             {
-                GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coin3Transform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(900, 100));
+                GameMgr.Instance.topUIController.PlayCoinFlyAnimation(coin2Transform.position, 900, 100);
             }
             else if (id == "com.healingjam.crossword2.coin_2000")
             {
-                GameMgr.Instance.topUIController.coinFlyAnimation.PlayAnimation(coin2Transform.position, topUIController.GetCoinRT(), OnCoinAnimationEnd, UI.CoinFlyAnimation.DivisionCoinAmounts(2000, 100));
+                GameMgr.Instance.topUIController.PlayCoinFlyAnimation(coin3Transform.position, 2000, 100);
             }
             else if (id == "com.healingjam.crossword2.remove_ad")
             {
@@ -83,11 +83,6 @@ namespace HealingJam.Crossword
             }
 
             saveTrigger = true;
-        }
-
-        private void OnCoinAnimationEnd(int coin)
-        {
-            Save.SaveMgr.Instance.AddCoin(coin);
         }
 
         public void RestoreProduct(Product product)

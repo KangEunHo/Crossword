@@ -71,6 +71,7 @@ namespace HealingJam.Crossword
             if (pause)
             {
                 SaveMgr.Instance.Save();
+                SaveMgr.Instance.SaveGoogleService();
                 SettingMgr.SaveToLocal();
             }
         }
@@ -78,6 +79,7 @@ namespace HealingJam.Crossword
         protected override void OnApplicationQuit()
         {
             SaveMgr.Instance.Save();
+            SaveMgr.Instance.SaveGoogleService();
             SettingMgr.SaveToLocal();
         }
 
