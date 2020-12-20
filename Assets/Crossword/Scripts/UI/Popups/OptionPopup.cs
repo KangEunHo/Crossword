@@ -24,7 +24,7 @@ namespace HealingJam.Crossword
 
 
             efxToggleController.SetPosition(SoundMgr.Instance.IsSoundOn());
-            vibrationToggleController.SetPosition(true);
+            vibrationToggleController.SetPosition(SettingMgr.UseVibration); ;
             darkModeToggleController.SetPosition(DarkMode.UseDarkMode);
 
             efxToggleController.valueChangeAction += OnSoundToggle;
@@ -69,8 +69,6 @@ namespace HealingJam.Crossword
             GameScreens.ScreenMgr.Instance.ChangeState(GameScreens.GameScreen.ScreenID.Loading);
 
             ToastPlugin.ToastHelper.ShowToast("데이터를 불러오기위해 게임을 재시작합니다", true);
-
-            SoundMgr.Instance.PlayOneShotButtonSound();
         }
     }
 }

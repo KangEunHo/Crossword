@@ -20,8 +20,6 @@ namespace HealingJam.Crossword
         [SerializeField] private Transform rewardAdTransform = null;
         [SerializeField] private TopUIController topUIController = null;
 
-        private bool saveTrigger = false;
-
         private void Start()
         {
 #if UNITY_ANDROID
@@ -30,17 +28,8 @@ namespace HealingJam.Crossword
             restoreButton.SetActive(true);
 #endif
 
+            ChangeRemoveAdButtonInteraction();
             Advertising.AdsRemoved += ChangeRemoveAdButtonInteraction;
-        }
-
-       
-        private void OnDisable()
-        {
-            if (saveTrigger)
-            {
-                SaveMgr.Instance.Save();
-                saveTrigger = false;
-            }
         }
 
         private void ChangeRemoveAdButtonInteraction()
@@ -56,8 +45,9 @@ namespace HealingJam.Crossword
 
         private void Reward()
         {
-            GameMgr.Instance.topUIController.PlayCoinFlyAnimation(rewardAdTransform.position, 30, 10);
-            saveTrigger = true;
+            topUIController.PlayCoinFlyAnimation(rewardAdTransform.position, 30, 10);
+            GameMgr.Instance.topUIController.UpdateCoinText(SaveMgr.Instance.GetCoin());
+            SaveMgr.Instance.SaveGoogleService();
         }
 
         public void GetPurchaseReward(Product product)
@@ -66,28 +56,35 @@ namespace HealingJam.Crossword
 
             if (id == "com.healingjam.crossword2.coin_150")
             {
-                GameMgr.Instance.topUIController.PlayCoinFlyAnimation(coin1Transform.position, 150, 30);
+                topUIController.PlayCoinFlyAnimation(coin1Transform.position, 150, 30);
+                GameMgr.Instance.topUIController.UpdateCoinText(SaveMgr.Instance.GetCoin());
+                SaveMgr.Instance.SaveGoogleService();
             }
             else if (id == "com.healingjam.crossword2.coin_900")
             {
-                GameMgr.Instance.topUIController.PlayCoinFlyAnimation(coin2Transform.position, 900, 100);
+                topUIController.PlayCoinFlyAnimation(coin2Transform.position, 900, 100);
+                GameMgr.Instance.topUIController.UpdateCoinText(SaveMgr.Instance.GetCoin());
+                SaveMgr.Instance.SaveGoogleService();
             }
             else if (id == "com.healingjam.crossword2.coin_2000")
             {
-                GameMgr.Instance.topUIController.PlayCoinFlyAnimation(coin3Transform.position, 2000, 100);
+                topUIController.PlayCoinFlyAnimation(coin3Transform.position, 2000, 100);
+                GameMgr.Instance.topUIController.UpdateCoinText(SaveMgr.Instance.GetCoin());
+                SaveMgr.Instance.SaveGoogleService();
             }
             else if (id == "com.healingjam.crossword2.remove_ad")
             {
                 SaveMgr.Instance.SetAdRemove(true);
+                SaveMgr.Instance.Save();
+                SaveMgr.Instance.SaveGoogleService();
                 Advertising.RemoveAds();
             }
-
-            saveTrigger = true;
         }
 
         public void RestoreProduct(Product product)
         {
             string id = product.definition.id;
+            Debug.Log("[Restore Product] " + id);
 
             #if UNITY_IOS
             ToastPlugin.ToastHelper.ShowToast("복원에 성공했습니다");
@@ -96,7 +93,6 @@ namespace HealingJam.Crossword
             {
                 SaveMgr.Instance.SetAdRemove(true);
                 Advertising.RemoveAds();
-                saveTrigger = true;
             }
         }
 

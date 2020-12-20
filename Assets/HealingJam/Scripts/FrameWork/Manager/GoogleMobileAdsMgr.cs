@@ -51,6 +51,9 @@ namespace HealingJam
 
         public void ShowBannerAD()
         {
+            if (Advertising.IsAdRemoved())
+                return;
+
             Advertising.ShowBannerAd(BannerAdPosition.Bottom, BannerAdSize.Banner);
         }
 
