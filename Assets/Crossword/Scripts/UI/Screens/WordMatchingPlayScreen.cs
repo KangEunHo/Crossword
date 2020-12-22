@@ -34,7 +34,7 @@ namespace HealingJam.Crossword.UI
                                                 new PopupClosedDelegate((msg) => { gameController.SetUp(gameMode, CreateAbilityTestAnswers()); }), message);
                     PlayerPrefsDatas.SetBoolData(ABILITY_FIST_VISIT_KEY, false);
                 }
-                else 
+                else
                     gameController.SetUp(gameMode, CreateAbilityTestAnswers());
             }
             else
@@ -44,7 +44,7 @@ namespace HealingJam.Crossword.UI
                 if (PlayerPrefsDatas.GetBoolData(BADGE_TEST_FIST_VISIT_KEY, 1))
                 {
                     PopupMgr.Instance.EnterWithAnimation(Popup.PopupID.Message, new MoveTweenPopupAnimation(MoveTweenPopupAnimation.MoveDirection.BottonToCenter, 0.25f),
-                        new PopupClosedDelegate((msg)=> { gameController.SetUp(gameMode, CreateBadgePlayAnswers()); }), message);
+                        new PopupClosedDelegate((msg) => { gameController.SetUp(gameMode, CreateBadgePlayAnswers()); }), message);
                     PlayerPrefsDatas.SetBoolData(BADGE_TEST_FIST_VISIT_KEY, false);
                 }
                 else
@@ -93,9 +93,12 @@ namespace HealingJam.Crossword.UI
             for (int i = 1; i < (int)WordData.WordType.Max; ++i)
             {
                 List<WordDataForGame> words = allAnswers[(WordData.WordType)i];
-                
+
+                // 3레벨에서 이코노미 문제가 1개뿐이다.
+                int min = Mathf.Min(2, words.Count);
+
                 // 타입별로 랜덤하게 2문제씩을 가져옵니다. 
-                for (int j = 0; j < 2; ++j)
+                for (int j = 0; j < min; ++j)
                 {
                     int randomIndex = Random.Range(0, words.Count);
                     WordDataForGame word = words[randomIndex];
