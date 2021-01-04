@@ -11,6 +11,7 @@ namespace HealingJam.Crossword
     public class GameMgr : MonoSingleton<GameMgr>
     {
         public TopUIController topUIController = null;
+        public AppInfo appInfo = null;
 
         protected override void Awake()
         {
@@ -70,6 +71,10 @@ namespace HealingJam.Crossword
         {
             if (pause)
             {
+                if (ScreenMgr.Instance.GetCurrentScreen().ID == GameScreen.ScreenID.Loading)
+                {
+                    return;
+                }
                 SaveMgr.Instance.Save();
                 SaveMgr.Instance.SaveGoogleService();
                 SettingMgr.SaveToLocal();
@@ -78,6 +83,10 @@ namespace HealingJam.Crossword
 
         protected override void OnApplicationQuit()
         {
+            if (ScreenMgr.AppIsQuitting == false && ScreenMgr.Instance.GetCurrentScreen().ID == GameScreen.ScreenID.Loading)
+            {
+                return;
+            }
             SaveMgr.Instance.Save();
             SaveMgr.Instance.SaveGoogleService();
             SettingMgr.SaveToLocal();

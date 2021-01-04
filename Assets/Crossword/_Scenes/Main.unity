@@ -1232,6 +1232,7 @@ GameObject:
   - component: {fileID: 42405106}
   - component: {fileID: 42405105}
   - component: {fileID: 42405109}
+  - component: {fileID: 42405110}
   m_Layer: 5
   m_Name: Option Popup Canvas
   m_TagString: Untagged
@@ -1339,6 +1340,18 @@ MonoBehaviour:
   efxToggleController: {fileID: 453005374}
   vibrationToggleController: {fileID: 1369520549}
   darkModeToggleController: {fileID: 1063996224}
+--- !u!114 &42405110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42405104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3545dc3495c4a4a9ed6f702e2de422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &42871615
 GameObject:
   m_ObjectHideFlags: 0
@@ -4869,6 +4882,7 @@ GameObject:
   - component: {fileID: 254184748}
   - component: {fileID: 254184750}
   - component: {fileID: 254184749}
+  - component: {fileID: 254184751}
   m_Layer: 0
   m_Name: Game Mgr
   m_TagString: Untagged
@@ -4891,6 +4905,7 @@ MonoBehaviour:
   Persistent: 1
   LazyInit: 0
   topUIController: {fileID: 489068446}
+  appInfo: {fileID: 254184751}
 --- !u!4 &254184747
 Transform:
   m_ObjectHideFlags: 0
@@ -4943,6 +4958,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671fdfb2f191f3a44a30360a8883c93e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &254184751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254184745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94a41ca13a60a3b4a85c79c6ecec7604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  APP_NAME: crossword2
+  APPSTORE_ID: '[YOUR_APPSTORE_ID'
+  BUNDLE_ID: com.healingjam.crossword2
+  APPSTORE_LINK: itms-apps://itunes.apple.com/app/id
+  PLAYSTORE_LINK: market://details?id=
+  APPSTORE_SHARE_LINK: https://itunes.apple.com/app/id
+  PLAYSTORE_SHARE_LINK: https://play.google.com/store/apps/details?id=
+  APPSTORE_HOMEPAGE: '[YOUR_APPSTORE_PUBLISHER_LINK]'
+  PLAYSTORE_HOMEPAGE: '[YOUR_GOOGLEPLAY_PUBLISHER_NAME]'
+  FACEBOOK_ID: '[YOUR_FACEBOOK_PAGE_ID]'
+  TWITTER_NAME: '[YOUR_TWITTER_PAGE_NAME]'
+  SUPPORT_EMAIL: '[YOUR_SUPPORT_EMAIL]'
+  FACEBOOK_LINK: https://facebook.com/
+  TWITTER_LINK: https://twitter.com/
 --- !u!1 &258493560
 GameObject:
   m_ObjectHideFlags: 0
@@ -5605,51 +5646,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292332394}
   m_CullTransparentMesh: 0
---- !u!1 &301048982
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 301048984}
-  - component: {fileID: 301048983}
-  m_Layer: 0
-  m_Name: InAppReview Mgr
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &301048983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 301048982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96df965c106ae8c4b9817c444b902402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Persistent: 1
-  LazyInit: 0
---- !u!4 &301048984
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 301048982}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &304618408
 GameObject:
   m_ObjectHideFlags: 0
@@ -5714,6 +5710,7 @@ GameObject:
   - component: {fileID: 316026326}
   - component: {fileID: 316026325}
   - component: {fileID: 316026328}
+  - component: {fileID: 316026329}
   m_Layer: 5
   m_Name: WordData Popup Canvas
   m_TagString: Untagged
@@ -5822,6 +5819,18 @@ MonoBehaviour:
   meaningText: {fileID: 1380132567}
   resultImageSwap: {fileID: 1127177399}
   zoomImageSwap: {fileID: 1580772818}
+--- !u!114 &316026329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316026323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3545dc3495c4a4a9ed6f702e2de422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &332699845
 GameObject:
   m_ObjectHideFlags: 0
@@ -7634,6 +7643,7 @@ GameObject:
   - component: {fileID: 415258574}
   - component: {fileID: 415258573}
   - component: {fileID: 415258572}
+  - component: {fileID: 415258577}
   m_Layer: 5
   m_Name: Play Exit Popup Canvas
   m_TagString: Untagged
@@ -7737,6 +7747,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &415258577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415258571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3545dc3495c4a4a9ed6f702e2de422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &419147959
 GameObject:
   m_ObjectHideFlags: 0
@@ -10608,6 +10630,7 @@ GameObject:
   - component: {fileID: 575687006}
   - component: {fileID: 575687005}
   - component: {fileID: 575687009}
+  - component: {fileID: 575687010}
   m_Layer: 5
   m_Name: DailyCommonSense Popup Canvas
   m_TagString: Untagged
@@ -10717,6 +10740,18 @@ MonoBehaviour:
   dateText: {fileID: 1341106277}
   zoomImageSwap: {fileID: 1677377634}
   questionMarkObject: {fileID: 2016028612}
+--- !u!114 &575687010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575687004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3545dc3495c4a4a9ed6f702e2de422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &589317823
 GameObject:
   m_ObjectHideFlags: 0
@@ -15092,6 +15127,7 @@ GameObject:
   - component: {fileID: 931176615}
   - component: {fileID: 931176614}
   - component: {fileID: 931176612}
+  - component: {fileID: 931176617}
   m_Layer: 5
   m_Name: Main Back Canvas
   m_TagString: Untagged
@@ -15194,6 +15230,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!114 &931176617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931176611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3545dc3495c4a4a9ed6f702e2de422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &931739013
 GameObject:
   m_ObjectHideFlags: 0
@@ -18701,6 +18749,7 @@ GameObject:
   - component: {fileID: 1098408668}
   - component: {fileID: 1098408667}
   - component: {fileID: 1098408671}
+  - component: {fileID: 1098408672}
   m_Layer: 5
   m_Name: Shop Popup Canvas
   m_TagString: Untagged
@@ -18810,6 +18859,18 @@ MonoBehaviour:
   coin3Transform: {fileID: 750874089}
   rewardAdTransform: {fileID: 207372412}
   topUIController: {fileID: 841025317}
+--- !u!114 &1098408672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098408666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3545dc3495c4a4a9ed6f702e2de422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1118495459
 GameObject:
   m_ObjectHideFlags: 0
@@ -25272,6 +25333,7 @@ GameObject:
   - component: {fileID: 1473795452}
   - component: {fileID: 1473795451}
   - component: {fileID: 1473795450}
+  - component: {fileID: 1473795454}
   m_Layer: 5
   m_Name: Message Popup Canvas
   m_TagString: Untagged
@@ -25375,6 +25437,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!114 &1473795454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473795448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3545dc3495c4a4a9ed6f702e2de422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1473936112
 GameObject:
   m_ObjectHideFlags: 0
@@ -26846,6 +26920,7 @@ GameObject:
   - component: {fileID: 1565039655}
   - component: {fileID: 1565039654}
   - component: {fileID: 1565039653}
+  - component: {fileID: 1565039657}
   m_Layer: 5
   m_Name: InternetConnectionWarning Popup Canvas
   m_TagString: Untagged
@@ -26948,6 +27023,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!114 &1565039657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565039651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3545dc3495c4a4a9ed6f702e2de422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1566238463
 GameObject:
   m_ObjectHideFlags: 0
@@ -26999,6 +27086,7 @@ GameObject:
   - component: {fileID: 1567242630}
   - component: {fileID: 1567242629}
   - component: {fileID: 1567242632}
+  - component: {fileID: 1567242633}
   m_Layer: 5
   m_Name: Modify Review Canvas
   m_TagString: Untagged
@@ -27102,6 +27190,18 @@ MonoBehaviour:
   popupID: 7
   window: {fileID: 1286620424}
   reviewText: {fileID: 839734232}
+--- !u!114 &1567242633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567242627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3545dc3495c4a4a9ed6f702e2de422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1568551465
 GameObject:
   m_ObjectHideFlags: 0
@@ -30806,6 +30906,7 @@ GameObject:
   - component: {fileID: 1812493121}
   - component: {fileID: 1812493120}
   - component: {fileID: 1812493119}
+  - component: {fileID: 1812493123}
   m_Layer: 5
   m_Name: Login Canvas
   m_TagString: Untagged
@@ -30908,6 +31009,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!114 &1812493123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812493117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3545dc3495c4a4a9ed6f702e2de422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1814425342
 GameObject:
   m_ObjectHideFlags: 0
@@ -35795,7 +35908,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2102312132
 GameObject:
